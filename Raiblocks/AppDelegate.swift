@@ -8,20 +8,71 @@
 
 import UIKit
 
+import Crashlytics
+import Fabric
+import RealmSwift
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var navigationController: UINavigationController?
     var window: UIWindow?
 
+    private var coverWindow: UIWindow?
+    private var coverVC: UIViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
+            UserService.logOut()
+
+            Answers.logCustomEvent(withName: "User Logged Out")
+
+            DispatchQueue.main.async {
+                self.navigationController?.setViewControllers([WelcomeViewController()], animated: false)
+                self.navigationController?.dismiss(animated: true, completion: nil)
+            }
+        }
+
+        // TODO: Remove me after beta testing
+        Credentials.legacyLogOut()
+
+        if let _ = UserService().currentUserSeed() {
+            self.navigationController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
+        } else {
+            self.navigationController = UINavigationController(rootViewController: WelcomeViewController())
+        }
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+
+        // Instantiate Crashlytics if APIKey and Secret are present
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+            let root = NSDictionary(contentsOfFile: path) as? [String: Any],
+            let fabric = root["Fabric"] as? [String: Any],
+            let _ = fabric["APIKey"] {
+            Fabric.with([Crashlytics.self, Answers.self])
+        } else {
+            print("No API Key Present")
+        }
+
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+
+        coverVC = BackgroundViewController()
+        coverWindow = UIWindow(frame: UIScreen.main.bounds)
+        let existingTopWindow = UIApplication.shared.windows.last
+
+        coverWindow?.windowLevel = existingTopWindow!.windowLevel + 1
+        coverVC!.view.frame = coverWindow!.bounds
+        coverWindow?.rootViewController = coverVC
+        coverWindow?.makeKeyAndVisible()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -35,12 +86,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        if coverWindow != nil {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                self.coverVC?.view.alpha = 0
+            }) { _ in
+                self.coverWindow!.isHidden = true
+                self.coverWindow!.rootViewController = nil
+                self.coverWindow = nil
+                self.coverVC = nil
+            }
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
-

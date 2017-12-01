@@ -7,39 +7,392 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
+		5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F6191FD89BD300CEAE78 /* String+Extensions.swift */; };
+		51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
+		51203A3A1FE1E3FD00CD7D79 /* AccountBlockCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A391FE1E3FD00CD7D79 /* AccountBlockCount.swift */; };
+		5122A61320124ACF00F7F43A /* SeedConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5122A61220124ACF00F7F43A /* SeedConfirmationViewController.swift */; };
+		5122A6152017931E00F7F43A /* NanoWalletError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5122A6142017931E00F7F43A /* NanoWalletError.swift */; };
+		5122A6192017AACA00F7F43A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5122A6182017AACA00F7F43A /* UserService.swift */; };
+		5125E44B1FD1FEA7004DB451 /* AccountHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44A1FD1FEA7004DB451 /* AccountHistory.swift */; };
+		5125E44D1FD1FF83004DB451 /* UInt128.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44C1FD1FF83004DB451 /* UInt128.swift */; };
+		5125E44F1FD217B8004DB451 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */; };
+		5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */; };
+		5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4551FD22210004DB451 /* TransactionViewModel.swift */; };
+		5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5135307B201A246E00B615D4 /* BackgroundViewController.swift */; };
+		5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */; };
+		5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279D1FEEBDD800C788E3 /* AccountInfo.swift */; };
+		514827A11FF2E98B00C788E3 /* HashReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514827A01FF2E98B00C788E3 /* HashReceive.swift */; };
+		515B4A4F1FD22AA20059F514 /* ReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */; };
+		515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */; };
+		515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */; };
+		515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E72A31FEC6B08001272D4 /* SendTextField.swift */; };
+		515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */; };
+		516C54A42008130E0044E0D2 /* Common.plist in Resources */ = {isa = PBXBuildFile; fileRef = 516C54A32008130E0044E0D2 /* Common.plist */; };
+		5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */; };
+		5174E8F9200FA6CF00DE86A0 /* PriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E8F8200FA6CF00DE86A0 /* PriceService.swift */; };
+		5174E90620112BE500DE86A0 /* RaiblocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E90520112BE500DE86A0 /* RaiblocksTests.swift */; };
+		5174E90F2011320A00DE86A0 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
+		517FA64D1FE1D1DB00FE04B6 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA64C1FE1D1DB00FE04B6 /* Address.swift */; };
+		517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */; };
+		5185DBEE1FDF14030096E687 /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912ECD1FDB513F001BDF2C /* SendViewModel.swift */; };
+		5185DBF01FDF140F0096E687 /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */; };
+		5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5185DC691FDF48D90096E687 /* Endpoint.swift */; };
+		5185DC6D1FE0709D0096E687 /* AccountSubscribe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5185DC6C1FE0709D0096E687 /* AccountSubscribe.swift */; };
+		5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5186C53F1FC92FE50040E66C /* UIColor+Extension.swift */; };
+		51883F0D1FE088CF00069D41 /* PendingBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51883F0C1FE088CF00069D41 /* PendingBlocks.swift */; };
+		51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51883F0E1FE08E9D00069D41 /* AccountBalance.swift */; };
+		51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC01FDA290F001BDF2C /* SendViewController.swift */; };
+		51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */; };
+		51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */; };
+		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
+		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
+		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
+		51A5204F1FE2D6AC003F6EC7 /* PricePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */; };
+		51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */; };
+		51A520551FE320C0003F6EC7 /* XRBPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* XRBPair.swift */; };
+		51A520591FE32E53003F6EC7 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520581FE32E53003F6EC7 /* Currency.swift */; };
+		51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205A1FE3314F003F6EC7 /* NanoButton.swift */; };
+		51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205C1FE33B04003F6EC7 /* WebViewController.swift */; };
+		51A5205F1FE422F2003F6EC7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205E1FE422F2003F6EC7 /* WelcomeViewController.swift */; };
+		51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */; };
+		51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520841FE99C63003F6EC7 /* RaiCore.swift */; };
+		51A520871FE9AD3F003F6EC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */; };
+		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
+		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
+		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
+		51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */; };
+		51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */; };
+		51E945D41FF6EC60006B7081 /* SharableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* SharableView.swift */; };
+		51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EADEA120067C6B00660E4A /* RaiCoreBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		51EADEA720067C6B00660E4A /* RaiCoreBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		51EADEAD20067CCA00660E4A /* interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A520801FE8462D003F6EC7 /* interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		51EADEAF2006A0E800660E4A /* RaiCoreBase in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5207D1FE8426B003F6EC7 /* RaiCoreBase */; };
+		51EADEB12006A2C500660E4A /* RaiCoreBase in CopyFiles */ = {isa = PBXBuildFile; fileRef = 51A5207D1FE8426B003F6EC7 /* RaiCoreBase */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		51EADEB32007F62000660E4A /* WorkGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EADEB22007F62000660E4A /* WorkGenerate.swift */; };
 		51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F971FC605C9009F045F /* AppDelegate.swift */; };
-		51FE1F9A1FC605C9009F045F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F991FC605C9009F045F /* ViewController.swift */; };
-		51FE1F9D1FC605C9009F045F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1F9B1FC605C9009F045F /* Main.storyboard */; };
+		51FE1F9A1FC605C9009F045F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F991FC605C9009F045F /* HomeViewController.swift */; };
 		51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1F9E1FC605C9009F045F /* Assets.xcassets */; };
 		51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */; };
+		B1B448F99EDC4C000021D555 /* Pods_Raiblocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5174E90820112BE500DE86A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51FE1F8C1FC605C9009F045F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51FE1F931FC605C9009F045F;
+			remoteInfo = Raiblocks;
+		};
+		51EADEA420067C6B00660E4A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51FE1F8C1FC605C9009F045F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 51EADE9E20067C6B00660E4A;
+			remoteInfo = RaiCoreBase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		51A520821FE8495D003F6EC7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				51EADEA720067C6B00660E4A /* RaiCoreBase.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51EADEB02006A2BC00660E4A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				51EADEB12006A2C500660E4A /* RaiCoreBase in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
+		5117F4CF1FD8490800CEAE78 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		5117F6191FD89BD300CEAE78 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Extensions.swift"; sourceTree = "<group>"; };
+		51203A391FE1E3FD00CD7D79 /* AccountBlockCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBlockCount.swift; sourceTree = "<group>"; };
+		5122A61220124ACF00F7F43A /* SeedConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedConfirmationViewController.swift; sourceTree = "<group>"; };
+		5122A6142017931E00F7F43A /* NanoWalletError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoWalletError.swift; sourceTree = "<group>"; };
+		5122A6182017AACA00F7F43A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		5125E44A1FD1FEA7004DB451 /* AccountHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHistory.swift; sourceTree = "<group>"; };
+		5125E44C1FD1FF83004DB451 /* UInt128.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt128.swift; sourceTree = "<group>"; };
+		5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		5125E4551FD22210004DB451 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
+		5135307B201A246E00B615D4 /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
+		5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTransaction.swift; sourceTree = "<group>"; };
+		5148279D1FEEBDD800C788E3 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
+		514827A01FF2E98B00C788E3 /* HashReceive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashReceive.swift; sourceTree = "<group>"; };
+		515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReceiveViewController.swift; path = "Raiblocks/New Group/ReceiveViewController.swift"; sourceTree = SOURCE_ROOT; };
+		515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
+		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SofiaPro-Regular.otf"; sourceTree = "<group>"; };
+		515E72A31FEC6B08001272D4 /* SendTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextField.swift; sourceTree = "<group>"; };
+		515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreconfiguredRepresentatives.swift; sourceTree = "<group>"; };
+		516C54A32008130E0044E0D2 /* Common.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Common.plist; sourceTree = "<group>"; };
+		5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedTextView.swift; sourceTree = "<group>"; };
+		5174E8F8200FA6CF00DE86A0 /* PriceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceService.swift; sourceTree = "<group>"; };
+		5174E90320112BE500DE86A0 /* RaiblocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RaiblocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5174E90520112BE500DE86A0 /* RaiblocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiblocksTests.swift; sourceTree = "<group>"; };
+		5174E90720112BE500DE86A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		517FA64C1FE1D1DB00FE04B6 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleguideV1.swift; sourceTree = "<group>"; };
+		5185DC691FDF48D90096E687 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		5185DC6C1FE0709D0096E687 /* AccountSubscribe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSubscribe.swift; sourceTree = "<group>"; };
+		5186C53F1FC92FE50040E66C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		51883F0C1FE088CF00069D41 /* PendingBlocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingBlocks.swift; sourceTree = "<group>"; };
+		51883F0E1FE08E9D00069D41 /* AccountBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBalance.swift; sourceTree = "<group>"; };
+		51912EC01FDA290F001BDF2C /* SendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
+		51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScanViewController.swift; sourceTree = "<group>"; };
+		51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewContoller.swift; sourceTree = "<group>"; };
+		51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
+		51912ECD1FDB513F001BDF2C /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
+		519B4D371FD23521006B7B6E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Raiblocks-Bridging-Header.h"; sourceTree = "<group>"; };
+		519B4D7E1FD7493E006B7B6E /* RaiCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCore.h; sourceTree = "<group>"; };
+		519B4D7F1FD74955006B7B6E /* RaiCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaiCore.m; sourceTree = "<group>"; };
+		519C1A181FEAE28E005EBA02 /* AccountCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheck.swift; sourceTree = "<group>"; };
+		51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePageViewController.swift; sourceTree = "<group>"; };
+		51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceViewController.swift; sourceTree = "<group>"; };
+		51A520541FE320C0003F6EC7 /* XRBPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRBPair.swift; sourceTree = "<group>"; };
+		51A520581FE32E53003F6EC7 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		51A5205A1FE3314F003F6EC7 /* NanoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoButton.swift; sourceTree = "<group>"; };
+		51A5205C1FE33B04003F6EC7 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		51A5205E1FE422F2003F6EC7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedScanViewController.swift; sourceTree = "<group>"; };
+		51A5207D1FE8426B003F6EC7 /* RaiCoreBase */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = RaiCoreBase; sourceTree = "<group>"; };
+		51A520801FE8462D003F6EC7 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		51A520841FE99C63003F6EC7 /* RaiCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiCore.swift; sourceTree = "<group>"; };
+		51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		51C684941FEB05C000943815 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
+		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
+		51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReceiveHeaderView.swift; sourceTree = "<group>"; };
+		51E945D31FF6EC60006B7081 /* SharableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharableView.swift; sourceTree = "<group>"; };
+		51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RaiCoreBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51EADEA120067C6B00660E4A /* RaiCoreBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCoreBase.h; sourceTree = "<group>"; };
+		51EADEA220067C6B00660E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51EADEB22007F62000660E4A /* WorkGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkGenerate.swift; sourceTree = "<group>"; };
 		51FE1F941FC605C9009F045F /* Raiblocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raiblocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51FE1F971FC605C9009F045F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		51FE1F991FC605C9009F045F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		51FE1F9C1FC605C9009F045F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		51FE1F991FC605C9009F045F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		51FE1F9E1FC605C9009F045F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51FE1FA11FC605C9009F045F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		51FE1FA31FC605C9009F045F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Raiblocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D52FEF9BCCC6F2F4A4622ECE /* Pods-Raiblocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		51FE1F911FC605C9009F045F /* Frameworks */ = {
+		5174E90020112BE500DE86A0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		51EADE9B20067C6B00660E4A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51FE1F911FC605C9009F045F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1B448F99EDC4C000021D555 /* Pods_Raiblocks.framework in Frameworks */,
+				51EADEAF2006A0E800660E4A /* RaiCoreBase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181B5530205C5249D66451C2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D52FEF9BCCC6F2F4A4622ECE /* Pods-Raiblocks.debug.xcconfig */,
+				415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		51203A3B1FE1ECF700CD7D79 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				517FA64C1FE1D1DB00FE04B6 /* Address.swift */,
+				5117F4CF1FD8490800CEAE78 /* Credentials.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5125E4491FD1FE8A004DB451 /* JSON Responses */ = {
+			isa = PBXGroup;
+			children = (
+				5125E44A1FD1FEA7004DB451 /* AccountHistory.swift */,
+				5148279D1FEEBDD800C788E3 /* AccountInfo.swift */,
+				51203A391FE1E3FD00CD7D79 /* AccountBlockCount.swift */,
+				5185DC6C1FE0709D0096E687 /* AccountSubscribe.swift */,
+				51883F0C1FE088CF00069D41 /* PendingBlocks.swift */,
+				5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */,
+				51883F0E1FE08E9D00069D41 /* AccountBalance.swift */,
+				51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */,
+				519C1A181FEAE28E005EBA02 /* AccountCheck.swift */,
+				514827A01FF2E98B00C788E3 /* HashReceive.swift */,
+				51EADEB22007F62000660E4A /* WorkGenerate.swift */,
+			);
+			path = "JSON Responses";
+			sourceTree = "<group>";
+		};
+		5125E4541FD21C5D004DB451 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				51FE1F991FC605C9009F045F /* HomeViewController.swift */,
+				5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */,
+				51C684941FEB05C000943815 /* HomeViewModel.swift */,
+				51A5205C1FE33B04003F6EC7 /* WebViewController.swift */,
+				5125E4551FD22210004DB451 /* TransactionViewModel.swift */,
+				51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */,
+				51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */,
+				51A520541FE320C0003F6EC7 /* XRBPair.swift */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		5174E8F7200FA6BC00DE86A0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5174E8F8200FA6CF00DE86A0 /* PriceService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5174E90420112BE500DE86A0 /* RaiblocksTests */ = {
+			isa = PBXGroup;
+			children = (
+				5174E90520112BE500DE86A0 /* RaiblocksTests.swift */,
+				5174E90720112BE500DE86A0 /* Info.plist */,
+			);
+			path = RaiblocksTests;
+			sourceTree = "<group>";
+		};
+		5186C5411FC92FFE0040E66C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */,
+				5125E44C1FD1FF83004DB451 /* UInt128.swift */,
+				5117F6191FD89BD300CEAE78 /* String+Extensions.swift */,
+				5186C53F1FC92FE50040E66C /* UIColor+Extension.swift */,
+				5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */,
+				51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */,
+				515E72A31FEC6B08001272D4 /* SendTextField.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		51912ECA1FDB4DA9001BDF2C /* SendViewController */ = {
+			isa = PBXGroup;
+			children = (
+				51912EC01FDA290F001BDF2C /* SendViewController.swift */,
+				51912ECD1FDB513F001BDF2C /* SendViewModel.swift */,
+				51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */,
+				51CD15401FF86B99004102A2 /* SendKeyboard.swift */,
+				51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */,
+				51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */,
+			);
+			path = SendViewController;
+			sourceTree = "<group>";
+		};
+		519C1A101FEAC39C005EBA02 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */,
+				515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */,
+				515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		51A520571FE32E47003F6EC7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				51A520581FE32E53003F6EC7 /* Currency.swift */,
+				517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */,
+				5185DC691FDF48D90096E687 /* Endpoint.swift */,
+				515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */,
+				51A5205A1FE3314F003F6EC7 /* NanoButton.swift */,
+				5122A6142017931E00F7F43A /* NanoWalletError.swift */,
+				5122A6182017AACA00F7F43A /* UserService.swift */,
+				5135307B201A246E00B615D4 /* BackgroundViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		51A520601FE430BD003F6EC7 /* New User Experience */ = {
+			isa = PBXGroup;
+			children = (
+				51A5205E1FE422F2003F6EC7 /* WelcomeViewController.swift */,
+				5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */,
+				51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */,
+				5122A61220124ACF00F7F43A /* SeedConfirmationViewController.swift */,
+			);
+			path = "New User Experience";
+			sourceTree = "<group>";
+		};
+		51A520811FE846E7003F6EC7 /* RaiCore */ = {
+			isa = PBXGroup;
+			children = (
+				519B4D7E1FD7493E006B7B6E /* RaiCore.h */,
+				519B4D7F1FD74955006B7B6E /* RaiCore.m */,
+				51A520841FE99C63003F6EC7 /* RaiCore.swift */,
+			);
+			path = RaiCore;
+			sourceTree = "<group>";
+		};
+		51E945D21FF6EC45006B7081 /* ReceiveViewController */ = {
+			isa = PBXGroup;
+			children = (
+				515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */,
+				51E945D31FF6EC60006B7081 /* SharableView.swift */,
+			);
+			name = ReceiveViewController;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		51EADEA020067C6B00660E4A /* RaiCoreBase */ = {
+			isa = PBXGroup;
+			children = (
+				51EADEA120067C6B00660E4A /* RaiCoreBase.h */,
+				51A520801FE8462D003F6EC7 /* interface.h */,
+				51A5207D1FE8426B003F6EC7 /* RaiCoreBase */,
+				51EADEA220067C6B00660E4A /* Info.plist */,
+			);
+			path = RaiCoreBase;
+			sourceTree = "<group>";
+		};
 		51FE1F8B1FC605C9009F045F = {
 			isa = PBXGroup;
 			children = (
 				51FE1F961FC605C9009F045F /* Raiblocks */,
+				51EADEA020067C6B00660E4A /* RaiCoreBase */,
+				5174E90420112BE500DE86A0 /* RaiblocksTests */,
 				51FE1F951FC605C9009F045F /* Products */,
+				181B5530205C5249D66451C2 /* Pods */,
+				C8887A5CA257542CA23A6941 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -47,6 +400,8 @@
 			isa = PBXGroup;
 			children = (
 				51FE1F941FC605C9009F045F /* Raiblocks.app */,
+				51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */,
+				5174E90320112BE500DE86A0 /* RaiblocksTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,30 +409,107 @@
 		51FE1F961FC605C9009F045F /* Raiblocks */ = {
 			isa = PBXGroup;
 			children = (
+				519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */,
+				51A520571FE32E47003F6EC7 /* Common */,
+				51203A3B1FE1ECF700CD7D79 /* Models */,
+				5186C5411FC92FFE0040E66C /* Extensions */,
+				5125E4491FD1FE8A004DB451 /* JSON Responses */,
 				51FE1F971FC605C9009F045F /* AppDelegate.swift */,
-				51FE1F991FC605C9009F045F /* ViewController.swift */,
-				51FE1F9B1FC605C9009F045F /* Main.storyboard */,
+				5174E8F7200FA6BC00DE86A0 /* Services */,
+				51A520601FE430BD003F6EC7 /* New User Experience */,
+				5125E4541FD21C5D004DB451 /* HomeViewController */,
+				51E945D21FF6EC45006B7081 /* ReceiveViewController */,
+				519B4D371FD23521006B7B6E /* SettingsViewController.swift */,
+				51912ECA1FDB4DA9001BDF2C /* SendViewController */,
+				51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */,
 				51FE1F9E1FC605C9009F045F /* Assets.xcassets */,
 				51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */,
 				51FE1FA31FC605C9009F045F /* Info.plist */,
+				516C54A32008130E0044E0D2 /* Common.plist */,
+				519C1A101FEAC39C005EBA02 /* Fonts */,
+				51A520811FE846E7003F6EC7 /* RaiCore */,
 			);
 			path = Raiblocks;
 			sourceTree = "<group>";
 		};
+		C8887A5CA257542CA23A6941 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		51EADE9C20067C6B00660E4A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51EADEAD20067CCA00660E4A /* interface.h in Headers */,
+				51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		51FE1F931FC605C9009F045F /* Raiblocks */ = {
+		5174E90220112BE500DE86A0 /* RaiblocksTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 51FE1FA61FC605C9009F045F /* Build configuration list for PBXNativeTarget "Raiblocks" */;
+			buildConfigurationList = 5174E90A20112BE500DE86A0 /* Build configuration list for PBXNativeTarget "RaiblocksTests" */;
 			buildPhases = (
-				51FE1F901FC605C9009F045F /* Sources */,
-				51FE1F911FC605C9009F045F /* Frameworks */,
-				51FE1F921FC605C9009F045F /* Resources */,
+				5174E8FF20112BE500DE86A0 /* Sources */,
+				5174E90020112BE500DE86A0 /* Frameworks */,
+				5174E90120112BE500DE86A0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5174E90920112BE500DE86A0 /* PBXTargetDependency */,
+			);
+			name = RaiblocksTests;
+			productName = RaiblocksTests;
+			productReference = 5174E90320112BE500DE86A0 /* RaiblocksTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		51EADE9E20067C6B00660E4A /* RaiCoreBase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51EADEAA20067C6B00660E4A /* Build configuration list for PBXNativeTarget "RaiCoreBase" */;
+			buildPhases = (
+				51EADE9A20067C6B00660E4A /* Sources */,
+				51EADE9B20067C6B00660E4A /* Frameworks */,
+				51EADE9C20067C6B00660E4A /* Headers */,
+				51EADE9D20067C6B00660E4A /* Resources */,
+				51EADEB02006A2BC00660E4A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RaiCoreBase;
+			productName = RaiCoreBase;
+			productReference = 51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		51FE1F931FC605C9009F045F /* Raiblocks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51FE1FA61FC605C9009F045F /* Build configuration list for PBXNativeTarget "Raiblocks" */;
+			buildPhases = (
+				E75B9383A84D38143A3F866A /* [CP] Check Pods Manifest.lock */,
+				51FE1F901FC605C9009F045F /* Sources */,
+				51FE1F911FC605C9009F045F /* Frameworks */,
+				51FE1F921FC605C9009F045F /* Resources */,
+				8D470C91ABDA43EE836B8F03 /* [CP] Embed Pods Frameworks */,
+				F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */,
+				51A520641FE43791003F6EC7 /* ShellScript */,
+				51A520821FE8495D003F6EC7 /* CopyFiles */,
+				5171EE7B201FB80800E4CE7C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				51EADEA520067C6B00660E4A /* PBXTargetDependency */,
 			);
 			name = Raiblocks;
 			productName = Raiblocks;
@@ -90,12 +522,22 @@
 		51FE1F8C1FC605C9009F045F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Zack Shapiro";
 				TargetAttributes = {
+					5174E90220112BE500DE86A0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 51FE1F931FC605C9009F045F;
+					};
+					51EADE9E20067C6B00660E4A = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					51FE1F931FC605C9009F045F = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -114,44 +556,210 @@
 			projectRoot = "";
 			targets = (
 				51FE1F931FC605C9009F045F /* Raiblocks */,
+				51EADE9E20067C6B00660E4A /* RaiCoreBase */,
+				5174E90220112BE500DE86A0 /* RaiblocksTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5174E90120112BE500DE86A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51EADE9D20067C6B00660E4A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51FE1F921FC605C9009F045F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
+				51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
-				51FE1F9D1FC605C9009F045F /* Main.storyboard in Resources */,
+				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
+				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
+				515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5171EE7B201FB80800E4CE7C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f .env ]; then\n    apiKey=$(sed -n '1p' < .env)\n    secretKey=$(sed -n '2p' < .env)\n\n    /usr/libexec/PlistBuddy -c \"Set :Fabric:APIKey string $apiKey\" $(PROJECT_DIR)/Info.plist\n\n    \"${PODS_ROOT}/Fabric/run\" $apiKey $secretKey\nelse\n    echo \"missing .env\"\nfi";
+		};
+		51A520641FE43791003F6EC7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:|FIXME:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -not -path \"./Pods/*\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
+		8D470C91ABDA43EE836B8F03 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E75B9383A84D38143A3F866A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		5174E8FF20112BE500DE86A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5174E90F2011320A00DE86A0 /* NSDecimalNumber+Extensions.swift in Sources */,
+				5174E90620112BE500DE86A0 /* RaiblocksTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51EADE9A20067C6B00660E4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51FE1F901FC605C9009F045F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51FE1F9A1FC605C9009F045F /* ViewController.swift in Sources */,
+				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
+				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
+				51A520551FE320C0003F6EC7 /* XRBPair.swift in Sources */,
+				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
+				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
+				519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */,
+				517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */,
+				51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */,
+				5185DBEE1FDF14030096E687 /* SendViewModel.swift in Sources */,
+				5185DC6D1FE0709D0096E687 /* AccountSubscribe.swift in Sources */,
+				514827A11FF2E98B00C788E3 /* HashReceive.swift in Sources */,
+				5125E44F1FD217B8004DB451 /* UIButton+Extensions.swift in Sources */,
+				517FA64D1FE1D1DB00FE04B6 /* Address.swift in Sources */,
+				51A520871FE9AD3F003F6EC7 /* ErrorMessage.swift in Sources */,
+				5185DBF01FDF140F0096E687 /* CommonExtensions.swift in Sources */,
+				51A5204F1FE2D6AC003F6EC7 /* PricePageViewController.swift in Sources */,
+				51883F0D1FE088CF00069D41 /* PendingBlocks.swift in Sources */,
+				51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */,
+				5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */,
+				51203A3A1FE1E3FD00CD7D79 /* AccountBlockCount.swift in Sources */,
+				5122A61320124ACF00F7F43A /* SeedConfirmationViewController.swift in Sources */,
+				51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */,
+				51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */,
+				5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */,
+				51A520591FE32E53003F6EC7 /* Currency.swift in Sources */,
+				5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */,
+				515B4A4F1FD22AA20059F514 /* ReceiveViewController.swift in Sources */,
+				5122A6152017931E00F7F43A /* NanoWalletError.swift in Sources */,
+				51A5205F1FE422F2003F6EC7 /* WelcomeViewController.swift in Sources */,
+				5125E44B1FD1FEA7004DB451 /* AccountHistory.swift in Sources */,
+				51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */,
+				5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */,
+				5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */,
+				5122A6192017AACA00F7F43A /* UserService.swift in Sources */,
+				5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */,
+				51EADEB32007F62000660E4A /* WorkGenerate.swift in Sources */,
+				51FE1F9A1FC605C9009F045F /* HomeViewController.swift in Sources */,
+				5174E8F9200FA6CF00DE86A0 /* PriceService.swift in Sources */,
+				519B4D801FD74955006B7B6E /* RaiCore.m in Sources */,
+				51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */,
+				51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */,
+				5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */,
+				51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */,
+				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,
+				51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */,
 				51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */,
+				51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */,
+				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
+				51E945D41FF6EC60006B7081 /* SharableView.swift in Sources */,
+				519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */,
+				5125E44D1FD1FF83004DB451 /* UInt128.swift in Sources */,
+				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
+				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
+				51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		51FE1F9B1FC605C9009F045F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				51FE1F9C1FC605C9009F045F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		5174E90920112BE500DE86A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51FE1F931FC605C9009F045F /* Raiblocks */;
+			targetProxy = 5174E90820112BE500DE86A0 /* PBXContainerItemProxy */;
 		};
+		51EADEA520067C6B00660E4A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 51EADE9E20067C6B00660E4A /* RaiCoreBase */;
+			targetProxy = 51EADEA420067C6B00660E4A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
 		51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -163,6 +771,98 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5174E90B20112BE500DE86A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				INFOPLIST_FILE = RaiblocksTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.RaiblocksTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Raiblocks.app/Raiblocks";
+			};
+			name = Debug;
+		};
+		5174E90C20112BE500DE86A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				INFOPLIST_FILE = RaiblocksTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.RaiblocksTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Raiblocks.app/Raiblocks";
+			};
+			name = Release;
+		};
+		51EADEA820067C6B00660E4A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RaiCoreBase/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RaiCoreBase",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.RaiCoreBase;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		51EADEA920067C6B00660E4A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = RaiCoreBase/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RaiCoreBase",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.RaiCoreBase;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		51FE1FA41FC605C9009F045F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -272,37 +972,112 @@
 		};
 		51FE1FA71FC605C9009F045F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D52FEF9BCCC6F2F4A4622ECE /* Pods-Raiblocks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Raiblocks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RaiBlocks/RaiCore",
+					"$(PROJECT_DIR)/RaiCoreBase",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Cartography\"",
+					"-framework",
+					"\"CommonCryptoModule\"",
+					"-framework",
+					"\"QRCode\"",
+					"-framework",
+					"\"ReactiveSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SwiftWebSocket\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Raiblocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		51FE1FA81FC605C9009F045F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Raiblocks",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RaiBlocks/RaiCore",
+					"$(PROJECT_DIR)/RaiCoreBase",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"Cartography\"",
+					"-framework",
+					"\"CommonCryptoModule\"",
+					"-framework",
+					"\"QRCode\"",
+					"-framework",
+					"\"ReactiveSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SwiftWebSocket\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Raiblocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5174E90A20112BE500DE86A0 /* Build configuration list for PBXNativeTarget "RaiblocksTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5174E90B20112BE500DE86A0 /* Debug */,
+				5174E90C20112BE500DE86A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51EADEAA20067C6B00660E4A /* Build configuration list for PBXNativeTarget "RaiCoreBase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51EADEA820067C6B00660E4A /* Debug */,
+				51EADEA920067C6B00660E4A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		51FE1F8F1FC605C9009F045F /* Build configuration list for PBXProject "Raiblocks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
