@@ -18,37 +18,6 @@ final class TransactionTableViewCell: UITableViewCell {
     private var amountLabel: UILabel?
     private var addressLabel: UILabel?
 
-    // Not currently in use, may be able to remove
-    var state: CellState = ._default {
-        didSet {
-            switch state {
-            case ._default:
-                self.icon?.alpha = 1.0
-                self.nanoCurrencySymbol?.alpha = 1.0
-                self.amountLabel?.alpha = 1.0
-                self.addressLabel?.alpha = 1.0
-
-                self.addressLabel?.attributedText = viewModel?.address?.shortAddressWithColor
-
-            case .isPending:
-                self.icon?.alpha = 0.2
-                self.nanoCurrencySymbol?.alpha = 0.2
-                self.amountLabel?.alpha = 0.2
-                self.addressLabel?.alpha = 0.2
-
-                self.addressLabel?.text = "Receiving (Pending)"
-
-            case .isReceiving:
-                self.icon?.alpha = 0.4
-                self.nanoCurrencySymbol?.alpha = 0.4
-                self.amountLabel?.alpha = 0.4
-                self.addressLabel?.alpha = 0.4
-
-                self.addressLabel?.text = "Receiving..."
-            }
-        }
-    }
-
     var viewModel: TransactionViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
@@ -114,8 +83,6 @@ final class TransactionTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
-        state = ._default
 
         icon?.image = nil
         icon?.alpha = 1.0
