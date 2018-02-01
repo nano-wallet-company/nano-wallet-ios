@@ -538,8 +538,12 @@ extension Signal {
 	///
 	/// - returns: A signal that forwards events yielded by the action.
 	internal func flatMapEvent<U, E>(_ transform: @escaping Event.Transformation<U, E>) -> Signal<U, E> {
-		return Signal<U, E> { observer, lifetime in
-			lifetime += self.observe(Signal.Observer(observer, transform))
+		return Signal<U, E> { output, lifetime in
+			// Create an input sink whose events would go through the given
+			// event transformation, and have the resulting events propagated
+			// to the resulting `Signal`.
+			let input = transform(output.send, lifetime)
+			lifetime += self.observe(input)
 		}
 	}
 
@@ -591,10 +595,7 @@ extension Signal {
 	/// - returns: A signal that sends values obtained using `transform` as this 
 	///            signal sends values.
 	public func lazyMap<U>(on scheduler: Scheduler, transform: @escaping (Value) -> U) -> Signal<U, Error> {
-		return flatMap(.latest) { value in
-			return SignalProducer({ transform(value) })
-				.start(on: scheduler)
-		}
+		return flatMapEvent(Signal.Event.lazyMap(on: scheduler, transform: transform))
 	}
 
 	/// Preserve only values which pass the given closure.
@@ -1366,59 +1367,7 @@ extension Signal {
 	/// - returns: A signal that sends values at least `interval` seconds 
 	///            appart on a given scheduler.
 	public func throttle(_ interval: TimeInterval, on scheduler: DateScheduler) -> Signal<Value, Error> {
-		precondition(interval >= 0)
-
-		return Signal { observer, lifetime in
-			let state: Atomic<ThrottleState<Value>> = Atomic(ThrottleState())
-			let schedulerDisposable = SerialDisposable()
-			lifetime += schedulerDisposable
-
-			lifetime += self.observe { event in
-				guard let value = event.value else {
-					schedulerDisposable.inner = scheduler.schedule {
-						observer.send(event)
-					}
-					return
-				}
-
-				var scheduleDate: Date!
-				state.modify {
-					$0.pendingValue = value
-
-					let proposedScheduleDate: Date
-					if let previousDate = $0.previousDate, previousDate.compare(scheduler.currentDate) != .orderedDescending {
-						proposedScheduleDate = previousDate.addingTimeInterval(interval)
-					} else {
-						proposedScheduleDate = scheduler.currentDate
-					}
-
-					switch proposedScheduleDate.compare(scheduler.currentDate) {
-					case .orderedAscending:
-						scheduleDate = scheduler.currentDate
-
-					case .orderedSame: fallthrough
-					case .orderedDescending:
-						scheduleDate = proposedScheduleDate
-					}
-				}
-
-				schedulerDisposable.inner = scheduler.schedule(after: scheduleDate) {
-					let pendingValue: Value? = state.modify { state in
-						defer {
-							if state.pendingValue != nil {
-								state.pendingValue = nil
-								state.previousDate = scheduleDate
-							}
-						}
-						return state.pendingValue
-					}
-
-					if let pendingValue = pendingValue {
-						observer.send(value: pendingValue)
-					}
-				}
-			}
-		}
+		return flatMapEvent(Signal.Event.throttle(interval, on: scheduler))
 	}
 
 	/// Conditionally throttles values sent on the receiver whenever
@@ -1534,26 +1483,7 @@ extension Signal {
 	/// - returns: A signal that sends values that are sent from `self` at least
 	///            `interval` seconds apart.
 	public func debounce(_ interval: TimeInterval, on scheduler: DateScheduler) -> Signal<Value, Error> {
-		precondition(interval >= 0)
-
-		return Signal { observer, lifetime in
-			let d = SerialDisposable()
-
-			lifetime += self.observe { event in
-				switch event {
-				case let .value(value):
-					let date = scheduler.currentDate.addingTimeInterval(interval)
-					d.inner = scheduler.schedule(after: date) {
-						observer.send(value: value)
-					}
-
-				case .completed, .failed, .interrupted:
-					d.inner = scheduler.schedule {
-						observer.send(event)
-					}
-				}
-			}
-		}
+		return flatMapEvent(Signal.Event.debounce(interval, on: scheduler))
 	}
 }
 
@@ -1586,11 +1516,6 @@ extension Signal where Value: Hashable {
 	public func uniqueValues() -> Signal<Value, Error> {
 		return uniqueValues { $0 }
 	}
-}
-
-private struct ThrottleState<Value> {
-	var previousDate: Date?
-	var pendingValue: Value?
 }
 
 private enum ThrottleWhileState<Value> {

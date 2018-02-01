@@ -6,13 +6,10 @@ use_frameworks!
 workspace 'Raiblocks'
 
 target 'Raiblocks' do
-  pod 'SwiftyJSON'
   pod 'SwiftWebSocket'
   pod 'ReactiveSwift', '~> 3.0'
   pod 'ReactiveCocoa', '~> 7.0.1'
   pod 'Cartography', '~> 2.1.0'
-  pod 'CommonCryptoModule'
-  pod 'QRCode'
   pod "EFQRCode", '~> 4.1.0'
   pod 'Fabric'
   pod 'Crashlytics'

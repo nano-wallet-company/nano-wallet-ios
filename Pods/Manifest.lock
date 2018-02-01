@@ -1,52 +1,43 @@
 PODS:
   - Cartography (2.1.0)
-  - CommonCryptoModule (1.0.1)
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - EFQRCode (4.1.0)
-  - Fabric (1.6.13)
-  - QRCode (2.0)
+  - Fabric (1.7.2)
   - ReactiveCocoa (7.0.1):
     - ReactiveSwift (~> 3.0)
-  - ReactiveSwift (3.0.0):
+  - ReactiveSwift (3.1.0):
     - Result (~> 3.2)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
-  - RealmSwift (3.0.2):
-    - Realm (= 3.0.2)
+  - Realm (3.1.0):
+    - Realm/Headers (= 3.1.0)
+  - Realm/Headers (3.1.0)
+  - RealmSwift (3.1.0):
+    - Realm (= 3.1.0)
   - Result (3.2.4)
   - SwiftWebSocket (2.6.5)
-  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Cartography (~> 2.1.0)
-  - CommonCryptoModule
   - Crashlytics
   - EFQRCode (~> 4.1.0)
   - Fabric
-  - QRCode
   - ReactiveCocoa (~> 7.0.1)
   - ReactiveSwift (~> 3.0)
   - RealmSwift
   - SwiftWebSocket
-  - SwiftyJSON
 
 SPEC CHECKSUMS:
   Cartography: 19c2223a8dfed35d82b098d365213b7ceb25ab2b
-  CommonCryptoModule: ee1951ed7ad8f8c4293754c0e1b53ab2089f1e4e
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   EFQRCode: f644c667b632a47bd0256e568418d9fc75dfce19
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   ReactiveCocoa: a1b5d502d0d1534f9a72981a485b297b17127f83
-  ReactiveSwift: d9fe0db33c1aaabecb092e8de83cf52875c0de6f
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
-  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
+  ReactiveSwift: 5b26d2e988fe0eed2daf48c4054d1de74db50184
+  Realm: 09513d7c054678d65cd02ce09871f805b0d758ac
+  RealmSwift: e868fee9b10e5490ad94b6b6ecd9027944da1824
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SwiftWebSocket: 1ef8a0efb023544643bdf480c1ec4a62b204f293
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 03f81e3f1680cdecabd0c0d463705feb7f18064a
+PODFILE CHECKSUM: 4eccfd7a49634096f08a8a32aa59e288f7c8f82e
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.4.0
