@@ -1,9 +1,9 @@
 //
 //  PendingBlocks.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/12/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 /// Takes into account the addresses. Used for .accounts_pending

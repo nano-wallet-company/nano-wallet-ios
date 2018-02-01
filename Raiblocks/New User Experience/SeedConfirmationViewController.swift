@@ -1,9 +1,9 @@
 //
 //  SeedConfirmationViewController.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 1/19/18.
-//  Copyright © 2018 Zack Shapiro. All rights reserved.
+//  Copyright © 2018 Nano. All rights reserved.
 //
 
 import UIKit

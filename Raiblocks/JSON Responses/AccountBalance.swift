@@ -1,9 +1,9 @@
 //
 //  AccountBalance.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/12/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 // I may not need this anymore

@@ -1,9 +1,9 @@
 //
 //  AccountInfo.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/23/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 /// This is used to get the Frontier hash before any request that requires it

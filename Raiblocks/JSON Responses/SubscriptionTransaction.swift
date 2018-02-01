@@ -1,9 +1,9 @@
 //
 //  SubscriptionTransaction.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/22/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 // NOTE: need to get new Frontier (use Account Info endpoint and JSON response)

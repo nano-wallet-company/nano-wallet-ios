@@ -1,9 +1,9 @@
 //
 //  HomeViewModel.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/20/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 import ReactiveSwift
@@ -130,7 +130,7 @@ final class HomeViewModel {
         }
 
         self.socket.event.message = { message in
-            print(message) // Uncomment for development
+//            print(message) // Uncomment for development
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
             if let accountCheck = self.genericDecoder(decodable: AccountCheck.self, from: data) {

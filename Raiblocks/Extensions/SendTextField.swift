@@ -1,9 +1,9 @@
 //
 //  SendTextField.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 12/21/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 import UIKit

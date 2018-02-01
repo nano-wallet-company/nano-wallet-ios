@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 11/22/17.
-//  Copyright © 2017 Zack Shapiro. All rights reserved.
+//  Copyright © 2017 Nano. All rights reserved.
 //
 
 import UIKit
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let _ = fabric["APIKey"] {
             Fabric.with([Crashlytics.self, Answers.self])
         } else {
-            print("No API Key Present")
+//            print("No API Key Present")
         }
 
         return true

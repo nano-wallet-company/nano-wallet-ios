@@ -1,9 +1,9 @@
 //
 //  NanoWalletError.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 1/23/18.
-//  Copyright © 2018 Zack Shapiro. All rights reserved.
+//  Copyright © 2018 Nano. All rights reserved.
 //
 
 enum NanoWalletError: Error {

@@ -1,9 +1,9 @@
 //
 //  WorkGenerate.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 1/11/18.
-//  Copyright © 2018 Zack Shapiro. All rights reserved.
+//  Copyright © 2018 Nano. All rights reserved.
 //
 
 struct WorkGenerate: Decodable {
