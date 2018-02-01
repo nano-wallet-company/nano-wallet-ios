@@ -91,8 +91,8 @@ class WelcomeViewController: UIViewController {
         constrain(cameraButton, textView) {
             self.cameraButtonHeightConstraint = $0.height == CGFloat(0)
             $0.width == CGFloat(50)
-            $0.top == $1.bottom
-            $0.right == $1.right
+            $0.centerY == $1.centerY
+            $0.right == $1.right - CGFloat(16)
         }
         self.cameraButton = cameraButton
 
