@@ -425,6 +425,9 @@ final class SendViewController: UIViewController {
             return
         }
 
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.appBackgroundingForSeedOrSend = true
+
         let context = LAContext()
         var error: NSError?
 
@@ -464,6 +467,7 @@ final class SendViewController: UIViewController {
 
                     Answers.logCustomEvent(withName: "Send Nano Finished")
 
+                    appDelegate.appBackgroundingForSeedOrSend = false
                     self.delegate?.didFinishWithViewController()
                 }
             }
@@ -473,6 +477,9 @@ final class SendViewController: UIViewController {
     }
 
     private func showError(title: String, message: String, buttonText text: String = "Okay") {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.appBackgroundingForSeedOrSend = false
+
         let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: text, style: .default))
 

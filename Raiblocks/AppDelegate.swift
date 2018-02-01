@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var coverWindow: UIWindow?
     private var coverVC: UIViewController?
 
+    var appBackgroundingForSeedOrSend: Bool = false
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()
@@ -64,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        guard !appBackgroundingForSeedOrSend else { return }
 
         coverVC = BackgroundViewController()
         coverWindow = UIWindow(frame: UIScreen.main.bounds)
@@ -86,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        if coverWindow != nil {
+        if coverWindow != nil && !appBackgroundingForSeedOrSend {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                 self.coverVC?.view.alpha = 0
             }) { _ in
