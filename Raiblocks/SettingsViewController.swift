@@ -185,33 +185,53 @@ final class SettingsViewController: UIViewController {
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             let reason = "Verify your identity to view your wallet seed."
 
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { [unowned self] success, authenticationError in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { [unowned self] success, error in
                 DispatchQueue.main.async {
-                    if success {
-                        Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "settings"])
-
-                        let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like 1Password, LastPass, or printing the Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
-                        ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
+                    guard success else {
+                        guard let error = error else {
+                            Answers.logCustomEvent(withName: "Seed Copy Failed", customAttributes: ["type": "generic"])
                             appDelegate.appBackgroundingForSeedOrSend = false
 
-                            // you have 2 minutes to paste this or it expires
-                            UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
-                        }))
-                        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-                            appDelegate.appBackgroundingForSeedOrSend = false
-                        })
-                        self.present(ac, animated: true)
-                    } else {
-                        // TODO: Add reasons in here ala Send VC and better logging
-                        Answers.logCustomEvent(withName: "Seed Copy Failed")
+                            let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
+                            ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }))
+
+                            self.present(ac, animated: true)
+
+                            return
+                        }
+
+                        appDelegate.appBackgroundingForSeedOrSend = false
+                        switch error {
+                        case LAError.userCancel: return
+                        default:
+                            Answers.logCustomEvent(withName: "Seed Copy Failed", customAttributes: ["type": error.localizedDescription])
+
+                            let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
+                            ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+                                self.dismiss(animated: true, completion: nil)
+                            }))
+                            self.present(ac, animated: true)
+
+                            return
+                        }
+                    }
+
+                    Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "settings"])
+
+                    let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like 1Password, LastPass, or printing the Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
                         appDelegate.appBackgroundingForSeedOrSend = false
 
-                        let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
-                        ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
-                            self.dismiss(animated: true, completion: nil)
-                        }))
-                        self.present(ac, animated: true)
-                    }
+                        // you have 2 minutes to paste this or it expires
+                        UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
+                    }))
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                        appDelegate.appBackgroundingForSeedOrSend = false
+                    })
+
+                    self.present(ac, animated: true)
                 }
             }
         } else {
