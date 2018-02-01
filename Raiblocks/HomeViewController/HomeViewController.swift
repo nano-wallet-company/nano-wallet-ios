@@ -271,6 +271,7 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath) as! TransactionTableViewCell
         cell.viewModel = TransactionViewModel(item: viewModel.transactions.value[indexPath.row])
+        cell.delegate = self 
 
         return cell
     }
@@ -340,6 +341,20 @@ extension HomeViewController: SendViewControllerDelegate {
         self.tableView?.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
 
         self.navigationController?.popViewController(animated: true)
+    }
+
+}
+
+
+extension HomeViewController: TransactionTableViewCellDelegate {
+
+    func cellWasLongPressed(address: Address) {
+        UIPasteboard.general.string = address.longAddress
+
+        let ac = UIAlertController(title: "Address Copied", message: "\(address.longAddress) was copied.", preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Okay", style: .default))
+
+        present(ac, animated: true)
     }
 
 }

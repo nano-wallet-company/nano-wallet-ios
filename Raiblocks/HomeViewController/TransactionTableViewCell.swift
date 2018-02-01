@@ -6,10 +6,10 @@ import UIKit
 
 import Cartography
 
-
-enum CellState {
-    case isPending, isReceiving, _default
+protocol TransactionTableViewCellDelegate: class {
+    func cellWasLongPressed(address: Address)
 }
+
 
 final class TransactionTableViewCell: UITableViewCell {
 
@@ -17,6 +17,8 @@ final class TransactionTableViewCell: UITableViewCell {
     private var nanoCurrencySymbol: UIImageView?
     private var amountLabel: UILabel?
     private var addressLabel: UILabel?
+
+    var delegate: TransactionTableViewCellDelegate?
 
     var viewModel: TransactionViewModel? {
         didSet {
@@ -75,6 +77,10 @@ final class TransactionTableViewCell: UITableViewCell {
             $0.right == $0.superview!.right - CGFloat(24)
         }
         self.addressLabel = addressLabel
+
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(copyAddress(_:)))
+        gestureRecognizer.numberOfTouchesRequired = 1
+        addGestureRecognizer(gestureRecognizer)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -94,6 +100,14 @@ final class TransactionTableViewCell: UITableViewCell {
         amountLabel?.alpha = 1.0
         addressLabel?.text = nil
         addressLabel?.alpha = 1.0
+    }
+
+    @objc func copyAddress(_ recognizer: UILongPressGestureRecognizer) {
+        guard let address = viewModel?.address else { return }
+
+        if recognizer.state == .ended {
+            delegate?.cellWasLongPressed(address: address)
+        }
     }
 }
 
