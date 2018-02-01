@@ -9,8 +9,16 @@
 enum NanoWalletError: Error {
 
     case longUsableStringCastFailed
+
     case credentialStorageError
+
     case unableToGetCurrentUserSeed
+    case unableToGenerateSignature
     case unableToGenerateWork
+
+    case blockWrappingFailed
+
+    case socketConnectionWasClosed
+    case socketEventError
 
 }

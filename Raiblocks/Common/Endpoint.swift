@@ -6,6 +6,9 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import Crashlytics
+
+
 enum Endpoint {
     case accountBlockCount(address: Address)
     case accountBalance(address: Address)
@@ -136,7 +139,8 @@ enum Endpoint {
             let string = String(data: data, encoding: .utf8),
             let signedBlock = RaiCore().signTransaction(string, withPrivateKey: key).asUTF8Data()
         else {
-            print("Signature failed")
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToGenerateSignature)
+
             return nil
         }
 
@@ -145,7 +149,8 @@ enum Endpoint {
             let sig = try? JSONSerialization.data(withJSONObject: signedDict),
             let block = String(data: sig, encoding: .utf8)
         else {
-            print("Wrapping up block for sending failed")
+            Crashlytics.sharedInstance().recordError(NanoWalletError.blockWrappingFailed)
+
             return nil
         }
 

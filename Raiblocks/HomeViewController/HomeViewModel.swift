@@ -6,6 +6,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import Crashlytics
 import ReactiveSwift
 import RealmSwift
 import Result
@@ -120,13 +121,14 @@ final class HomeViewModel {
         }
 
         socket.event.close = { code, reason, clean in
-            // LOG in Fabric
-            print("CONNECTION WAS CLOSED")
+            Crashlytics.sharedInstance().recordError(NanoWalletError.socketConnectionWasClosed)
+            // print("CONNECTION WAS CLOSED")
         }
 
         socket.event.error = { error in
-            // LOG in Fabric
-            print("error \(error)")
+            Crashlytics.sharedInstance().recordError(NanoWalletError.socketEventError, withAdditionalUserInfo: ["error": error.localizedDescription])
+
+            // print("error \(error)")
         }
 
         self.socket.event.message = { message in
@@ -182,7 +184,7 @@ final class HomeViewModel {
                 return self._previousFrontierHash = newFrontierHash.hash
             }
 
-            print("fail, did not have an object for \(message)")
+//            print("fail, did not have an object for \(message)")
         }
 
         socket.open()
@@ -310,7 +312,6 @@ final class HomeViewModel {
         // Send values through the observer that the hashProducer below is listening to
         hashStreamingSocket.event.message = { message in
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
-            print("process pending blocks message:", message)
 
             if let newFrontierHash = self.genericDecoder(decodable: HashReceive.self, from: data) {
                 self._previousFrontierHash = newFrontierHash.hash
