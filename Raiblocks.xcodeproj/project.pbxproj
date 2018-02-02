@@ -15,7 +15,6 @@
 		5122A6152017931E00F7F43A /* NanoWalletError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5122A6142017931E00F7F43A /* NanoWalletError.swift */; };
 		5122A6192017AACA00F7F43A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5122A6182017AACA00F7F43A /* UserService.swift */; };
 		5125E44B1FD1FEA7004DB451 /* AccountHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44A1FD1FEA7004DB451 /* AccountHistory.swift */; };
-		5125E44D1FD1FF83004DB451 /* UInt128.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44C1FD1FF83004DB451 /* UInt128.swift */; };
 		5125E44F1FD217B8004DB451 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */; };
 		5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */; };
 		5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4551FD22210004DB451 /* TransactionViewModel.swift */; };
@@ -127,7 +126,6 @@
 		5122A6142017931E00F7F43A /* NanoWalletError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoWalletError.swift; sourceTree = "<group>"; };
 		5122A6182017AACA00F7F43A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5125E44A1FD1FEA7004DB451 /* AccountHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHistory.swift; sourceTree = "<group>"; };
-		5125E44C1FD1FF83004DB451 /* UInt128.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt128.swift; sourceTree = "<group>"; };
 		5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		5125E4551FD22210004DB451 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
@@ -294,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */,
-				5125E44C1FD1FF83004DB451 /* UInt128.swift */,
 				5117F6191FD89BD300CEAE78 /* String+Extensions.swift */,
 				5186C53F1FC92FE50040E66C /* UIColor+Extension.swift */,
 				5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */,
@@ -757,7 +754,6 @@
 				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
 				51E945D41FF6EC60006B7081 /* SharableView.swift in Sources */,
 				519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */,
-				5125E44D1FD1FF83004DB451 /* UInt128.swift in Sources */,
 				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
 				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
 				51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */,
