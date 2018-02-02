@@ -46,6 +46,9 @@ final class HomeViewModel {
 
     let isCurrentlySyncing = MutableProperty<Bool>(false)
 
+    let _hasNetworkConnection = MutableProperty<Bool>(false)
+    var hasNetworkConnection: ReactiveSwift.Property<Bool>
+
     let currentlyReceivingHash = MutableProperty<String?>(nil)
 
     let addressIsOnNetwork = MutableProperty<Bool>(false)
@@ -106,14 +109,16 @@ final class HomeViewModel {
         self.frontierBlockHash = ReactiveSwift.Property<String?>(_frontierBlockHash)
         self.accountBalance = ReactiveSwift.Property<NSDecimalNumber>(_accountBalance)
         self.transactableAccountBalance = ReactiveSwift.Property<NSDecimalNumber>(_transactableAccountBalance)
+        self.hasNetworkConnection = ReactiveSwift.Property<Bool>(_hasNetworkConnection)
 
         // MARK: - Socket Setup
 
         self.socket = WebSocket(urlString)
         self.hashStreamingSocket = WebSocket(urlString)
 
-        // Called right after .open() below, assuming connection
         socket.event.open = {
+//            print("socket opened")
+            self._hasNetworkConnection.value = true
             self.socket.sendMultiple(endpoints: [
                 .accountSubscribe(address: self.address),
                 .accountCheck(address: self.address),
@@ -122,7 +127,9 @@ final class HomeViewModel {
 
         socket.event.close = { code, reason, clean in
             Crashlytics.sharedInstance().recordError(NanoWalletError.socketConnectionWasClosed)
-            // print("CONNECTION WAS CLOSED")
+
+            self._hasNetworkConnection.value = false
+//             print("CONNECTION WAS CLOSED")
         }
 
         socket.event.error = { error in
@@ -205,7 +212,11 @@ final class HomeViewModel {
     func refresh() {
         priceService.fetchLatestPrices()
 
-        socket.send(endpoint: .accountBlockCount(address: address))
+        switch socket.readyState {
+        case .open: socket.send(endpoint: .accountBlockCount(address: address))
+        case .closed: socket.open()
+        case .closing, .connecting: break
+        }
     }
 
     func update(localCurrency currency: Currency) {

@@ -55,13 +55,16 @@ class HomeViewController: UIViewController {
                 self.tableView?.reloadData()
             }
 
-        viewModel.addressIsOnNetwork
+        SignalProducer.combineLatest(viewModel.hasNetworkConnection, viewModel.addressIsOnNetwork, viewModel.isCurrentlySyncing)
             .producer
             .take(during: lifetime)
             .observe(on: UIScheduler())
-            .startWithValues { val in
-                self.sendButton?.isEnabled = val
-            }
+            .startWithValues { hasNetworkConnection, addressIsOnNetwork, isCurrentlySyncing in
+                guard hasNetworkConnection else { self.sendButton?.isEnabled = false; return }
+                guard addressIsOnNetwork   else { self.sendButton?.isEnabled = false; return }
+
+                self.sendButton?.isEnabled = !isCurrentlySyncing
+        }
 
         viewModel.lastBlockCount
             .producer
@@ -71,14 +74,6 @@ class HomeViewController: UIViewController {
                 if let _ = self.tableView?.refreshControl?.isRefreshing {
                     self.tableView?.refreshControl?.endRefreshing()
                 }
-            }
-
-        viewModel.isCurrentlySyncing
-            .producer
-            .take(during: lifetime)
-            .observe(on: UIScheduler())
-            .startWithValues { val in
-                self.sendButton?.isEnabled = !val
             }
 
         viewModel.localCurrency
@@ -300,6 +295,7 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        // TODO: move to new block explorer
         guard
             let hash = viewModel.transactions.value[indexPath.row].hash,
             let url = URL(string: "https://raiblocks.net/block/index.php" + "?h=" + hash)
