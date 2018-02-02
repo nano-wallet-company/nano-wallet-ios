@@ -18,20 +18,11 @@ struct AccountBalance: Decodable {
     }
 
     var totalBalance: NSDecimalNumber? {
-        guard
-            let balance = try? UInt128(_balance),
-            let pending = try? UInt128(_pending)
-        else { return nil }
-
-        let sum = balance + pending
-
-        return NSDecimalNumber(string: sum._valueToString())
+        return NSDecimalNumber(string: _balance).adding(NSDecimalNumber(string: _pending))
     }
 
     var transactableBalance: NSDecimalNumber? {
-        guard let balance = try? UInt128(_balance) else { return nil }
-
-        return NSDecimalNumber(string: balance._valueToString())
+        return NSDecimalNumber(string: _balance)
     }
 
     var totalBalanceAsString: String {
