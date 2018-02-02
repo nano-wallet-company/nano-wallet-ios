@@ -1,35 +1,34 @@
 //
-//  SeedTextView.swift
+//  SendAddressTextView.swift
 //  Nano
 //
-//  Created by Zack Shapiro on 1/28/18.
+//  Created by Zack Shapiro on 2/2/18.
 //  Copyright © 2018 Nano. All rights reserved.
 //
 
 import UIKit
 
-
-final class SeedTextView: UITextView {
+// Will refactor this and SeedTextView into a common base class in the future 
+final class SendAddressTextView: UITextView {
 
     init() {
         super.init(frame: .zero, textContainer: nil)
 
         isEditable = true
-        layer.cornerRadius = 3
-        font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        clipsToBounds = true
-        backgroundColor = Styleguide.Colors.darkBlue.color
         textAlignment = .center
-        textColor = .white
+        textColor = Styleguide.Colors.darkBlue.color
+        font = Styleguide.Fonts.nunitoRegular.font(ofSize: 16)
         returnKeyType = .done
         isScrollEnabled = false
+        tintColor = Styleguide.Colors.lightBlue.color
         autocorrectionType = .no
         spellCheckingType = .no
-        tintColor = Styleguide.Colors.lightBlue.color
-        autocapitalizationType = .allCharacters
-        textContainerInset = UIEdgeInsets(top: 15, left: 60, bottom: 12, right: 60)
+        autocapitalizationType = .none
+        layer.cornerRadius = 3
+        clipsToBounds = true
+        textContainerInset = UIEdgeInsets(top: 22, left: 56, bottom: 18, right: 56)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,10 +38,11 @@ final class SeedTextView: UITextView {
             label.isHidden = !show
         }
     }
-    
+
 }
 
-extension SeedTextView: UITextViewDelegate {
+
+extension SendAddressTextView: UITextViewDelegate {
 
     override open var bounds: CGRect {
         didSet {

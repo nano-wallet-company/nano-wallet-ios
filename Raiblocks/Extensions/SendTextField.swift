@@ -24,8 +24,6 @@ final class SendTextField: UITextField {
         placeholder = "0.00"
         inputView = UIView() // Don't show a keyboard
         font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
-
-//        textContainerInset = UIEdgeInsets(top: 20, left: 60, bottom: 20, right: 60)
     }
 
     required init?(coder aDecoder: NSCoder) {

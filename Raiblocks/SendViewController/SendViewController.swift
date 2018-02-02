@@ -26,7 +26,7 @@ final class SendViewController: UIViewController {
 
     private let (lifetime, token) = Lifetime.make()
 
-    private weak var addressTextView: UITextView?
+    private weak var addressTextView: SendAddressTextView?
 
     private let sendAddressIsValid = MutableProperty<Bool>(false)
     private let sendableAmountIsValid = MutableProperty<Bool>(false)
@@ -86,39 +86,25 @@ final class SendViewController: UIViewController {
         self.navigationItem.title = "Send To".uppercased()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera"), style: .plain, target: self, action: #selector(openCamera))
 
-        let nanoAddressTextView = UITextView()
-        nanoAddressTextView.attributedText = NSAttributedString(string: "xrb_")
-        nanoAddressTextView.isEditable = true
-        nanoAddressTextView.delegate = self
-        nanoAddressTextView.textAlignment = .center
-        nanoAddressTextView.textColor = Styleguide.Colors.darkBlue.color
-        nanoAddressTextView.font = Styleguide.Fonts.nunitoRegular.font(ofSize: 16)
-        nanoAddressTextView.returnKeyType = .done
-        nanoAddressTextView.isScrollEnabled = false
-        nanoAddressTextView.tintColor = Styleguide.Colors.lightBlue.color
-        nanoAddressTextView.autocorrectionType = .no
-        nanoAddressTextView.spellCheckingType = .no
-        nanoAddressTextView.autocapitalizationType = .none
-        nanoAddressTextView.layer.cornerRadius = 3
-        nanoAddressTextView.clipsToBounds = true
-        nanoAddressTextView.textContainerInset = UIEdgeInsets(top: 22, left: 56, bottom: 18, right: 56)
-
-        nanoAddressTextView.inputAccessoryView = keyboardAccessoryView()
-        view.addSubview(nanoAddressTextView)
-        constrain(nanoAddressTextView) {
+        let addressTextView = SendAddressTextView()
+        addressTextView.delegate = self
+        addressTextView.inputAccessoryView = keyboardAccessoryView()
+        addressTextView.placeholder = "Enter a Nano Address"
+        view.addSubview(addressTextView)
+        constrain(addressTextView) {
             $0.top == $0.superview!.top
             $0.left == $0.superview!.left
             $0.right == $0.superview!.right
             $0.height == CGFloat(88)
         }
-        self.addressTextView = nanoAddressTextView
+        self.addressTextView = addressTextView
 
         // MARK: - Price Section
 
         let priceSection = UIView()
         priceSection.backgroundColor = Styleguide.Colors.lightBlue.color
         view.addSubview(priceSection)
-        constrain(priceSection, nanoAddressTextView) {
+        constrain(priceSection, addressTextView) {
             $0.width == $0.superview!.width
             $0.top == $1.bottom
             $0.height == 140
@@ -504,6 +490,7 @@ final class SendViewController: UIViewController {
 
         guard let text = self.addressTextView?.text, !text.contains("_") else { return }
 
+        self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = handleRegularTextEntry(forAttributedText: "nano_")
     }
 
@@ -512,6 +499,7 @@ final class SendViewController: UIViewController {
 
         guard let text = self.addressTextView?.text, !text.contains("_") else { return }
 
+        self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = handleRegularTextEntry(forAttributedText: "xrb_")
     }
 
@@ -571,23 +559,37 @@ extension SendViewController: UITextViewDelegate {
 
     // Allow any A-Z,0-9 character through for the seed as well as backspaces, prevent everything else
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let isBackspace = strcmp(text.cString(using: .utf8)!, "\\b") == -92
+        if sendAddressIsValid.value { return isBackspace } // Only allow backspaces on already valid address
+
         // if you paste in an address
         if text.count > 60 { return true }
 
-        guard text.count <= 64 else { return false }
-
+        // Done key
         guard text != "\n" else {
             textView.resignFirstResponder()
 
             return true
         }
 
-        let isBackspace = strcmp(text.cString(using: .utf8)!, "\\b") == -92
-        guard !isBackspace else { return true }
+        guard !isBackspace else {
+            if textView.text.count == 1 {
+                self.addressTextView?.togglePlaceholder(show: true)
+            }
+
+            return true
+        }
 
         let validCharacters = ["a","b","c","d","e","f","g","h","i","j","k","m","n","o","p","q","r","s","t","u","w","x","y","z","1","3","4","5","6","7","8","9", "_"]
 
-        return validCharacters.contains(text.lowercased())
+        let isValidCharacter = validCharacters.contains(text.lowercased())
+        if self.addressTextView!.text.count >= 0, isValidCharacter {
+            self.addressTextView?.togglePlaceholder(show: false)
+        } else {
+            return false
+        }
+
+        return isValidCharacter
     }
 
 }

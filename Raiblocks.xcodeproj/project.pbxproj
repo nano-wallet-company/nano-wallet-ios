@@ -32,6 +32,7 @@
 		5174E8F9200FA6CF00DE86A0 /* PriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E8F8200FA6CF00DE86A0 /* PriceService.swift */; };
 		5174E90620112BE500DE86A0 /* RaiblocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E90520112BE500DE86A0 /* RaiblocksTests.swift */; };
 		5174E90F2011320A00DE86A0 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
+		517CCCCF20250A410095590D /* SendAddressTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517CCCCE20250A410095590D /* SendAddressTextView.swift */; };
 		517FA64D1FE1D1DB00FE04B6 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA64C1FE1D1DB00FE04B6 /* Address.swift */; };
 		517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */; };
 		5185DBEE1FDF14030096E687 /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912ECD1FDB513F001BDF2C /* SendViewModel.swift */; };
@@ -145,6 +146,7 @@
 		5174E90320112BE500DE86A0 /* RaiblocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RaiblocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5174E90520112BE500DE86A0 /* RaiblocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiblocksTests.swift; sourceTree = "<group>"; };
 		5174E90720112BE500DE86A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		517CCCCE20250A410095590D /* SendAddressTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAddressTextView.swift; sourceTree = "<group>"; };
 		517FA64C1FE1D1DB00FE04B6 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleguideV1.swift; sourceTree = "<group>"; };
 		5185DC691FDF48D90096E687 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				51CD15401FF86B99004102A2 /* SendKeyboard.swift */,
 				51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */,
 				51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */,
+				517CCCCE20250A410095590D /* SendAddressTextView.swift */,
 			);
 			path = SendViewController;
 			sourceTree = "<group>";
@@ -734,6 +737,7 @@
 				5122A6152017931E00F7F43A /* NanoWalletError.swift in Sources */,
 				51A5205F1FE422F2003F6EC7 /* WelcomeViewController.swift in Sources */,
 				5125E44B1FD1FEA7004DB451 /* AccountHistory.swift in Sources */,
+				517CCCCF20250A410095590D /* SendAddressTextView.swift in Sources */,
 				51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */,
 				5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */,
 				5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */,
