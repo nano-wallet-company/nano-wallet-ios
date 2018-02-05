@@ -31,4 +31,4 @@ This should already be set up for you by cloning the repo but if you need to upd
 
 ### Have a question?
 
-If you need any help, please visit our [GitHub Issues](https://github.com/zackshapiro/raiblocks-ios-wallet/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you do not manage to find any solution.
+If you need any help, please visit our [GitHub Issues](https://github.com/nanocurrency/raiblocks-ios-wallet/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you do not manage to find any solution.
