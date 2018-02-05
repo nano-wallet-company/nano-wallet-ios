@@ -418,7 +418,7 @@ final class SendViewController: UIViewController {
         var error: NSError?
 
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "Please confirm that you want to send \(amount) Nano."
+            let reason = "Send \(amount) Nano?"
 
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { [unowned self] success, error in
                 DispatchQueue.main.async {
@@ -509,6 +509,7 @@ extension SendViewController: CodeScanViewControllerDelegate {
 
     func didReceiveAddress(address: Address) {
         self.sendAddressIsValid.value = true
+        self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = addAttributes(forAttributedText: address.longAddressWithColor)
 
         navigationController?.dismiss(animated: true) {
