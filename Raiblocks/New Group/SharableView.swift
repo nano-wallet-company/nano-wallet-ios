@@ -104,7 +104,7 @@ class SharableView: UIView {
         }
 
         let website = UILabel()
-        website.text = "nano.co"
+        website.text = "nano.org"
         website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
         website.textColor = Styleguide.Colors.lightBlue.color
         rightView.addSubview(website)
