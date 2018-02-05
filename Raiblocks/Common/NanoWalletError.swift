@@ -11,6 +11,7 @@ enum NanoWalletError: Error {
     case longUsableStringCastFailed
 
     case credentialStorageError
+    case currencyStorageError
 
     case unableToGetCurrentUserSeed
     case unableToGenerateSignature

@@ -6,6 +6,22 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import RealmSwift
+
+
+final class StorableCurrency: Object {
+    @objc dynamic var symbol: String = ""
+
+    convenience init?(string: String) {
+        guard let _ = Currency(rawValue: string) else { return nil }
+
+        self.init()
+
+        self.symbol = string
+    }
+}
+
+
 enum Currency: String {
     case aud
     case brl
@@ -164,10 +180,6 @@ enum Currency: String {
         }
 
         return numberFormatter
-    }
-
-    func calculateLocalCurrencyValue() -> Double {
-        return 0.0
     }
 
 }

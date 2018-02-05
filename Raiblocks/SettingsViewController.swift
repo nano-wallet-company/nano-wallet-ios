@@ -40,6 +40,7 @@ protocol SettingsViewControllerDelegate: class {
 final class SettingsViewController: UIViewController {
 
     private let credentials: Credentials
+    private let currencyService = CurrencyService()
 
     private let currencies: [Currency] = Currency.allCurrencies
     private let localCurrency: Currency
@@ -310,11 +311,13 @@ extension SettingsViewController: UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        UserDefaults.standard.set(currencies[row].rawValue, forKey: "localCurrency")
+        let currency = currencies[row]
 
-        Answers.logCustomEvent(withName: "Local Currency Selected", customAttributes: ["currency": currencies[row].paramValue])
+        Answers.logCustomEvent(withName: "Local Currency Selected", customAttributes: ["currency": currency.paramValue])
 
-        delegate?.localCurrencyWasSelected(currency: currencies[row])
+        currencyService.store(currency: StorableCurrency(string: currency.rawValue)!) {
+            delegate?.localCurrencyWasSelected(currency: currency)
+        }
     }
 
 }

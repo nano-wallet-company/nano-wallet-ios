@@ -15,7 +15,7 @@ import Crashlytics
 final class PriceService {
 
     var localCurrency: Property<Currency>
-    private let _localCurrency = MutableProperty<Currency>(Currency(rawValue: UserDefaults.standard.string(forKey: "localCurrency") ?? "") ?? .usd)
+    private let _localCurrency = MutableProperty<Currency>(CurrencyService().localCurrency())
 
     var lastBTCTradePrice: Property<Double>
     private let _lastBTCTradePrice = MutableProperty<Double>(0)

@@ -33,6 +33,7 @@
 		5174E90620112BE500DE86A0 /* RaiblocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E90520112BE500DE86A0 /* RaiblocksTests.swift */; };
 		5174E90F2011320A00DE86A0 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
 		517CCCCF20250A410095590D /* SendAddressTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517CCCCE20250A410095590D /* SendAddressTextView.swift */; };
+		517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517CCCD02028EAE90095590D /* CurrencyService.swift */; };
 		517FA64D1FE1D1DB00FE04B6 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA64C1FE1D1DB00FE04B6 /* Address.swift */; };
 		517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */; };
 		5185DBEE1FDF14030096E687 /* SendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912ECD1FDB513F001BDF2C /* SendViewModel.swift */; };
@@ -147,6 +148,7 @@
 		5174E90520112BE500DE86A0 /* RaiblocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiblocksTests.swift; sourceTree = "<group>"; };
 		5174E90720112BE500DE86A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		517CCCCE20250A410095590D /* SendAddressTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAddressTextView.swift; sourceTree = "<group>"; };
+		517CCCD02028EAE90095590D /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		517FA64C1FE1D1DB00FE04B6 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		517FA96A1FD225CD00043EE2 /* StyleguideV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleguideV1.swift; sourceTree = "<group>"; };
 		5185DC691FDF48D90096E687 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -277,6 +279,8 @@
 			isa = PBXGroup;
 			children = (
 				5174E8F8200FA6CF00DE86A0 /* PriceService.swift */,
+				5122A6182017AACA00F7F43A /* UserService.swift */,
+				517CCCD02028EAE90095590D /* CurrencyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -336,7 +340,6 @@
 				515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */,
 				51A5205A1FE3314F003F6EC7 /* NanoButton.swift */,
 				5122A6142017931E00F7F43A /* NanoWalletError.swift */,
-				5122A6182017AACA00F7F43A /* UserService.swift */,
 				5135307B201A246E00B615D4 /* BackgroundViewController.swift */,
 			);
 			path = Common;
@@ -712,6 +715,7 @@
 				51A520551FE320C0003F6EC7 /* XRBPair.swift in Sources */,
 				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
+				517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */,
 				519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */,
 				517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */,
 				51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */,
