@@ -95,7 +95,7 @@ class SeedConfirmationViewController: UIViewController {
         textView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(copySeed)))
         view.addSubview(textView)
         constrain(textView, button) {
-            $0.height == CGFloat(80)
+            $0.height == (isiPhoneX() ? CGFloat(90) : CGFloat(80))
             $0.bottom == $1.top - CGFloat(33)
             $0.width == $1.width
             $0.centerX == $1.centerX
@@ -174,7 +174,9 @@ extension SeedConfirmationViewController: NSItemProviderWriting {
     }
 
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
-        completionHandler(credentials.seed.data(using: .utf8), nil)
+        DispatchQueue.main.sync {
+            completionHandler(credentials.seed.data(using: .utf8), nil)
+        }
 
         return nil
     }
