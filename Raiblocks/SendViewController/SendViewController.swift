@@ -218,7 +218,7 @@ final class SendViewController: UIViewController {
             case .backspace:
                 self.viewModel.maxAmountInUse = false
 
-                if textField.text! == "0." {
+                if textField.text! == "0\(self.viewModel.decimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
                 } else {
@@ -227,7 +227,7 @@ final class SendViewController: UIViewController {
             case .number:
                 if textField.text! == "", button.valueIsDecimalIndicator {
                     textField.text!.insert("0", at: String.Index(encodedOffset: 0))
-                    textField.text!.insert(".", at: String.Index(encodedOffset: 1))
+                    textField.text!.insert(Character(self.viewModel.decimalSeparator), at: String.Index(encodedOffset: 1))
                 } else {
                     textField.text!.insert(button.characterValue, at: String.Index(encodedOffset: text.count))
                 }
@@ -263,7 +263,7 @@ final class SendViewController: UIViewController {
             case .backspace:
                 self.viewModel.maxAmountInUse = false
 
-                if textField.text! == "0." {
+                if textField.text! == "0\(self.viewModel.decimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
                 } else {
@@ -272,7 +272,7 @@ final class SendViewController: UIViewController {
             case .number:
                 if textField.text! == "\(self.viewModel.localCurrency.mark)", button.valueIsDecimalIndicator {
                     textField.text!.insert("0", at: String.Index(encodedOffset: textField.text!.count))
-                    textField.text!.insert(".", at: String.Index(encodedOffset: textField.text!.count))
+                    textField.text!.insert(Character(self.viewModel.decimalSeparator), at: String.Index(encodedOffset: textField.text!.count))
                 } else {
                     textField.text!.insert(button.characterValue, at: String.Index(encodedOffset: text.count))
                 }
@@ -289,7 +289,7 @@ final class SendViewController: UIViewController {
                 string.remove(at: string.startIndex)
             }
 
-            if let index = string.index(of: ",") {
+            if let index = string.index(of: Character(self.viewModel.groupingSeparator)) {
                 string.remove(at: index)
             }
 
@@ -300,7 +300,7 @@ final class SendViewController: UIViewController {
 
         viewModel.nanoAmount.producer.startWithValues {
             if self.activeTextField == self.nanoTextField {
-                self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: $0) ?? "0.0"
+                self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: $0) ?? "0\(self.viewModel.decimalSeparator)0"
             }
         }
 
@@ -343,7 +343,7 @@ final class SendViewController: UIViewController {
 
     @objc private func fillOutWithMaxBalance(showAlert: Bool = false) {
         nanoTextField?.text = viewModel.sendableNanoBalance.rawAsUsableString
-        localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: viewModel.sendableNanoBalance) ?? "0.0"
+        localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: viewModel.sendableNanoBalance) ?? "0\(self.viewModel.decimalSeparator)0"
 
         viewModel.maxAmountInUse = true
         Answers.logCustomEvent(withName: "Send: Max Amount Used")
@@ -627,9 +627,10 @@ extension SendViewController: UITextFieldDelegate {
         // handle backspace, NOTE: this needs to come after line above to prevent the user from removing the $
         if string == "<" { return true }
 
-        if text.contains("."), string == "." { return false }
+        let separator = viewModel.decimalSeparator
+        if text.contains(separator), string == separator { return false }
 
-        if text == "0" && string != "." { return false } // Don't allow 000
+        if text == "0" && string != separator { return false } // Don't allow 000
 
         return true
     }

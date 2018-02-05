@@ -19,6 +19,8 @@ final class SendViewModel {
     let previousFrontierHash: String
     let socket: WebSocket
     let localCurrency: Currency
+    let groupingSeparator: String
+    let decimalSeparator: String
 
     let nanoAmount = MutableProperty<NSDecimalNumber>(0)
     let localCurrencyAmount = MutableProperty<NSDecimalNumber>(0)
@@ -35,6 +37,9 @@ final class SendViewModel {
         self.previousFrontierHash = previousFrontierHash
         self.socket = socket
         self.localCurrency = localCurrency
+        self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
+        self.decimalSeparator = localCurrency.locale.decimalSeparator ?? "."
+        // Default values are USD grouping/separator values
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {
