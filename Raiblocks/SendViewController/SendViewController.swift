@@ -564,7 +564,11 @@ extension SendViewController: UITextViewDelegate {
         if sendAddressIsValid.value { return isBackspace } // Only allow backspaces on already valid address
 
         // if you paste in an address
-        if text.count > 60 { return true }
+        if text.count > 60 {
+            self.addressTextView?.togglePlaceholder(show: false)
+
+            return true
+        }
 
         // Done key
         guard text != "\n" else {
