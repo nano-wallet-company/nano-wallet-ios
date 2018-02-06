@@ -46,7 +46,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Nano Wallet uses your camera to scan QR codes to set up your wallet and send money to other people</string>
+	<string>Nano Wallet uses your camera to scan Wallet Seed and Nano Address QR Codes</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Nano Wallet would like access to save your Share Card to your Photo Library</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nano Wallet would like access to load photos from your Photo Library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Light.ttf</string>

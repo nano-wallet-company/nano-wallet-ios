@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import Photos
 
 import Cartography
 import Crashlytics
@@ -176,21 +177,37 @@ class ReceiveViewController: UIViewController {
         shareCard.setNeedsLayout()
         shareCard.layoutSubviews()
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: { self.shareCard?.alpha = 1 }, completion: nil)
-        let sharable = shareCard.asImage()
-        activityItems.append(sharable)
+        let sharableImage = shareCard.asImage()
+        activityItems.append(sharableImage)
 
         let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = button
-        activityViewController.excludedActivityTypes = [.assignToContact, .addToReadingList]
-        activityViewController.completionWithItemsHandler = { (_, _, _, _) -> Void in
-            UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
-                self.shareCard?.alpha = 0
-            }) { _ in
-                self.shareCard?.removeFromSuperview()
+        activityViewController.excludedActivityTypes = [.assignToContact, .addToReadingList, .markupAsPDF, .openInIBooks, .postToVimeo]
+        activityViewController.completionWithItemsHandler = { activityType, _, _, _ -> Void in
+            if let type = activityType, case .saveToCameraRoll = type {
+                PHPhotoLibrary.requestAuthorization {
+                    guard $0 == .authorized else {
+                        DispatchQueue.main.sync {
+                            self.removeShareCard()
+                        }
+
+                        return
+                    }
+                }
             }
+
+            self.removeShareCard()
         }
 
         present(activityViewController, animated: true, completion: nil)
+    }
+
+    private func removeShareCard() {
+        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: {
+            self.shareCard?.alpha = 0
+        }) { _ in
+            self.shareCard?.removeFromSuperview()
+        }
     }
 
     @objc func dismissVC() {
