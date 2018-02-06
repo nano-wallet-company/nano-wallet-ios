@@ -55,13 +55,14 @@ class HomeViewController: UIViewController {
                 self.tableView?.reloadData()
             }
 
-        SignalProducer.combineLatest(viewModel.hasNetworkConnection, viewModel.addressIsOnNetwork, viewModel.isCurrentlySyncing)
+        SignalProducer.combineLatest(viewModel.hasNetworkConnection, viewModel.addressIsOnNetwork, viewModel.isCurrentlySyncing, viewModel.transactableAccountBalance)
             .producer
             .take(during: lifetime)
             .observe(on: UIScheduler())
-            .startWithValues { hasNetworkConnection, addressIsOnNetwork, isCurrentlySyncing in
+            .startWithValues { hasNetworkConnection, addressIsOnNetwork, isCurrentlySyncing, transactableBalance in
                 guard hasNetworkConnection else { self.sendButton?.isEnabled = false; return }
                 guard addressIsOnNetwork   else { self.sendButton?.isEnabled = false; return }
+                guard transactableBalance.compare(0) == .orderedDescending else { self.sendButton?.isEnabled = false; return }
 
                 self.sendButton?.isEnabled = !isCurrentlySyncing
         }
