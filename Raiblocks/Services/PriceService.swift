@@ -42,23 +42,9 @@ final class PriceService {
         fetchLatestBTCLocalCurrencyPrice()
     }
 
+    // Add Binance, Okex, Kucoin
+
     private func fetchLatestBTCPrice() {
-        guard let url = URL(string: "https://bitgrail.com/api/v1/BTC-XRB/ticker") else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard error == nil else { return self.fetchPriceFromMercatox() }
-
-            if let data = data, let xrb = try? JSONDecoder().decode(BGXRBPair.self, from: data), let lastBTCTradePrice = Double(xrb.xrbPair) {
-                self._lastBTCTradePrice.value = lastBTCTradePrice
-            } else {
-                self.fetchPriceFromMercatox()
-            }
-        }.resume()
-    }
-
-    // Add Bitgrail and Kucoin
-
-    private func fetchPriceFromMercatox() {
         guard let url = URL(string: "https://mercatox.com/public/json24") else { return }
 
         URLSession.shared.dataTask(with: url) { data, _, error in
