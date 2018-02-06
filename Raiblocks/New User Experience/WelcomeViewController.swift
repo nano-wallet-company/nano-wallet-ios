@@ -222,10 +222,10 @@ class WelcomeViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    private func showAlertForBadSeed() {
+    private func showAlertForBadSeed(message: String? = nil) {
         Answers.logCustomEvent(withName: "Alert for bad seed viewed")
 
-        let ac = UIAlertController(title: "There was a problem with your seed", message: "There was a problem importing your wallet seed. Please double check it and try again or contact Nano Support.", preferredStyle: .actionSheet)
+        let ac = UIAlertController(title: "There was a problem with your Wallet Seed", message: message ?? "There was a problem importing your Wallet Seed. Please double check it and try again or contact Nano's support channel.", preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
 
         present(ac, animated: true, completion: nil)
@@ -247,9 +247,23 @@ extension WelcomeViewController: UITextViewDelegate {
 
     // Allow any A-Z,0-9 character through for the seed as well as backspaces, prevent everything else
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Pastes an address
+        if (Address(text)) != nil || text.contains("_") {
+            showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
+
+            return false
+        }
+
         // Wallet Seed was pasted
         if text.count == 64 {
-            createCredentialsAndContinue(forSeed: text.flatten())
+            // User pasted an address
+            if (Address(text) != nil || text.contains("_")) {
+                showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
+
+                return false
+            } else {
+                createCredentialsAndContinue(forSeed: text.flatten())
+            }
         }
 
         // User entered good Wallet Seed
