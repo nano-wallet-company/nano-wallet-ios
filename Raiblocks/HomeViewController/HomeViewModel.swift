@@ -247,6 +247,8 @@ final class HomeViewModel {
     }
 
     private func handle(accountBalance: AccountBalance) {
+        if !addressIsOnNetwork.value { addressIsOnNetwork.value = true }
+
         self._accountBalance.value = accountBalance.totalBalance ?? 0
         self._transactableAccountBalance.value = accountBalance.transactableBalance ?? 0
     }
