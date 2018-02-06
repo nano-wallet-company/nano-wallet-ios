@@ -83,7 +83,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data")
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription])
 
                 return self._lastBTCLocalCurrencyPrice.value = 0
             }
@@ -93,7 +93,7 @@ final class PriceService {
             if let data = data,let price = try? pair.decode(fromData: data) {
                 self._lastBTCLocalCurrencyPrice.value = price
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data")
+                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description"])
 
                 self._lastBTCLocalCurrencyPrice.value = 0
             }
