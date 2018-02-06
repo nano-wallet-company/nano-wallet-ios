@@ -170,7 +170,7 @@ class ReceiveViewController: UIViewController {
         let shareCard = SharableView(address: viewModel.address)
         let margin: CGFloat = 20
         let width = view.bounds.width - margin
-        shareCard.frame = CGRect(x: (margin / 2), y: margin, width: width, height: (width / 2)) // how does this look on non-plus phones?
+        shareCard.frame = CGRect(x: (margin / 2), y: margin, width: width, height: (width / 2)) // TODO fix this on non-plus phones
         shareCard.alpha = 0
         self.shareCard = shareCard
         view.addSubview(shareCard)

@@ -6,6 +6,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 import LocalAuthentication
 import MobileCoreServices
@@ -365,11 +366,24 @@ final class SendViewController: UIViewController {
     }
 
     @objc func openCamera() {
-        Answers.logCustomEvent(withName: "Address Scan Camera View Viewed")
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                DispatchQueue.main.async {
+                    Answers.logCustomEvent(withName: "Address Scan Camera View Viewed")
 
-        codeScanViewController.delegate = self
+                    self.codeScanViewController.delegate = self
 
-        navigationController?.present(codeScanViewController, animated: true, completion: nil)
+                    self.navigationController?.present(self.codeScanViewController, animated: true, completion: nil)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let ac = UIAlertController(title: "Camera Permissions Required", message: "Please enable Camera permissions in iOS Settings", preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Okay", style: .default))
+
+                    self.present(ac, animated: true, completion: nil)
+                }
+            }
+        }
     }
 
     @objc func sendNano() {

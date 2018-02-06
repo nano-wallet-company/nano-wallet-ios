@@ -6,6 +6,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 import Cartography
@@ -205,12 +206,25 @@ class WelcomeViewController: UIViewController {
     }
 
     @objc func showCameraView() {
-        Answers.logCustomEvent(withName: "Seed Scan Camera View Viewed")
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            if granted {
+                DispatchQueue.main.async {
+                    Answers.logCustomEvent(withName: "Seed Scan Camera View Viewed")
 
-        let vc = SeedScanViewController()
-        vc.delegate = self
+                    let vc = SeedScanViewController()
+                    vc.delegate = self
 
-        present(vc, animated: true)
+                    self.present(vc, animated: true)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let ac = UIAlertController(title: "Camera Permissions Required", message: "Please enable Camera permissions in iOS Settings", preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Okay", style: .default))
+
+                    self.present(ac, animated: true, completion: nil)
+                }
+            }
+        }
     }
 
     @objc func celebrate() {
