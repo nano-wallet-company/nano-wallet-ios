@@ -95,7 +95,7 @@ final class SendViewController: UIViewController {
             $0.top == $0.superview!.top
             $0.left == $0.superview!.left
             $0.right == $0.superview!.right
-            $0.height == CGFloat(88)
+            $0.height == CGFloat(99)
         }
         self.addressTextView = addressTextView
 

@@ -14,9 +14,22 @@ import Result
 import SwiftWebSocket
 
 
+func isiPhoneSE() -> Bool {
+    return UIScreen.main.bounds.width == 320 && UIScreen.main.bounds.height == 568
+}
+
+func isiPhoneRegular() -> Bool {
+    return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 667
+}
+
+func isiPhonePlus() -> Bool {
+    return UIScreen.main.bounds.width == 414 && UIScreen.main.bounds.height == 736
+}
+
 func isiPhoneX() -> Bool {
     return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 812
 }
+
 
 extension WebSocket {
 
