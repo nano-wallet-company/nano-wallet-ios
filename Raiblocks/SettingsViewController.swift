@@ -97,7 +97,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let showSeedButton = SettingsButton()
-        showSeedButton.setTitle("Show My Seed", for: .normal)
+        showSeedButton.setTitle("Copy My Wallet Seed", for: .normal)
         showSeedButton.addTarget(self, action: #selector(showSeed), for: .touchUpInside)
         view.addSubview(showSeedButton)
         constrain(showSeedButton, localCurrencyButton) {
@@ -129,7 +129,7 @@ final class SettingsViewController: UIViewController {
         constrain(picker, divider2) {
             $0.centerX == $1.centerX
             $0.top == $1.bottom + 22
-            $0.width == $0.superview!.width * 0.75
+            $0.width == $0.superview!.width * 0.80
             pickerViewHeightLayoutConstraint = $0.height == 0
         }
         self.pickerView = picker

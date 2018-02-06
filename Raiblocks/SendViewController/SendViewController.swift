@@ -645,6 +645,12 @@ extension SendViewController: UITextFieldDelegate {
 extension SendViewController: SendKeyboardDelegate {
 
     func valueWasSent(button: KeyboardButton) {
+        // If the user types without a field explicitly selected
+        if activeTextField == nil {
+            activeTextField = nanoTextField
+            nanoTextField?.becomeFirstResponder()
+        }
+
         guard
             let textField = activeTextField,
             let selectedTextRange = textField.selectedTextRange,
