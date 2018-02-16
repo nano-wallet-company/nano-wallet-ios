@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>29</string>
+	<string>30</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -47,12 +47,12 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Nano Wallet uses your camera to scan Wallet Seed and Nano Address QR Codes</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Nano Wallet would like to use FaceID to verify your identity</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Nano Wallet would like access to save your Share Card to your Photo Library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Nano Wallet would like access to load photos from your Photo Library</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Nano Wallet would like to use FaceID to verify your identity</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Nunito-Light.ttf</string>
