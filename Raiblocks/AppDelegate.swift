@@ -45,7 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.navigationController = UINavigationController(rootViewController: WelcomeViewController())
         }
 
-        window = UIWindow(frame: UIScreen.main.bounds)
+//         For on-device testing when you don't have all the devices, just make sure you're using a configuration smaller than your actual device size
+        let device: Device? = nil // .se
+        window = UIWindow(frame: device?.frame ?? UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

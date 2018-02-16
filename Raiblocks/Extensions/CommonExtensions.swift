@@ -30,6 +30,28 @@ func isiPhoneX() -> Bool {
     return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 812
 }
 
+enum Device {
+    case se, regular, plus, x
+
+    var size: CGSize {
+        switch self {
+        case .se: return CGSize(width: 320, height: 568)
+        case .regular: return CGSize(width: 375, height: 667)
+        case .plus: return CGSize(width: 414, height: 736)
+        case .x: return CGSize(width: 375, height: 812)
+        }
+    }
+
+    var frame: CGRect {
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
+        let x = (width - self.size.width) / 2
+        let y = (height - self.size.height) / 2
+
+        return CGRect(x: x, y: y, width: self.size.width, height: self.size.height)
+    }
+}
+
 
 extension WebSocket {
 
