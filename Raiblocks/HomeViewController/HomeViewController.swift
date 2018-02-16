@@ -96,6 +96,10 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = Styleguide.Colors.darkBlue.color
         navigationController?.navigationBar.tintColor = Styleguide.Colors.lightBlue.color
         super.viewWillAppear(animated)
+
+        if viewModel.socket.readyState != .open {
+            viewModel.socket.open()
+        }
     }
 
     override func viewDidLoad() {
