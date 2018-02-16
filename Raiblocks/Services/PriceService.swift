@@ -38,28 +38,34 @@ final class PriceService {
     }
 
     func fetchLatestPrices() {
-        fetchLatestBTCPrice()
+        fetchLatestPrice(exchange: .binance, decodable: BinanceNanoBTCPair.self)
         fetchLatestBTCLocalCurrencyPrice()
     }
 
-    // Add Binance, Okex, Kucoin
+    func fetchLatestPrice<T: ExchangePair>(exchange: Exchange, decodable: T.Type) {
+        guard let url = exchange.url else { return }
 
-    private func fetchLatestBTCPrice() {
-        guard let url = URL(string: "https://mercatox.com/public/json24") else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting Mercatox price data")
+                Answers.logCustomEvent(withName: "Error getting exchange price data", customAttributes: ["name": exchange.rawValue, "location": "error case", "response": response?.description ?? ""])
 
-                return self._lastBTCTradePrice.value = 0
+                switch exchange {
+                case .binance: return self.fetchLatestPrice(exchange: .okex, decodable: OkExNanoBTCPair.self)
+                case .okex: return self.fetchLatestPrice(exchange: .kucoin, decodable: KucoinNanoBTCPair.self)
+                case .kucoin: return self._lastBTCTradePrice.value = 0
+                }
             }
 
-            if let data = data, let xrb = try? JSONDecoder().decode(MercXRBPair.self, from: data), let lastBTCTradePrice = Double(xrb.xrbPair.last) {
-                self._lastBTCTradePrice.value = lastBTCTradePrice
+            if let data = data, let json = try? JSONDecoder().decode(decodable, from: data) {
+                self._lastBTCTradePrice.value = json.last
             } else {
-                Answers.logCustomEvent(withName: "Error decoding Mercatox price data")
+                Answers.logCustomEvent(withName: "Error getting exchange price data", customAttributes: ["name": exchange.rawValue, "location": "unable to decode data", "response": response?.description ?? ""])
 
-                self._lastBTCTradePrice.value = 0
+                switch exchange {
+                case .binance: return self.fetchLatestPrice(exchange: .okex, decodable: OkExNanoBTCPair.self)
+                case .okex: return self.fetchLatestPrice(exchange: .kucoin, decodable: KucoinNanoBTCPair.self)
+                case .kucoin: return self._lastBTCTradePrice.value = 0
+                }
             }
         }.resume()
     }
@@ -69,7 +75,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription])
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
 
                 return self._lastBTCLocalCurrencyPrice.value = 0
             }

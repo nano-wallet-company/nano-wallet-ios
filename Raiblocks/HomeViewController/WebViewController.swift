@@ -36,7 +36,7 @@ class WebViewController: UIViewController {
         constrain(toolbar) { toolbar in
             toolbar.width == toolbar.superview!.width
             toolbar.centerX == toolbar.superview!.centerX
-            toolbar.top == toolbar.superview!.top
+            toolbar.top == toolbar.superview!.top + (isiPhoneX() ? CGFloat(11) : CGFloat(0))
             toolbar.height == CGFloat(64)
         }
 

@@ -19,5 +19,6 @@ let preconfiguredRepresentatives = [
     "xrb_1w77aapnijnm5mo16r3xtpqu7n459r61fqpcdt3kxfmz8gtqgzbozswxmduy",
     "xrb_1n4dtjocgft8aexcr5ftiibu9f47g3j13ay8yzx35qk3qe6sfdq16nsnu5h3",
     "xrb_3ju9wdb8zpzdn3bnhz6ypm5sipccok9urqif9kdyweimj9c9zyi54ceos1qu",
-    "xrb_1nanode8ngaakzbck8smq6ru9bethqwyehomf79sae1k7xd47dkidjqzffeg"
+    "xrb_1nanode8ngaakzbck8smq6ru9bethqwyehomf79sae1k7xd47dkidjqzffeg",
+    "xrb_1w77aapnijnm5mo16r3xtpqu7n459r61fqpcdt3kxfmz8gtqgzbozswxmduy"
 ]

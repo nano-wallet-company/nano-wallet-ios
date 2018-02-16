@@ -19,6 +19,7 @@
 		5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */; };
 		5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4551FD22210004DB451 /* TransactionViewModel.swift */; };
 		5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5135307B201A246E00B615D4 /* BackgroundViewController.swift */; };
+		51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51394038202B64BB0073B90F /* ExchaingePairs.swift */; };
 		5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */; };
 		5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279D1FEEBDD800C788E3 /* AccountInfo.swift */; };
 		514827A11FF2E98B00C788E3 /* HashReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514827A01FF2E98B00C788E3 /* HashReceive.swift */; };
@@ -132,6 +133,7 @@
 		5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		5125E4551FD22210004DB451 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		5135307B201A246E00B615D4 /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
+		51394038202B64BB0073B90F /* ExchaingePairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchaingePairs.swift; sourceTree = "<group>"; };
 		5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTransaction.swift; sourceTree = "<group>"; };
 		5148279D1FEEBDD800C788E3 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
 		514827A01FF2E98B00C788E3 /* HashReceive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashReceive.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				517FA64C1FE1D1DB00FE04B6 /* Address.swift */,
+				51394038202B64BB0073B90F /* ExchaingePairs.swift */,
 				5117F4CF1FD8490800CEAE78 /* Credentials.swift */,
 			);
 			path = Models;
@@ -754,6 +757,7 @@
 				51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */,
 				51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */,
 				5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */,
+				51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */,
 				51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */,
 				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,
 				51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */,

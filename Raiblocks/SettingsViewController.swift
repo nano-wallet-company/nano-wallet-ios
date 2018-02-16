@@ -221,7 +221,7 @@ final class SettingsViewController: UIViewController {
 
                     Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "settings"])
 
-                    let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like 1Password, LastPass, or printing the Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
+                    let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
                     ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
                         appDelegate.appBackgroundingForSeedOrSend = false
 

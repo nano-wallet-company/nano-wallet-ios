@@ -115,7 +115,7 @@ class SeedConfirmationViewController: UIViewController {
         let textBody = UITextView()
         textBody.textAlignment = .left
         textBody.isUserInteractionEnabled = false
-        let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is how we generate your wallet. It’s also how you log into the iOS Wallet or any of our other wallets, including NanoWallet.io.\n\nIf you lose your Wallet Seed, your funds cannot be recovered.\n\nKeep your Wallet Seed somewhere safe (like 1Password, LastPass, or print it out and put it in a safe).\n\nNever give it to anyone, ever.")
+        let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is how we generate your wallet. It’s also how you log into the iOS Wallet or any of our other wallets, including NanoWallet.io.\n\nIf you lose your Wallet Seed, your funds cannot be recovered.\n\nKeep your Wallet Seed somewhere safe (like password management software or print it out and put it in a safe).\n\nNever give it to anyone, ever.")
         attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.darkBlue.color, range: NSMakeRange(0, attributedText.length))
         attributedText.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 18), range: NSMakeRange(0, attributedText.length))
         attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(150, 64)) // Middle sentence "If you lose your wallet..."
@@ -144,7 +144,7 @@ class SeedConfirmationViewController: UIViewController {
             UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
 
             DispatchQueue.main.sync {
-                let ac = UIAlertController(title: "Wallet Seed Copied", message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like 1Password, LastPass, or print it out and put it in a safe.", preferredStyle: .actionSheet)
+                let ac = UIAlertController(title: "Wallet Seed Copied", message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like  passwork management software or print it out and put it in a safe.", preferredStyle: .actionSheet)
                 ac.addAction(UIAlertAction(title: "Okay", style: .default))
 
                 self.present(ac, animated: true, completion: nil)
