@@ -289,6 +289,17 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
 
+    private enum Explorer {
+        case nano, nanode
+
+        func url(hash: String) -> URL? {
+            switch self {
+            case .nano: return URL(string: "https://nano.org/en/explore/block/" + hash)
+            case .nanode: return URL(string: "https://www.nanode.co/block/" + hash)
+            }
+        }
+    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66
     }
@@ -296,13 +307,31 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        // TODO: move to new block explorer
+        showExplorerAlert(forIndexPath: indexPath)
+    }
+
+    private func showExplorerAlert(forIndexPath indexPath: IndexPath) {
+        let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "View on Nano Explorer", style: .default) { _ in self.view(explorer: .nano, forIndexPath: indexPath) })
+        ac.addAction(UIAlertAction(title: "View on Nanode Explorer", style: .default) { _ in self.view(explorer: .nanode, forIndexPath: indexPath) })
+
+        ac.addAction(UIAlertAction(title: "Copy Address", style: .default) { _ in
+            if let address = self.viewModel.transactions.value[indexPath.row].fromAddress {
+                self.cellWasLongPressed(address: address)
+            }
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(ac, animated: true, completion: nil)
+    }
+
+    private func view(explorer: Explorer, forIndexPath indexPath: IndexPath) {
         guard
-            let hash = viewModel.transactions.value[indexPath.row].hash,
-            let url = URL(string: "https://raiblocks.net/block/index.php" + "?h=" + hash)
+            let hash = self.viewModel.transactions.value[indexPath.row].hash,
+            let url = explorer.url(hash: hash)
         else { return }
 
-        present(WebViewController(url: url), animated: true, completion: nil)
+        self.present(WebViewController(url: url), animated: true, completion: nil)
     }
 
 }
