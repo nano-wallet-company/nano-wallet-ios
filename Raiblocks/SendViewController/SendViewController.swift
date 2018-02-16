@@ -96,7 +96,7 @@ final class SendViewController: UIViewController {
             $0.top == $0.superview!.top
             $0.left == $0.superview!.left
             $0.right == $0.superview!.right
-            $0.height == CGFloat(99)
+            $0.height == CGFloat(88)
         }
         self.addressTextView = addressTextView
 
@@ -639,6 +639,7 @@ extension SendViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
+        guard string.count == 1 else { return false }
 
         if text == viewModel.localCurrency.mark && range.length == 1 && string == "<" { return false }
 

@@ -91,11 +91,15 @@ class SeedConfirmationViewController: UIViewController {
         textView.textAlignment = .center
         textView.returnKeyType = .done
         textView.isScrollEnabled = false
-        textView.textContainerInset = UIEdgeInsets(top: 15, left: 60, bottom: 12, right: 60)
+        if isiPhoneSE() {
+            textView.textContainerInset = UIEdgeInsets(top: 15, left: 20, bottom: 12, right: 20)
+        } else {
+            textView.textContainerInset = UIEdgeInsets(top: 15, left: 30, bottom: 12, right: 30)
+        }
         textView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(copySeed)))
         view.addSubview(textView)
         constrain(textView, button) {
-            $0.height == (isiPhoneX() ? CGFloat(90) : CGFloat(80))
+            $0.height == CGFloat(80)
             $0.bottom == $1.top - CGFloat(33)
             $0.width == $1.width
             $0.centerX == $1.centerX
@@ -114,7 +118,9 @@ class SeedConfirmationViewController: UIViewController {
 
         let textBody = UITextView()
         textBody.textAlignment = .left
-        textBody.isUserInteractionEnabled = false
+        textBody.isUserInteractionEnabled = true
+        textBody.isEditable = false
+        textBody.isSelectable = false
         let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is how we generate your wallet. It’s also how you log into the iOS Wallet or any of our other wallets, including NanoWallet.io.\n\nIf you lose your Wallet Seed, your funds cannot be recovered.\n\nKeep your Wallet Seed somewhere safe (like password management software or print it out and put it in a safe).\n\nNever give it to anyone, ever.")
         attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.darkBlue.color, range: NSMakeRange(0, attributedText.length))
         attributedText.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 18), range: NSMakeRange(0, attributedText.length))
@@ -126,8 +132,14 @@ class SeedConfirmationViewController: UIViewController {
         constrain(textBody, titleLabel, textView) {
             $0.width == $2.width
             $0.centerX == $0.superview!.centerX
-            $0.top == $1.bottom + CGFloat(33)
-            $0.bottom == $2.top - CGFloat(33)
+
+            if isiPhoneSE() {
+                $0.top == $1.bottom + CGFloat(22)
+                $0.bottom == $2.top - CGFloat(22)
+            } else {
+                $0.top == $1.bottom + CGFloat(33)
+                $0.bottom == $2.top - CGFloat(33)
+            }
         }
     }
 

@@ -15,11 +15,19 @@ import SwiftWebSocket
 
 
 func isiPhoneSE() -> Bool {
-    return UIScreen.main.bounds.width == 320 && UIScreen.main.bounds.height == 568
+    #if DEBUG
+        return debug_isiPhoneSE()
+    #else
+        return UIScreen.main.bounds.width == 320 && UIScreen.main.bounds.height == 568
+    #endif
 }
 
 func isiPhoneRegular() -> Bool {
-    return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 667
+    #if DEBUG
+        return debug_isiPhoneRegular()
+    #else
+        return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 667
+    #endif
 }
 
 func isiPhonePlus() -> Bool {
@@ -29,6 +37,24 @@ func isiPhonePlus() -> Bool {
 func isiPhoneX() -> Bool {
     return UIScreen.main.bounds.width == 375 && UIScreen.main.bounds.height == 812
 }
+
+// MARK: - Debug Functions
+
+private func debug_isiPhoneSE() -> Bool {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let frame = appDelegate.window!.frame
+
+    return frame.width == 320 && frame.height == 568
+}
+
+private func debug_isiPhoneRegular() -> Bool {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let frame = appDelegate.window!.frame
+
+    return frame.width == 375 && frame.height == 667
+}
+
+// MARK: -
 
 enum Device {
     case se, regular, plus, x
@@ -56,7 +82,6 @@ enum Device {
 extension WebSocket {
 
     func send(endpoint: Endpoint) {
-//        print(endpoint)
         send(text: endpoint.stringify()!)
     }
 

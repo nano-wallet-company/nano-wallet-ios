@@ -82,10 +82,10 @@ final class PriceService {
 
             let pair = LocalCurrencyPair(currency: self.localCurrency.value)
 
-            if let data = data,let price = try? pair.decode(fromData: data) {
+            if let data = data, let price = try? pair.decode(fromData: data) {
                 self._lastBTCLocalCurrencyPrice.value = price
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description"])
+                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
 
                 self._lastBTCLocalCurrencyPrice.value = 0
             }
