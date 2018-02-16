@@ -6,42 +6,11 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-// TODO: Add Kucoin pair
-// https://kucoinapidocs.docs.apiary.io/#reference/0/currencies-plugin/list-exchange-rate-of-coins(open)
-
-struct BGXRBPair: Decodable {
-
-    let response: Response
-
-    var xrbPair: String {
-        return response.last
-    }
-
-    struct Response: Decodable {
-        let last: String
-    }
-
-}
-
-
-struct MercXRBPair: Decodable {
-
-    let pairs: [String: Pair]
-
-    var xrbPair: Pair {
-        return pairs.filter { $0.key == "XRB_BTC" }.first!.value
-    }
-
-    struct Pair: Decodable {
-        let last: String
-    }
-
-}
-
 enum DecodableErrors: Error {
     case doubleCastError
     case priceError
 }
+
 
 struct LocalCurrencyPair {
 
