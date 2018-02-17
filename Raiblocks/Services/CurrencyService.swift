@@ -1,9 +1,9 @@
 //
 //  CurrencyService.swift
-//  Raiblocks
+//  Nano
 //
 //  Created by Zack Shapiro on 2/5/18.
-//  Copyright © 2018 Zack Shapiro. All rights reserved.
+//  Copyright © 2018 Nano. All rights reserved.
 //
 
 import Foundation

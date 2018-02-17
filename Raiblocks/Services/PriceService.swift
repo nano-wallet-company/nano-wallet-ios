@@ -73,22 +73,37 @@ final class PriceService {
     func fetchLatestBTCLocalCurrencyPrice() {
         guard let url = URL(string: "https://api.coinmarketcap.com/v1/ticker/?convert=\(localCurrency.value.paramValue)&limit=1") else { return }
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error!.localizedDescription])
 
                 return self._lastBTCLocalCurrencyPrice.value = 0
             }
 
             let pair = LocalCurrencyPair(currency: self.localCurrency.value)
 
-            if let data = data, let price = try? pair.decode(fromData: data) {
-                self._lastBTCLocalCurrencyPrice.value = price
+            if let data = data {
+                if let price = try? pair.decode(fromData: data) {
+                    self._lastBTCLocalCurrencyPrice.value = price
+                } else {
+                    Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString, "event": "price decode failed", "currency": pair.currency.paramValue])
+                    self._lastBTCLocalCurrencyPrice.value = 0
+                }
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
-
+                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
                 self._lastBTCLocalCurrencyPrice.value = 0
             }
+
+            // TODO: re-implement after debugging
+//            if let data = data, let price = try? pair.decode(fromData: data) {
+//                print(price)
+//                self._lastBTCLocalCurrencyPrice.value = price
+//            } else {
+//                print("error...")
+//                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
+//
+//                self._lastBTCLocalCurrencyPrice.value = 0
+//            }
         }.resume()
     }
 
@@ -97,20 +112,35 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap Nano price data")
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap Nano price data", customAttributes: ["error_description": error!.localizedDescription])
 
                 return self._lastNanoLocalCurrencyPrice.value = 0
             }
 
             let pair = NanoPricePair(currency: self.localCurrency.value)
 
-            if let data = data, let price = try? pair.decode(fromData: data) {
-                self._lastNanoLocalCurrencyPrice.value = price
+            if let data = data {
+                if let price = try? pair.decode(fromData: data) {
+                    self._lastNanoLocalCurrencyPrice.value = price
+                } else {
+                    Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data", customAttributes: ["url": url.absoluteString, "event": "price decode failed", "currency": pair.currency.paramValue])
+
+                    self._lastNanoLocalCurrencyPrice.value = 0
+                }
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data")
+                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data", customAttributes: ["url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
 
                 self._lastNanoLocalCurrencyPrice.value = 0
             }
+
+            // will re-implement after debugging in next build
+//            if let data = data, let price = try? pair.decode(fromData: data) {
+//                self._lastNanoLocalCurrencyPrice.value = price
+//            } else {
+//                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data")
+//
+//                self._lastNanoLocalCurrencyPrice.value = 0
+//            }
         }.resume()
     }
 
