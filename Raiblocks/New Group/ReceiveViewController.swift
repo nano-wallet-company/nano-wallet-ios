@@ -71,7 +71,17 @@ class ReceiveViewController: UIViewController {
         constrain(scanLabel) {
             $0.width == $0.superview!.width * CGFloat(0.5)
             $0.centerX == $0.superview!.centerX
-            $0.top == $0.superview!.top + CGFloat(55)
+
+            // TODO: Refactor to use preportional layout, just in here to ship v1 faster and interate
+            let spacing: CGFloat
+            if isiPhoneSE() {
+                spacing = 10
+            } else if isiPhoneRegular() {
+                spacing = 20
+            } else {
+                spacing = 55
+            }
+            $0.top == $0.superview!.top + spacing
         }
 
         let qr = EFQRCode.generate(
@@ -87,7 +97,7 @@ class ReceiveViewController: UIViewController {
         constrain(imageView, scanLabel) {
             $0.width == $0.superview!.width * CGFloat(0.55)
             $0.height == $0.superview!.width * CGFloat(0.55)
-            $0.top == $1.bottom + CGFloat(36)
+            $0.top == $1.bottom + (isiPhoneSE() ? CGFloat(12) : CGFloat(36))
             $0.centerX == $1.centerX
         }
 
@@ -95,7 +105,7 @@ class ReceiveViewController: UIViewController {
 
         let copyButton = NanoButton(withType: .lightBlue)
         copyButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
-        copyButton.setAttributedTitle("Copy".uppercased())
+        copyButton.setAttributedTitle("Copy Address".uppercased())
         view.addSubview(copyButton)
         constrain(copyButton) {
             $0.height == CGFloat(55)
@@ -125,8 +135,17 @@ class ReceiveViewController: UIViewController {
         constrain(addressLabel) {
             $0.top == $0.superview!.top + CGFloat(15)
             $0.bottom == $0.superview!.bottom - CGFloat(15)
-            $0.left == $0.superview!.left + CGFloat(60)
-            $0.right == $0.superview!.right - CGFloat(60)
+
+            if isiPhoneSE() {
+                $0.left == $0.superview!.left + CGFloat(30)
+                $0.right == $0.superview!.right - CGFloat(30)
+            } else if isiPhoneRegular() {
+                $0.left == $0.superview!.left + CGFloat(45)
+                $0.right == $0.superview!.right - CGFloat(45)
+            } else {
+                $0.left == $0.superview!.left + CGFloat(60)
+                $0.right == $0.superview!.right - CGFloat(60)
+            }
         }
 
         let nanoAddressLabel = UILabel()
@@ -170,7 +189,7 @@ class ReceiveViewController: UIViewController {
         let shareCard = SharableView(address: viewModel.address)
         let margin: CGFloat = 20
         let width = view.bounds.width - margin
-        shareCard.frame = CGRect(x: (margin / 2), y: margin, width: width, height: (width / 2)) // TODO fix this on non-plus phones
+        shareCard.frame = CGRect(x: (margin / 2), y: margin, width: width, height: (width / 2))
         shareCard.alpha = 0
         self.shareCard = shareCard
         view.addSubview(shareCard)

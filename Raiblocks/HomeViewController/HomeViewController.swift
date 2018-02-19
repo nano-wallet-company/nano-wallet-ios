@@ -171,7 +171,7 @@ class HomeViewController: UIViewController {
         view.addSubview(receiveButton)
         constrain(receiveButton) {
             $0.bottom == $0.superview!.bottom - CGFloat(34)
-            $0.left == $0.superview!.left + CGFloat(24)
+            $0.right == $0.superview!.centerX - CGFloat(10)
             $0.width == $0.superview!.width * CGFloat(0.43)
             $0.height == CGFloat(55)
         }
@@ -181,7 +181,7 @@ class HomeViewController: UIViewController {
         view.addSubview(sendButton)
         constrain(sendButton, receiveButton) {
             $0.bottom == $1.bottom
-            $0.right == $0.superview!.right - CGFloat(24)
+            $0.left == $0.superview!.centerX + CGFloat(10)
             $0.width == $1.width
             $0.height == $1.height
         }
