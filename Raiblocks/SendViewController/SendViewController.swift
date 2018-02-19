@@ -114,10 +114,6 @@ final class SendViewController: UIViewController {
         let nanoTextField = SendTextField()
         nanoTextField.delegate = self
         nanoTextField.textAlignment = .center
-//        let leftView = NanoLeftView()
-//        leftView.sizeToFit()
-//        nanoTextField.leftView = leftView
-//        nanoTextField.leftViewMode = .always
         priceSection.addSubview(nanoTextField)
         constrain(nanoTextField) {
             $0.top == $0.superview!.top
@@ -688,20 +684,3 @@ extension SendViewController: SendKeyboardDelegate {
     }
 
 }
-
-// Not currently in use, need to implement
-//final class NanoLeftView: UIView {
-//
-//    init() {
-//        super.init(frame: .zero)
-//
-//        let imageView = UIImageView(image: UIImage(named: "nanoCurrencyMarkWhite"))
-//        addSubview(imageView)
-//        constrain(imageView) { $0.edges == $0.superview!.edges }
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
-
