@@ -304,6 +304,16 @@ final class SendViewController: UIViewController {
         viewModel.localCurrencyAmount.producer.startWithValues { amount in
             if self.activeTextField == self.localCurrencyTextField {
                 let lastTradePrice = NSDecimalNumber(value: self.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
+
+                // If there is an error with the PriceService
+                guard lastTradePrice.compare(0) == .orderedDescending else {
+                    self.nanoTextField?.text = "Error Getting Nano Price"
+                    self.sendableAmountIsValid.value = false
+
+                    // TODO: make this more apparent to the user with online/offline UI states
+                    return
+                }
+
                 let dividedAmount = amount.dividing(by: lastTradePrice)
                 let raw = dividedAmount.asRawValue
 
@@ -339,6 +349,8 @@ final class SendViewController: UIViewController {
     }
 
     @objc private func fillOutWithMaxBalance(showAlert: Bool = false) {
+        nanoTextField?.becomeFirstResponder()
+        activeTextField = nanoTextField
         nanoTextField?.text = viewModel.sendableNanoBalance.rawAsUsableString
         localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: viewModel.sendableNanoBalance) ?? "0\(self.viewModel.decimalSeparator)0"
 
