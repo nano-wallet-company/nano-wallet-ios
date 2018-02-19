@@ -108,7 +108,7 @@ final class SendViewController: UIViewController {
         constrain(priceSection, addressTextView) {
             $0.width == $0.superview!.width
             $0.top == $1.bottom
-            $0.height == 140
+            $0.height == (isiPhoneSE() ? CGFloat(100) : CGFloat(140))
         }
 
         let nanoTextField = SendTextField()
@@ -121,7 +121,7 @@ final class SendViewController: UIViewController {
         priceSection.addSubview(nanoTextField)
         constrain(nanoTextField) {
             $0.top == $0.superview!.top
-            $0.height == CGFloat(70)
+            $0.height == $0.superview!.height * CGFloat(0.5)
             $0.width == $0.superview!.width
         }
         self.nanoTextField = nanoTextField
@@ -143,7 +143,7 @@ final class SendViewController: UIViewController {
         maxButton.titleLabel?.baselineAdjustment = .alignCenters
         constrain(maxButton, nanoTextField) {
             $0.centerY == $1.centerY
-            $0.left == $0.superview!.left + CGFloat(44) // line up with left of button
+            $0.left == $0.superview!.left + CGFloat(20)
             $0.width == CGFloat(58)
             $0.height == CGFloat(29)
         }
@@ -151,26 +151,26 @@ final class SendViewController: UIViewController {
         let border = UIView()
         border.backgroundColor = UIColor.white.withAlphaComponent(0.25)
         priceSection.addSubview(border)
-        constrain(border, nanoTextField) {
+        constrain(border) {
             $0.height == CGFloat(1)
-            $0.top == $1.bottom
+            $0.centerY == $0.superview!.centerY
             $0.width == $0.superview!.width
         }
 
         let upDownArrow = UIImageView(image: UIImage(named: "upDownArrow"))
         priceSection.addSubview(upDownArrow)
         constrain(upDownArrow, border) {
-            $0.centerX == $1.centerX
-            $0.centerY == $1.centerY
+            $0.center == $1.center
         }
 
         let localCurrencyTextField = SendTextField()
         localCurrencyTextField.delegate = self
         priceSection.addSubview(localCurrencyTextField)
-        constrain(localCurrencyTextField, border) {
+        constrain(localCurrencyTextField, nanoTextField) {
             $0.top == $1.bottom
             $0.bottom == $0.superview!.bottom
             $0.width == $0.superview!.width
+            $0.height == $0.superview!.height * CGFloat(0.5)
         }
         self.localCurrencyTextField = localCurrencyTextField
 
@@ -203,10 +203,10 @@ final class SendViewController: UIViewController {
         keyboard.delegate = self
         bottomSection.addSubview(keyboard)
         constrain(keyboard, priceSection, sendButton) {
-            $0.top == $1.bottom + CGFloat(36)
+            $0.top == $1.bottom + (isiPhoneSE() ? CGFloat(9) : CGFloat(36))
+            $0.bottom == $2.top - (isiPhoneSE() ? CGFloat(9) : CGFloat(36))
             $0.width == $0.superview!.width * CGFloat(0.8)
             $0.centerX == $0.superview!.centerX
-            $0.bottom == $2.top - CGFloat(36)
         }
 
         nanoProducer.producer.startWithValues { button in
@@ -539,7 +539,7 @@ extension SendViewController: UITextViewDelegate {
     private func addAttributes(forAttributedText text: NSAttributedString) -> NSAttributedString {
         let str = NSMutableAttributedString(attributedString: text)
         let range = NSMakeRange(0, str.length)
-        str.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 16), range: range)
+        str.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: (isiPhoneSE() ? 15 : 16)), range: range)
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         str.addAttribute(.paragraphStyle, value: paragraph, range: range)
@@ -550,7 +550,7 @@ extension SendViewController: UITextViewDelegate {
     private func handleRegularTextEntry(forAttributedText text: String) -> NSAttributedString {
         let str = NSMutableAttributedString(string: text)
         let range = NSMakeRange(0, str.length)
-        str.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 16), range: range)
+        str.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: (isiPhoneSE() ? 15 : 16)), range: range)
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
         str.addAttribute(.paragraphStyle, value: paragraph, range: range)
@@ -580,6 +580,10 @@ extension SendViewController: UITextViewDelegate {
         // if you paste in an address
         if text.count > 60 {
             self.addressTextView?.togglePlaceholder(show: false)
+
+            if let _ = Address(text) {
+                self.addressTextView?.resignFirstResponder()
+            }
 
             return true
         }

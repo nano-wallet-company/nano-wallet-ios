@@ -23,7 +23,7 @@ final class SendTextField: UITextField {
         textAlignment = .center
         placeholder = "0.00"
         inputView = UIView() // Don't show a keyboard
-        font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
+        font = Styleguide.Fonts.nunitoLight.font(ofSize: (isiPhoneSE() ? 17 : 20))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,12 +32,12 @@ final class SendTextField: UITextField {
 
     func setSmallerFontSize() {
         alpha = 0.5
-        font = Styleguide.Fonts.nunitoLight.font(ofSize: 16)
+        font = Styleguide.Fonts.nunitoLight.font(ofSize: (isiPhoneSE() ? 14 : 16))
     }
 
     func setLargerFontSize() {
         alpha = 1.0
-        font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
+        font = Styleguide.Fonts.nunitoLight.font(ofSize: (isiPhoneSE() ? 17 : 20))
     }
 
 }
