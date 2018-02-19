@@ -48,6 +48,8 @@ final class SettingsViewController: UIViewController {
     private weak var pickerView: UIPickerView?
     private var pickerViewHeightLayoutConstraint: NSLayoutConstraint?
 
+    private weak var localCurrencyButton: SettingsButton?
+
     weak var delegate: SettingsViewControllerDelegate?
 
     init(credentials: Credentials, localCurrency: Currency) {
@@ -78,7 +80,7 @@ final class SettingsViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "dismissBlack"), style: .plain, target: self, action: #selector(dismissVC))
 
         let localCurrencyButton = SettingsButton()
-        localCurrencyButton.setTitle("Local Currency", for: .normal)
+        localCurrencyButton.setTitle("Show My Local Currency", for: .normal)
         localCurrencyButton.addTarget(self, action: #selector(selectLocalCurrency), for: .touchUpInside)
         view.addSubview(localCurrencyButton)
         constrain(localCurrencyButton) {
@@ -86,6 +88,7 @@ final class SettingsViewController: UIViewController {
             $0.height == CGFloat(66)
             $0.top == $0.superview!.top + (isiPhoneX() ? CGFloat(91) : CGFloat(64))
         }
+        self.localCurrencyButton = localCurrencyButton
 
         let divider = UIView()
         divider.backgroundColor = UIColor.black.withAlphaComponent(0.2)
@@ -246,8 +249,11 @@ final class SettingsViewController: UIViewController {
     }
 
     @objc func selectLocalCurrency() {
-        let val: CGFloat = pickerViewHeightLayoutConstraint?.constant == 0 ? 200 : 0
-        self.pickerViewHeightLayoutConstraint?.constant = val
+        let height: CGFloat = pickerViewHeightLayoutConstraint?.constant == 0 ? 200 : 0
+        self.pickerViewHeightLayoutConstraint?.constant = height
+
+        let buttonCopy = height == 0 ? "Show My Local Currency" : "Select Local Currency"
+        self.localCurrencyButton?.setTitle(buttonCopy, for: .normal)
 
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()

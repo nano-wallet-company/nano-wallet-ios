@@ -35,7 +35,7 @@ class WelcomeViewController: UIViewController {
 
         let welcomeLabel = UILabel()
         welcomeLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        welcomeLabel.text = "Welcome to Nano"
+        welcomeLabel.text = "Welcome to Nano Wallet"
         welcomeLabel.textColor = Styleguide.Colors.darkBlue.color
         view.addSubview(welcomeLabel)
         constrain(welcomeLabel) {
@@ -51,7 +51,7 @@ class WelcomeViewController: UIViewController {
         }
 
         let startButton = NanoButton(withType: .lightBlue)
-        startButton.setAttributedTitle("Start a new wallet", withKerning: 1)
+        startButton.setAttributedTitle("Create a new Wallet", withKerning: 1)
         startButton.addTarget(self, action: #selector(startANewWallet), for: .touchUpInside)
         view.addSubview(startButton)
         constrain(startButton, welcomeLabel) {
@@ -62,7 +62,7 @@ class WelcomeViewController: UIViewController {
         }
 
         let existingWalletButton = NanoButton(withType: .lightBlue)
-        existingWalletButton.setAttributedTitle("I already have a wallet", withKerning: 1)
+        existingWalletButton.setAttributedTitle("Enter existing Wallet Seed", withKerning: 1)
         existingWalletButton.addTarget(self, action: #selector(toggleTextFieldForSeed), for: .touchUpInside)
         view.addSubview(existingWalletButton)
         constrain(existingWalletButton, startButton) {
@@ -230,7 +230,7 @@ class WelcomeViewController: UIViewController {
     @objc func celebrate() {
         Answers.logCustomEvent(withName: "Easter Egg Viewed")
 
-        let alertController = UIAlertController(title: "Welcome!", message: "Thank you for using the Nano Mobile Wallet!", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Welcome!", message: "Thank you for using the Nano Wallet for iOS!", preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "🎉", style: .default, handler: nil))
 
         present(alertController, animated: true, completion: nil)
