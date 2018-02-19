@@ -635,6 +635,7 @@ extension SendViewController: UITextFieldDelegate {
         guard let textField = textField as? SendTextField else { return }
         self.activeTextField = textField
 
+        // This guard makes sure that fields aren't zeroed out after the alert shows when you enter over your max balance
         guard !viewModel.maxAmountInUse else  {
             return viewModel.maxAmountInUse = false
         }
@@ -642,7 +643,7 @@ extension SendViewController: UITextFieldDelegate {
         nanoTextField?.text = nil
         localCurrencyTextField?.text = viewModel.localCurrency.mark
 
-        viewModel.nanoAmount.value = 0 
+        viewModel.nanoAmount.value = 0
         viewModel.localCurrencyAmount.value = 0
 
         if activeTextField == nanoTextField {
