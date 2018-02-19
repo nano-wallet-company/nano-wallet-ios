@@ -642,6 +642,9 @@ extension SendViewController: UITextFieldDelegate {
         nanoTextField?.text = nil
         localCurrencyTextField?.text = viewModel.localCurrency.mark
 
+        viewModel.nanoAmount.value = 0 
+        viewModel.localCurrencyAmount.value = 0
+
         if activeTextField == nanoTextField {
             nanoTextField?.setLargerFontSize()
             localCurrencyTextField?.setSmallerFontSize()
