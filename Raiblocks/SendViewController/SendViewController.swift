@@ -215,6 +215,7 @@ final class SendViewController: UIViewController {
             case .backspace:
                 self.viewModel.maxAmountInUse = false
 
+                // TODO: add case: if second to last char is decimalSeparator, deleteBackwardsx2 (see also in other producer below)
                 if textField.text! == "0\(self.viewModel.decimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
