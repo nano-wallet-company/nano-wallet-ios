@@ -36,6 +36,7 @@ final class SendViewModel {
         self.privateKeyData = privateKeyData
         self.previousFrontierHash = previousFrontierHash
         self.socket = socket
+
         self.localCurrency = localCurrency
         self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
         self.decimalSeparator = localCurrency.locale.decimalSeparator ?? "."

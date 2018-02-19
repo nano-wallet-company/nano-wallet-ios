@@ -354,6 +354,8 @@ final class SendViewController: UIViewController {
         nanoTextField?.text = viewModel.sendableNanoBalance.rawAsUsableString
         localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: viewModel.sendableNanoBalance) ?? "0\(self.viewModel.decimalSeparator)0"
 
+        viewModel.nanoAmount.value = viewModel.sendableNanoBalance
+
         viewModel.maxAmountInUse = true
         Answers.logCustomEvent(withName: "Send: Max Amount Used")
 
@@ -367,7 +369,7 @@ final class SendViewController: UIViewController {
         if showAlert {
             self.viewModel.maxAmountInUse = true
 
-            let ac = UIAlertController(title: "Amount Too Large", message: "The amount you entered was larger than your Nano balance.\n\nWe've filled the form with your full balance for sending.", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Amount Too Large", message: "The amount you entered was larger than your Nano balance.\n\nWe've filled the form with your full balance.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
             self.present(ac, animated: true, completion: nil)
         }
