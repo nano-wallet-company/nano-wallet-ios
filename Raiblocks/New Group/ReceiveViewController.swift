@@ -17,7 +17,7 @@ class ReceiveViewController: UIViewController {
 
     let viewModel: ReceiveViewModel
 
-    var shareCard: SharableView?
+    var shareCard: ShareCard?
 
     init(viewModel: ReceiveViewModel) {
         self.viewModel = viewModel
@@ -186,15 +186,13 @@ class ReceiveViewController: UIViewController {
 
         activityItems = [viewModel.address.longAddress]
 
-        let shareCard = SharableView(address: viewModel.address)
+        let shareCard = ShareCard(address: viewModel.address)
         let margin: CGFloat = 20
         let width = view.bounds.width - margin
         shareCard.frame = CGRect(x: (margin / 2), y: margin, width: width, height: (width / 2))
         shareCard.alpha = 0
         self.shareCard = shareCard
         view.addSubview(shareCard)
-        shareCard.setNeedsLayout()
-        shareCard.layoutSubviews()
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut, animations: { self.shareCard?.alpha = 1 }, completion: nil)
         let sharableImage = shareCard.asImage()
         activityItems.append(sharableImage)

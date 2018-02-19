@@ -1,5 +1,5 @@
 //
-//  SharableView.swift
+//  ShareCard.swift
 //  Nano
 //
 //  Created by Zack Shapiro on 12/29/17.
@@ -11,7 +11,8 @@ import UIKit
 import Cartography
 import EFQRCode
 
-class SharableView: UIView {
+
+class ShareCard: UIView {
 
     init(address: Address) {
         super.init(frame: .zero)
@@ -26,9 +27,10 @@ class SharableView: UIView {
         imgHolder.backgroundColor = .white
         addSubview(imgHolder)
         constrain(imgHolder) {
-            $0.left == $0.superview!.left + CGFloat(20)
-            $0.width == CGFloat(140)
-            $0.height == CGFloat(140)
+            $0.left == $0.superview!.left + (isiPhoneSE() ? CGFloat(10) : CGFloat(20))
+            let width = $0.superview!.height * CGFloat(0.8)
+            $0.width == width
+            $0.height == width
             $0.centerY == $0.superview!.centerY
         }
 
@@ -44,15 +46,20 @@ class SharableView: UIView {
         imgHolder.addSubview(imageView)
         constrain(imageView) {
             $0.center == $0.superview!.center
-            $0.width == CGFloat(100)
-            $0.height == CGFloat(100)
+            let width = $0.superview!.width * CGFloat(0.8)
+            $0.width == width
+            $0.height == width
         }
 
         let rightView = UIView()
         addSubview(rightView)
         constrain(rightView, imgHolder) {
-            $0.left == $1.right + CGFloat(40)
-            $0.right == $0.superview!.right - CGFloat(20)
+            if isiPhoneSE() {
+                $0.width == $0.superview!.width * CGFloat(0.50)
+            } else {
+                $0.width == $0.superview!.width * CGFloat(0.45)
+            }
+            $0.right == $0.superview!.right - (isiPhoneSE() ? CGFloat(10) : CGFloat(20))
             $0.top == $1.top
             $0.bottom == $1.bottom
         }
@@ -66,22 +73,26 @@ class SharableView: UIView {
 
         let nanoLabel = UILabel()
         nanoLabel.textColor = .white
-        nanoLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 30)
+        nanoLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 27)
         let text = NSMutableAttributedString(string: "NANO")
-        text.addAttribute(.kern, value: 5.0, range: NSMakeRange(0, text.length))
+        text.addAttribute(.kern, value: 4.0, range: NSMakeRange(0, text.length))
         nanoLabel.attributedText = text
 
         rightView.addSubview(nanoLabel)
         constrain(nanoLabel, logo) {
             $0.left == $1.right + CGFloat(12)
-            $0.top == $1.top - 8
+            $0.top == $1.top - 6
         }
 
         let addressLabel = UILabel()
         let addressText =  NSMutableAttributedString(attributedString: address.longAddressWithColorOnDarkBG)
         addressLabel.numberOfLines = 0
         addressLabel.lineBreakMode = .byCharWrapping
-        addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        if isiPhoneSE() {
+            addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        } else {
+            addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         addressText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, addressText.length))
@@ -95,7 +106,11 @@ class SharableView: UIView {
 
         let cashtag = UILabel()
         cashtag.text = "$nano"
-        cashtag.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        if isiPhoneSE() {
+            cashtag.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        } else {
+            cashtag.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        }
         cashtag.textColor = Styleguide.Colors.lightBlue.color
         rightView.addSubview(cashtag)
         constrain(cashtag) {
@@ -105,7 +120,11 @@ class SharableView: UIView {
 
         let website = UILabel()
         website.text = "nano.org"
-        website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        if isiPhoneSE() {
+            website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        } else {
+            website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        }
         website.textColor = Styleguide.Colors.lightBlue.color
         rightView.addSubview(website)
         constrain(website, cashtag) {

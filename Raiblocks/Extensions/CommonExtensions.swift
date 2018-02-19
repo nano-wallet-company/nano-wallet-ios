@@ -30,6 +30,14 @@ func isiPhoneRegular() -> Bool {
     #endif
 }
 
+func isiPhoneRegularWidth() -> Bool {
+    #if DEBUG
+        return debug_isiPhoneRegular() || debug_isiPhoneX()
+    #else
+        return UIScreen.main.bounds.width == 375
+    #endif
+}
+
 func isiPhonePlus() -> Bool {
     return UIScreen.main.bounds.width == 414 && UIScreen.main.bounds.height == 736
 }
@@ -52,6 +60,13 @@ private func debug_isiPhoneRegular() -> Bool {
     let frame = appDelegate.window!.frame
 
     return frame.width == 375 && frame.height == 667
+}
+
+private func debug_isiPhoneX() -> Bool {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    let frame = appDelegate.window!.frame
+
+    return frame.width == 375 && frame.height == 812
 }
 
 // MARK: -

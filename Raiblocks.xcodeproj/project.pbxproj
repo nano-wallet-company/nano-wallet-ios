@@ -65,7 +65,7 @@
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
 		51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */; };
 		51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */; };
-		51E945D41FF6EC60006B7081 /* SharableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* SharableView.swift */; };
+		51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* ShareCard.swift */; };
 		51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EADEA120067C6B00660E4A /* RaiCoreBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51EADEA720067C6B00660E4A /* RaiCoreBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		51EADEAD20067CCA00660E4A /* interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A520801FE8462D003F6EC7 /* interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -184,7 +184,7 @@
 		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
 		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
 		51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReceiveHeaderView.swift; sourceTree = "<group>"; };
-		51E945D31FF6EC60006B7081 /* SharableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharableView.swift; sourceTree = "<group>"; };
+		51E945D31FF6EC60006B7081 /* ShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCard.swift; sourceTree = "<group>"; };
 		51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RaiCoreBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		51EADEA120067C6B00660E4A /* RaiCoreBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCoreBase.h; sourceTree = "<group>"; };
 		51EADEA220067C6B00660E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */,
-				51E945D31FF6EC60006B7081 /* SharableView.swift */,
+				51E945D31FF6EC60006B7081 /* ShareCard.swift */,
 			);
 			name = ReceiveViewController;
 			path = "New Group";
@@ -764,7 +764,7 @@
 				51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */,
 				51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */,
 				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
-				51E945D41FF6EC60006B7081 /* SharableView.swift in Sources */,
+				51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */,
 				519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */,
 				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
 				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
