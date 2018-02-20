@@ -217,6 +217,11 @@ final class HomeViewModel {
         case .closed: socket.open()
         case .closing, .connecting: break
         }
+
+        switch hashStreamingSocket.readyState {
+        case .closed: hashStreamingSocket.open()
+        case .open, .closing, .connecting: break
+        }
     }
 
     func update(localCurrency currency: Currency) {
