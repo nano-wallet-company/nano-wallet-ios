@@ -323,7 +323,9 @@ final class SendViewController: UIViewController {
                 } else {
                     let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
 
-                    self.nanoTextField?.text = dividedAmount.rounding(accordingToBehavior: numberHandler).stringValue
+                    let roundedAmount = dividedAmount.rounding(accordingToBehavior: numberHandler)
+                    self.viewModel.nanoAmount.value = roundedAmount
+                    self.nanoTextField?.text = roundedAmount    .stringValue
                 }
             }
         }
