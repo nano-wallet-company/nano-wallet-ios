@@ -150,6 +150,7 @@ class HomeViewController: UIViewController {
         pageControl.pageIndicatorTintColor = Styleguide.Colors.lightBlue.color.withAlphaComponent(0.25)
         pageControl.currentPageIndicatorTintColor = Styleguide.Colors.lightBlue.color
         pageControl.numberOfPages = pageViewController.vcs.count
+        pageControl.addTarget(self, action: #selector(didChangePageControlValue(_:)), for: .touchUpInside)
         topSection.addSubview(pageControl)
         constrain(pageControl, pageViewController.view) {
             $0.centerX == $1.centerX
@@ -261,6 +262,10 @@ class HomeViewController: UIViewController {
         let nc = UINavigationController(rootViewController: vc)
 
         present(nc, animated: true, completion: nil)
+    }
+
+    @objc func didChangePageControlValue(_ sender: UIPageControl) {
+        pricePageViewController?.scrollToViewController(index: sender.currentPage)
     }
 
 }
