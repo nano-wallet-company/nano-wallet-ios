@@ -156,7 +156,7 @@ class SeedConfirmationViewController: UIViewController {
             UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
 
             DispatchQueue.main.sync {
-                let ac = UIAlertController(title: "Wallet Seed Copied", message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like  passwork management software or print it out and put it in a safe.", preferredStyle: .actionSheet)
+                let ac = UIAlertController(title: "Wallet Seed Copied", message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like  password management software or print it out and put it in a safe.", preferredStyle: .actionSheet)
                 ac.addAction(UIAlertAction(title: "Okay", style: .default))
 
                 self.present(ac, animated: true, completion: nil)
