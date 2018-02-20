@@ -74,7 +74,7 @@ class WelcomeViewController: UIViewController {
 
         let textView = SeedTextView()
         textView.delegate = self
-        textView.placeholder = "(Tap to Enter Wallet Seed)"
+        textView.placeholder = "(Tap to type or paste Wallet Seed)"
         view.addSubview(textView)
         constrain(textView, existingWalletButton) {
             textFieldHeightConstraint = $0.height == CGFloat(0)
