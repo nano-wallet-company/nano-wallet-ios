@@ -6,6 +6,9 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
+import Crashlytics
+
+
 enum DecodableErrors: Error {
     case doubleCastError
     case priceError
@@ -25,14 +28,34 @@ struct LocalCurrencyPair {
             numberFormatter.maximumFractionDigits = 2
             numberFormatter.roundingMode = .halfUp
 
-            guard
-                let dict = coins.first,
-                let _price = dict["price_\(currency.paramValue)"],
-                let price = numberFormatter.number(from: _price)
-            else { throw DecodableErrors.doubleCastError }
+            if let dict = coins.first {
+                if let _price = dict["price_\(currency.paramValue)"] {
+                    if let price = numberFormatter.number(from: _price) {
+                        return price.doubleValue
+                    } else {
+                        Answers.logCustomEvent(withName: "Local Currency Price unable to format", customAttributes: [:])
+                        throw DecodableErrors.doubleCastError
+                    }
+                } else {
+                    Answers.logCustomEvent(withName: "Local Currency unable to get value for dict key", customAttributes: [:])
+                    throw DecodableErrors.doubleCastError
+                }
+            } else {
+                Answers.logCustomEvent(withName: "Local Currency unable to get first coin", customAttributes: [:])
+                throw DecodableErrors.doubleCastError
+            }
 
-            return price.doubleValue
+            // temp
+//            guard
+//                let dict = coins.first,
+//                let _price = dict["price_\(currency.paramValue)"],
+//                let price = numberFormatter.number(from: _price)
+//            else { throw DecodableErrors.doubleCastError }
+
+//            return price.doubleValue
         } catch {
+            Answers.logCustomEvent(withName: "Error in LocalCurrencyPair.decode function", customAttributes: [:])
+
             throw DecodableErrors.priceError
         }
     }
@@ -52,14 +75,34 @@ struct NanoPricePair {
             numberFormatter.maximumFractionDigits = 2
             numberFormatter.roundingMode = .halfUp
 
-            guard
-                let dict = coins.filter({$0["symbol"]?.lowercased() == "nano" || $0["symbol"]?.lowercased() == "xrb" }).first,
-                let _price = dict["price_\(currency.paramValue)"],
-                let price = numberFormatter.number(from: _price)
-            else { throw DecodableErrors.doubleCastError }
+            if let dict = coins.filter({$0["symbol"]?.lowercased() == "nano"}).first {
+                if let _price = dict["price_\(currency.paramValue)"] {
+                    if let price = numberFormatter.number(from: _price) {
+                        return price.doubleValue
+                    } else {
+                        Answers.logCustomEvent(withName: "Nano Price Pair unable to format", customAttributes: [:])
+                        throw DecodableErrors.doubleCastError
+                    }
+                } else {
+                    Answers.logCustomEvent(withName: "Nano Price Pair unable to get value for dict key", customAttributes: [:])
+                    throw DecodableErrors.doubleCastError
+                }
 
-            return price.doubleValue
+            } else {
+                Answers.logCustomEvent(withName: "Nano Price Pair unable to get first coin", customAttributes: [:])
+                throw DecodableErrors.doubleCastError
+            }
+
+//            guard
+//                let dict = coins.filter({$0["symbol"]?.lowercased() == "nano"}).first,
+//                let _price = dict["price_\(currency.paramValue)"],
+//                let price = numberFormatter.number(from: _price)
+//            else { throw DecodableErrors.doubleCastError }
+//
+//            return price.doubleValue
         } catch {
+            Answers.logCustomEvent(withName: "Error in NanoPricePair.decode function", customAttributes: [:])
+
             throw DecodableErrors.priceError
         }
     }

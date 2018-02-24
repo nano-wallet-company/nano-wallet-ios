@@ -8,6 +8,7 @@
 
 import UIKit
 
+import Crashlytics
 import EFQRCode
 import ReactiveSwift
 import Result
@@ -97,7 +98,12 @@ enum Device {
 extension WebSocket {
 
     func send(endpoint: Endpoint) {
-        send(text: endpoint.stringify()!)
+        guard let text = endpoint.stringify() else {
+            Answers.logCustomEvent(withName: "Endpoint Unwrap Failed")
+            return
+        }
+
+        send(text: text)
     }
 
     func sendMultiple(endpoints: [Endpoint]) {

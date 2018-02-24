@@ -75,13 +75,13 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error!.localizedDescription])
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
 
                 return self._lastBTCLocalCurrencyPrice.value = 0
             }
 
             let pair = LocalCurrencyPair(currency: self.localCurrency.value)
-
+        
             if let data = data {
                 if let price = try? pair.decode(fromData: data) {
                     self._lastBTCLocalCurrencyPrice.value = price
@@ -112,7 +112,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap Nano price data", customAttributes: ["error_description": error!.localizedDescription])
+                Answers.logCustomEvent(withName: "Error getting CoinMarketCap Nano price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
 
                 return self._lastNanoLocalCurrencyPrice.value = 0
             }

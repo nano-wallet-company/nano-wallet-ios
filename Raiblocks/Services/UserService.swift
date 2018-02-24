@@ -92,10 +92,15 @@ final class UserService {
 
     static func logOut() {
         let configuration = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-        let realm = try! Realm(configuration: configuration)
 
-        try! realm.write {
-            realm.deleteAll()
+        do {
+            let realm = try Realm(configuration: configuration)
+
+            try realm.write {
+                realm.deleteAll()
+            }
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.logOutError)
         }
     }
 

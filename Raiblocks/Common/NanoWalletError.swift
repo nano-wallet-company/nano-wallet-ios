@@ -22,4 +22,6 @@ enum NanoWalletError: Error {
     case socketConnectionWasClosed
     case socketEventError
 
+    case logOutError
+
 }
