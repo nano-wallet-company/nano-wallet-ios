@@ -127,8 +127,8 @@ class ScannerViewContoller: UIViewController {
         view.addSubview(label)
         constrain(label) {
             $0.centerX == $0.superview!.centerX
-            $0.top == $0.superview!.top + CGFloat(100)
-            $0.width == $0.superview!.width * CGFloat(0.7)
+            $0.top == $0.superview!.top + (isiPhoneSE() ? CGFloat(75) : CGFloat(100))
+            $0.width == $0.superview!.width * CGFloat(0.8)
         }
         self.label = label
     }

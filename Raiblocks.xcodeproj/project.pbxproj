@@ -18,6 +18,7 @@
 		5125E44F1FD217B8004DB451 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */; };
 		5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */; };
 		5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5125E4551FD22210004DB451 /* TransactionViewModel.swift */; };
+		5133DE70204321A100C66199 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5133DE6F204321A100C66199 /* Double+Extensions.swift */; };
 		5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5135307B201A246E00B615D4 /* BackgroundViewController.swift */; };
 		51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51394038202B64BB0073B90F /* ExchaingePairs.swift */; };
 		5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */; };
@@ -53,7 +54,7 @@
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
 		51A5204F1FE2D6AC003F6EC7 /* PricePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */; };
 		51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */; };
-		51A520551FE320C0003F6EC7 /* XRBPair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* XRBPair.swift */; };
+		51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */; };
 		51A520591FE32E53003F6EC7 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520581FE32E53003F6EC7 /* Currency.swift */; };
 		51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205A1FE3314F003F6EC7 /* NanoButton.swift */; };
 		51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205C1FE33B04003F6EC7 /* WebViewController.swift */; };
@@ -133,6 +134,7 @@
 		5125E44E1FD217B8004DB451 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		5125E4521FD21C33004DB451 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		5125E4551FD22210004DB451 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
+		5133DE6F204321A100C66199 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		5135307B201A246E00B615D4 /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		51394038202B64BB0073B90F /* ExchaingePairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchaingePairs.swift; sourceTree = "<group>"; };
 		5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTransaction.swift; sourceTree = "<group>"; };
@@ -172,7 +174,7 @@
 		519C1A181FEAE28E005EBA02 /* AccountCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheck.swift; sourceTree = "<group>"; };
 		51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePageViewController.swift; sourceTree = "<group>"; };
 		51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceViewController.swift; sourceTree = "<group>"; };
-		51A520541FE320C0003F6EC7 /* XRBPair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XRBPair.swift; sourceTree = "<group>"; };
+		51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalCurrencyPair+NanoPricePair.swift"; sourceTree = "<group>"; };
 		51A520581FE32E53003F6EC7 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		51A5205A1FE3314F003F6EC7 /* NanoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoButton.swift; sourceTree = "<group>"; };
 		51A5205C1FE33B04003F6EC7 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -275,7 +277,7 @@
 				5125E4551FD22210004DB451 /* TransactionViewModel.swift */,
 				51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */,
 				51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */,
-				51A520541FE320C0003F6EC7 /* XRBPair.swift */,
+				51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */,
 			);
 			path = HomeViewController;
 			sourceTree = "<group>";
@@ -309,6 +311,7 @@
 				517275AF203F46F9009D9AA1 /* URL+Extensions.swift */,
 				51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */,
 				515E72A31FEC6B08001272D4 /* SendTextField.swift */,
+				5133DE6F204321A100C66199 /* Double+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -718,7 +721,7 @@
 			files = (
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
-				51A520551FE320C0003F6EC7 /* XRBPair.swift in Sources */,
+				51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */,
 				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
 				517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */,
@@ -752,6 +755,7 @@
 				51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */,
 				5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */,
 				5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */,
+				5133DE70204321A100C66199 /* Double+Extensions.swift in Sources */,
 				5122A6192017AACA00F7F43A /* UserService.swift in Sources */,
 				5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */,
 				51EADEB32007F62000660E4A /* WorkGenerate.swift in Sources */,
