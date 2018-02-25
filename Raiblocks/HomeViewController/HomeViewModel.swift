@@ -116,6 +116,8 @@ final class HomeViewModel {
         self.socket = WebSocket(urlString)
         self.hashStreamingSocket = WebSocket(urlString)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(appWasReopened(_:)), name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
+
         socket.event.open = {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
@@ -203,6 +205,8 @@ final class HomeViewModel {
         hashStreamingSocket.close()
 
         disposable.dispose()
+
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
     }
 
     func fetchLatestPrices() {
@@ -212,6 +216,10 @@ final class HomeViewModel {
     func refresh() {
         priceService.fetchLatestPrices()
 
+        checkAndOpenSockets()
+    }
+
+    func checkAndOpenSockets() {
         switch socket.readyState {
         case .open: socket.send(endpoint: .accountBlockCount(address: address))
         case .closed: socket.open()
@@ -420,6 +428,10 @@ final class HomeViewModel {
         let int = Int(arc4random_uniform(count - 1))
 
         return preconfiguredRepresentatives[int]
+    }
+
+    @objc func appWasReopened(_ notification: Notification) {
+        checkAndOpenSockets()
     }
 
 }

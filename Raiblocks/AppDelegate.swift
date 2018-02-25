@@ -91,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "ReestablishConnection")))
+
         if coverWindow != nil && !appBackgroundingForSeedOrSend {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                 self.coverVC?.view.alpha = 0
