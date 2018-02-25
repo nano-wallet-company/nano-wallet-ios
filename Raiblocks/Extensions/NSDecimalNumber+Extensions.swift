@@ -20,6 +20,7 @@ extension NSDecimalNumber {
         let result = rawAsUsableAmount
 
         let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale.current
         numberFormatter.roundingMode = .floor
         numberFormatter.maximumFractionDigits = 6
 
@@ -30,17 +31,18 @@ extension NSDecimalNumber {
         let result = rawAsUsableAmount
 
         let numberFormatter = NumberFormatter()
+        numberFormatter.locale = Locale.current
         numberFormatter.roundingMode = .floor
         numberFormatter.maximumFractionDigits = 10
 
         return numberFormatter.string(from: result)
     }
 
-
     var rawAsDouble: Double? {
         guard let string = rawAsUsableString else { return nil }
 
-        return Double(string)
+        // This is gross, clean this up (just included to ship v1)
+        return Double(string.replacingOccurrences(of: Locale.current.decimalSeparator ?? ",", with: "."))
     }
 
     var asRawValue: NSDecimalNumber {
