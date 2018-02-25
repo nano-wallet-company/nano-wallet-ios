@@ -205,6 +205,7 @@ final class SendViewController: UIViewController {
             $0.centerX == $0.superview!.centerX
         }
 
+        // Refactor all of this to be more functional
         nanoProducer.producer.startWithValues { button in
             guard
                 let textField = self.nanoTextField,
@@ -231,7 +232,7 @@ final class SendViewController: UIViewController {
                 }
             }
 
-            let value = NSDecimalNumber(string: (textField.text == "" ? "0" : textField.text))
+            let value = NSDecimalNumber(string: (textField.text == "" ? "0" : self.formatForMath(textField.text!)))
 
             // If the value you typed is equal to your total balance
             if value.asRawValue.compare(self.viewModel.sendableNanoBalance) == .orderedSame {
@@ -287,9 +288,7 @@ final class SendViewController: UIViewController {
                 string.remove(at: string.startIndex)
             }
 
-            if let index = string.index(of: Character(self.viewModel.groupingSeparator)) {
-                string.remove(at: index)
-            }
+            string = self.formatForMath(string)
 
             self.sendableAmountIsValid.value = textField.text != "\(self.viewModel.localCurrency.mark)"
 
@@ -335,10 +334,22 @@ final class SendViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    func formatForMath(_ string: String) -> String {
+        guard let separator = viewModel.localCurrency.locale.decimalSeparator, separator != "." else { return string }
+
+        return string.replacingOccurrences(of: separator, with: ".")
+    }
+
+    func formatForView(_ string: String) -> String {
+        guard let separator = viewModel.localCurrency.locale.decimalSeparator else { return string }
+
+        return string.replacingOccurrences(of: ".", with: separator)
+    }
+
     private func convertNanoToLocalCurrency(value: NSDecimalNumber) -> String? {
         var val = value
 
-        // FIXME: implment a better fix for this
+        // FIXME: implement a better fix for this
         if value.stringValue.contains("0000000") || value.stringValue.count >= 20 {
             val = NSDecimalNumber(string: value.rawAsUsableString)
         }
