@@ -6,15 +6,6 @@ enum TransactionType: String, Codable {
     case open, send, receive
 }
 
-//protocol NanoTransaction {
-//    var type: TransactionType? { get }
-//    var isPending: Bool { get }
-//    var hash: String? { get }
-//
-//    var fromAddress: Address? { get }
-//    var transactionAmount: NSDecimalNumber { get }
-//}
-
 enum NanoTransaction: Equatable {
 
     case pending(PendingHistoryItem)
