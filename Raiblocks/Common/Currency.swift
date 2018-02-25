@@ -134,7 +134,7 @@ enum Currency: String {
         case .czk: return "Czech Koruna"
         case .dkk: return "Danish Krone"
         case .eur: return "Euro"
-        case .gbp: return "Great Britain Pound"
+        case .gbp: return "Great British Pound"
         case .hkd: return "Hong Kong Dollar"
         case .huf: return "Hungarian Forint"
         case .idr: return "Indonesian Rupiah"
