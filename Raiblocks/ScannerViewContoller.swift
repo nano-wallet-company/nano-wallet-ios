@@ -38,7 +38,7 @@ class ScannerViewContoller: UIViewController {
         super.viewWillDisappear(animated)
 
         if captureSession?.isRunning == true {
-            DispatchQueue.global(qos: .background).async { [weak self] in
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.captureSession.stopRunning()
             }
         }
@@ -74,6 +74,9 @@ class ScannerViewContoller: UIViewController {
         let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissCamera))
         gestureRecognizer.direction = .down
         view.addGestureRecognizer(gestureRecognizer)
+
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchToZoom(_:)))
+        view.addGestureRecognizer(pinchGestureRecognizer)
     }
 
     override func viewDidLoad() {
@@ -131,10 +134,14 @@ class ScannerViewContoller: UIViewController {
             $0.width == $0.superview!.width * CGFloat(0.8)
         }
         self.label = label
+
+        if captureSession?.isRunning == false {
+            self.startRunning()
+        }
     }
 
     func startRunning() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.captureSession.startRunning()
         }
     }
@@ -145,6 +152,30 @@ class ScannerViewContoller: UIViewController {
 
     @objc func dismissCamera() {
         return dismiss(animated: true, completion: nil)
+    }
+
+    @objc func pinchToZoom(_ sender: UIPinchGestureRecognizer) {
+        guard
+            let videoCaptureDevice = AVCaptureDevice.default(for: .video),
+            let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice)
+        else { return }
+
+        let device = videoInput.device
+        if sender.state == .changed {
+            let maxZoomFactor = device.activeFormat.videoMaxZoomFactor
+            let pinchVelocityDividerFactor: CGFloat = 5.0
+
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+
+                let desiredZoomFactor = device.videoZoomFactor + atan2(sender.velocity, pinchVelocityDividerFactor)
+                device.videoZoomFactor = max(1.0, min(desiredZoomFactor, maxZoomFactor))
+
+            } catch {
+                print(error)
+            }
+        }
     }
 
     func showNoCameraAlert() {

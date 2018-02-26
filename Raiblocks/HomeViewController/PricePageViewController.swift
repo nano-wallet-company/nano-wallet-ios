@@ -94,7 +94,7 @@ class PricePageViewController: UIPageViewController {
         DispatchQueue.global(qos: .background).async {
             self.viewModel.fetchLatestPrices()
 
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 if let index = self.vcs.index(of: firstViewController) {
                     self.pricePageDelegate?.pricePageViewController(self, didUpdatePageIndex: index)
                 }

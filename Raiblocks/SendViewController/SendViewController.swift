@@ -33,7 +33,6 @@ final class SendViewController: UIViewController {
     private let sendableAmountIsValid = MutableProperty<Bool>(false)
 
     private let viewModel: SendViewModel
-    private let codeScanViewController: CodeScanViewController = CodeScanViewController()
 
     private weak var nanoTextField: SendTextField?
     private weak var localCurrencyTextField: SendTextField?
@@ -399,9 +398,10 @@ final class SendViewController: UIViewController {
                 DispatchQueue.main.async {
                     Answers.logCustomEvent(withName: "Address Scan Camera View Viewed")
 
-                    self.codeScanViewController.delegate = self
+                    let vc = CodeScanViewController()
+                    vc.delegate = self
 
-                    self.navigationController?.present(self.codeScanViewController, animated: true, completion: nil)
+                    self.navigationController?.present(vc, animated: true, completion: nil)
                 }
             } else {
                 DispatchQueue.main.async {
