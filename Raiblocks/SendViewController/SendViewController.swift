@@ -513,23 +513,12 @@ final class SendViewController: UIViewController {
     private func keyboardAccessoryView() -> UIToolbar {
         let accessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
         accessoryView.barStyle = .default
-        // Will bring back later
-//        let nanoItem = UIBarButtonItem(title: "nano_", style: .plain, target: self, action: #selector(addNanoAddressPrefix))
         let xrbItem = UIBarButtonItem(title: "xrb_", style: .plain, target: self, action: #selector(addXRBAddressPrefix))
         [xrbItem].forEach { $0.tintColor = .black }
         accessoryView.items = [xrbItem]
         accessoryView.sizeToFit()
 
         return accessoryView
-    }
-
-    @objc func addNanoAddressPrefix() {
-        Answers.logCustomEvent(withName: "User used nano_ prefix")
-
-        guard let text = self.addressTextView?.text, !text.contains("_") else { return }
-
-        self.addressTextView?.togglePlaceholder(show: false)
-        self.addressTextView?.attributedText = handleRegularTextEntry(forAttributedText: "nano_")
     }
 
     @objc func addXRBAddressPrefix() {
