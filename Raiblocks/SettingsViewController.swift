@@ -180,9 +180,6 @@ final class SettingsViewController: UIViewController {
     }
 
     func authenticateUser() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.appBackgroundingForSeedOrSend = true
-
         let context = LAContext()
         var error: NSError?
 
@@ -194,7 +191,6 @@ final class SettingsViewController: UIViewController {
                     guard success else {
                         guard let error = error else {
                             Answers.logCustomEvent(withName: "Seed Copy Failed", customAttributes: ["type": "generic"])
-                            appDelegate.appBackgroundingForSeedOrSend = false
 
                             let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
                             ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
@@ -206,7 +202,6 @@ final class SettingsViewController: UIViewController {
                             return
                         }
 
-                        appDelegate.appBackgroundingForSeedOrSend = false
                         switch error {
                         case LAError.userCancel: return
                         default:
@@ -226,21 +221,16 @@ final class SettingsViewController: UIViewController {
 
                     let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
                     ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
-                        appDelegate.appBackgroundingForSeedOrSend = false
-
                         // you have 2 minutes to paste this or it expires
                         UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
                     }))
-                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-                        appDelegate.appBackgroundingForSeedOrSend = false
-                    })
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
                     self.present(ac, animated: true)
                 }
             }
         } else {
             Answers.logCustomEvent(withName: "Seed Copy Failed")
-            appDelegate.appBackgroundingForSeedOrSend = false
 
             let ac = UIAlertController(title: "Touch ID not available", message: "Your device is not configured for Touch ID.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Okay", style: .default))

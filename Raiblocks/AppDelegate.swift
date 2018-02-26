@@ -22,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var coverWindow: UIWindow?
     private var coverVC: UIViewController?
 
-    var appBackgroundingForSeedOrSend: Bool = false
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()
@@ -68,8 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-        guard !appBackgroundingForSeedOrSend else { return }
+    }
 
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         coverVC = BackgroundViewController()
         coverWindow = UIWindow(frame: UIScreen.main.bounds)
         let existingTopWindow = UIApplication.shared.windows.last
@@ -80,11 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         coverWindow?.makeKeyAndVisible()
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
@@ -93,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "ReestablishConnection")))
 
-        if coverWindow != nil && !appBackgroundingForSeedOrSend {
+        if coverWindow != nil {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
                 self.coverVC?.view.alpha = 0
             }) { _ in
