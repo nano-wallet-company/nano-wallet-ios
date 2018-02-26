@@ -55,15 +55,4 @@ final class Credentials: Object {
         return Address(core.createAddress(fromPublicKey: publicKey))!
     }
 
-    // MARK: - Functions
-
-    // TODO: remove this
-    static func legacyLogOut() {
-        let defaults = UserDefaults.standard
-
-        for val in ["seed", "pkd", "publicKey", "address", "localCurrency"] {
-            defaults.set(nil, forKey: val)
-        }
-    }
-
 }

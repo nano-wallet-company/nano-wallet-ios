@@ -34,9 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        // TODO: Remove me after beta testing
-        Credentials.legacyLogOut()
-
         if let _ = UserService().currentUserSeed() {
             self.navigationController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
         } else {
