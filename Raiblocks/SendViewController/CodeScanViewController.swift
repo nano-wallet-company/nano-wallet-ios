@@ -81,7 +81,9 @@ final class AddressParser {
 
         var amount: Double = 0
         if String(_addressString).contains("amount=") {
-            amount = Double(_addressString.split(separator: "=")[1]) ?? 0
+            // TODO: protect against strings formatted as 1,000.00
+            let val = _addressString.split(separator: "=")[1].replacingOccurrences(of: ",", with: ".")
+            amount = Double(val) ?? 0
         }
 
         return (address: address, amount: amount)

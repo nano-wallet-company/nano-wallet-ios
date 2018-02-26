@@ -597,7 +597,16 @@ extension SendViewController: UITextViewDelegate {
     // Allow any A-Z,0-9 character through for the seed as well as backspaces, prevent everything else
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let isBackspace = strcmp(text.cString(using: .utf8)!, "\\b") == -92
-        if sendAddressIsValid.value { return isBackspace } // Only allow backspaces on already valid address
+        // Only allow backspaces on already valid address
+        if sendAddressIsValid.value {
+            if text == "\n" {
+                textView.resignFirstResponder()
+
+                return true
+            }
+
+            return isBackspace
+        }
 
         // if you paste in an address
         if text.count > 60 {
