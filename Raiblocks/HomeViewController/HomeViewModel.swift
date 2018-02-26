@@ -128,15 +128,14 @@ final class HomeViewModel {
         }
 
         socket.event.close = { code, reason, clean in
-            Crashlytics.sharedInstance().recordError(NanoWalletError.socketConnectionWasClosed)
+            Answers.logCustomEvent(withName: "Socked Closed in HomeVM", customAttributes: ["code": code, "reason": reason])
 
             self._hasNetworkConnection.value = false
-//             print("CONNECTION WAS CLOSED")
+            // print("CONNECTION WAS CLOSED")
         }
 
         socket.event.error = { error in
-            Crashlytics.sharedInstance().recordError(NanoWalletError.socketEventError, withAdditionalUserInfo: ["error": error.localizedDescription])
-
+            Answers.logCustomEvent(withName: "Socket Error in HomeVM", customAttributes: ["error": error.localizedDescription])
             // print("error \(error)")
         }
 
