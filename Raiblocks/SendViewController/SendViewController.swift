@@ -40,6 +40,8 @@ final class SendViewController: UIViewController {
     private weak var activeTextField: UITextField?
     private weak var sendButton: NanoButton?
 
+    private var isScanningAmount: Bool = false
+
     weak var delegate: SendViewControllerDelegate?
 
     let (nanoSignal, nanoObserver) = Signal<KeyboardButton, NoError>.pipe()
@@ -295,9 +297,10 @@ final class SendViewController: UIViewController {
             self.viewModel.localCurrencyAmount.value = NSDecimalNumber(string: string == "" ? "0" : string)
         }
 
-        viewModel.nanoAmount.producer.startWithValues {
-            if self.activeTextField == self.nanoTextField {
-                self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: $0) ?? "0\(self.viewModel.decimalSeparator)0"
+        viewModel.nanoAmount.producer.startWithValues { amount in
+            // TODO: fix case where local currency amount is selected, you scan a code with an amount and the translated amount isn't present
+            if self.activeTextField == self.nanoTextField || self.activeTextField == nil {
+                self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: amount) ?? "0\(self.viewModel.decimalSeparator)0"
             }
         }
 
@@ -534,10 +537,16 @@ final class SendViewController: UIViewController {
 
 extension SendViewController: CodeScanViewControllerDelegate {
 
-    func didReceiveAddress(address: Address) {
+    func didReceiveAddress(address: Address, amount: Double) {
         self.sendAddressIsValid.value = true
+        self.isScanningAmount = true
         self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = addAttributes(forAttributedText: address.longAddressWithColor)
+
+        if amount > 0 {
+            self.nanoTextField?.text = "\(amount)"
+            viewModel.nanoAmount.value = NSDecimalNumber(floatLiteral: amount)
+        }
 
         navigationController?.dismiss(animated: true) {
             self.nanoTextField?.becomeFirstResponder()
@@ -643,11 +652,13 @@ extension SendViewController: UITextFieldDelegate {
             return viewModel.maxAmountInUse = false
         }
 
-        nanoTextField?.text = nil
-        localCurrencyTextField?.text = viewModel.localCurrency.mark
+        if !self.isScanningAmount {
+            nanoTextField?.text = nil
+            localCurrencyTextField?.text = viewModel.localCurrency.mark
 
-        viewModel.nanoAmount.value = 0
-        viewModel.localCurrencyAmount.value = 0
+            viewModel.nanoAmount.value = 0
+            viewModel.localCurrencyAmount.value = 0
+        }
 
         if activeTextField == nanoTextField {
             nanoTextField?.setLargerFontSize()
@@ -656,6 +667,8 @@ extension SendViewController: UITextFieldDelegate {
             localCurrencyTextField?.setLargerFontSize()
             nanoTextField?.setSmallerFontSize()
         }
+
+        self.isScanningAmount = false
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
