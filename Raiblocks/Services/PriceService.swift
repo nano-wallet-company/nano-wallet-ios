@@ -81,29 +81,13 @@ final class PriceService {
             }
 
             let pair = LocalCurrencyPair(currency: self.localCurrency.value)
-        
-            if let data = data {
-                if let price = try? pair.decode(fromData: data) {
-                    self._lastBTCLocalCurrencyPrice.value = price
-                } else {
-                    Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString, "event": "price decode failed", "currency": pair.currency.paramValue])
-                    self._lastBTCLocalCurrencyPrice.value = 0
-                }
+            if let data = data, let price = try? pair.decode(fromData: data) {
+                self._lastBTCLocalCurrencyPrice.value = price
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
+                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
+
                 self._lastBTCLocalCurrencyPrice.value = 0
             }
-
-            // TODO: re-implement after debugging
-//            if let data = data, let price = try? pair.decode(fromData: data) {
-//                print(price)
-//                self._lastBTCLocalCurrencyPrice.value = price
-//            } else {
-//                print("error...")
-//                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
-//
-//                self._lastBTCLocalCurrencyPrice.value = 0
-//            }
         }.resume()
     }
 
@@ -118,29 +102,13 @@ final class PriceService {
             }
 
             let pair = NanoPricePair(currency: self.localCurrency.value)
-
-            if let data = data {
-                if let price = try? pair.decode(fromData: data) {
-                    self._lastNanoLocalCurrencyPrice.value = price
-                } else {
-                    Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data", customAttributes: ["url": url.absoluteString, "event": "price decode failed", "currency": pair.currency.paramValue])
-
-                    self._lastNanoLocalCurrencyPrice.value = 0
-                }
+            if let data = data, let price = try? pair.decode(fromData: data) {
+                self._lastNanoLocalCurrencyPrice.value = price
             } else {
                 Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data", customAttributes: ["url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
 
                 self._lastNanoLocalCurrencyPrice.value = 0
             }
-
-            // will re-implement after debugging in next build
-//            if let data = data, let price = try? pair.decode(fromData: data) {
-//                self._lastNanoLocalCurrencyPrice.value = price
-//            } else {
-//                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data")
-//
-//                self._lastNanoLocalCurrencyPrice.value = 0
-//            }
         }.resume()
     }
 
