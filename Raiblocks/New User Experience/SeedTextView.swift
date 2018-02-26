@@ -27,7 +27,7 @@ final class SeedTextView: UITextView {
         spellCheckingType = .no
         tintColor = Styleguide.Colors.lightBlue.color
         autocapitalizationType = .allCharacters
-        textContainerInset = UIEdgeInsets(top: 15, left: 60, bottom: 12, right: 60)
+        textContainerInset = UIEdgeInsets(top: 15, left: 50, bottom: 12, right: 50)
     }
     
     required init?(coder aDecoder: NSCoder) {

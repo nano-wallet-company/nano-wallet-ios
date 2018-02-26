@@ -190,7 +190,11 @@ class WelcomeViewController: UIViewController {
 
     @objc func toggleTextFieldForSeed() {
         let shouldShow = self.textFieldHeightConstraint?.constant == 0
-        self.textFieldHeightConstraint?.constant = shouldShow ? 80 : 0
+        if isiPhoneSE() {
+            self.textFieldHeightConstraint?.constant = shouldShow ? 100 : 0
+        } else {
+            self.textFieldHeightConstraint?.constant = shouldShow ? 80 : 0
+        }
         self.cameraButtonHeightConstraint?.constant = shouldShow ? 50 : 0
 
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
