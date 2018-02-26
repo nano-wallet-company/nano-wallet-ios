@@ -45,8 +45,8 @@ extension RaiCore {
 
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
-                // check for fundamental networking error
-                Crashlytics.sharedInstance().recordError(NanoWalletError.unableToGenerateWork)
+                // TODO: check for fundamental networking error
+                Answers.logCustomEvent(withName: "Unable to Generate Work", customAttributes: ["error": error?.localizedDescription ?? ""])
                 return
             }
 
