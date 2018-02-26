@@ -163,6 +163,7 @@ final class SendViewController: UIViewController {
 
         let localCurrencyTextField = SendTextField()
         localCurrencyTextField.delegate = self
+        localCurrencyTextField.setSmallerFontSize()
         priceSection.addSubview(localCurrencyTextField)
         constrain(localCurrencyTextField, nanoTextField) {
             $0.top == $1.bottom
