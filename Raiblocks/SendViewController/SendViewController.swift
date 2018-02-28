@@ -207,6 +207,8 @@ final class SendViewController: UIViewController {
             $0.centerX == $0.superview!.centerX
         }
 
+        // MARK: - SendTextField producers (handles text)
+
         // Refactor all of this to be more functional
         nanoProducer.producer.startWithValues { button in
             guard
@@ -280,55 +282,57 @@ final class SendViewController: UIViewController {
             }
 
             guard let updatedText = textField.text else {
-                return self.viewModel.localCurrencyAmount.value = 0.0
+                Answers.logCustomEvent(withName: "Error unwrapping Local Currency text", customAttributes: ["text": textField.text ?? ""])
+                textField.text = "There was a problem"
+
+                return
             }
 
-            var string = updatedText
+            var value = updatedText
 
             // Remove currency mark
             for _ in 0..<self.viewModel.localCurrency.mark.count {
-                string.remove(at: string.startIndex)
+                value.remove(at: value.startIndex)
             }
 
-            string = self.formatForMath(string)
+            value = self.formatForMath(value)
 
             self.sendableAmountIsValid.value = textField.text != "\(self.viewModel.localCurrency.mark)"
 
-            self.viewModel.localCurrencyAmount.value = NSDecimalNumber(string: string == "" ? "0" : string)
+            let decimalValue = NSDecimalNumber(string: value == "" ? "0" : value)
+
+            // Code for converstion to Nano amount
+            let lastTradePrice = NSDecimalNumber(value: self.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
+            // If there is an error with the PriceService
+            guard lastTradePrice.compare(0) == .orderedDescending else {
+                self.nanoTextField?.text = "Error Getting Nano Price"
+                self.sendableAmountIsValid.value = false
+
+                // TODO: make this more apparent to the user with online/offline UI states
+                return
+            }
+
+            let dividedAmount = decimalValue.dividing(by: lastTradePrice)
+            let raw = dividedAmount.asRawValue
+
+            if raw.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
+                self.fillOutWithMaxBalance(showAlert: true)
+            } else {
+                let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+
+                let roundedAmount = dividedAmount.rounding(accordingToBehavior: numberHandler)
+                self.viewModel.nanoAmount.value = roundedAmount
+            }
         }
+
+        // MARK: - NSDecimalNumber Producer
 
         viewModel.nanoAmount.producer.startWithValues { amount in
             // TODO: fix case where local currency amount is selected, you scan a code with an amount and the translated amount isn't present
             if self.activeTextField == self.nanoTextField || self.activeTextField == nil {
                 self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: amount) ?? "0\(self.viewModel.decimalSeparator)0"
-            }
-        }
-
-        viewModel.localCurrencyAmount.producer.startWithValues { amount in
-            if self.activeTextField == self.localCurrencyTextField {
-                let lastTradePrice = NSDecimalNumber(value: self.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
-
-                // If there is an error with the PriceService
-                guard lastTradePrice.compare(0) == .orderedDescending else {
-                    self.nanoTextField?.text = "Error Getting Nano Price"
-                    self.sendableAmountIsValid.value = false
-
-                    // TODO: make this more apparent to the user with online/offline UI states
-                    return
-                }
-
-                let dividedAmount = amount.dividing(by: lastTradePrice)
-                let raw = dividedAmount.asRawValue
-
-                if raw.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
-                    self.fillOutWithMaxBalance(showAlert: true)
-                } else {
-                    let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-
-                    let roundedAmount = dividedAmount.rounding(accordingToBehavior: numberHandler)
-                    self.viewModel.nanoAmount.value = roundedAmount
-                    self.nanoTextField?.text = roundedAmount    .stringValue
-                }
+            } else {
+                self.nanoTextField?.text = amount.stringValue
             }
         }
     }
@@ -667,7 +671,6 @@ extension SendViewController: UITextFieldDelegate {
             localCurrencyTextField?.text = viewModel.localCurrency.mark
 
             viewModel.nanoAmount.value = 0
-            viewModel.localCurrencyAmount.value = 0
         }
 
         if activeTextField == nanoTextField {

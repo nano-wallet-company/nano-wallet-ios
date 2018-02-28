@@ -8,10 +8,6 @@
 
 import UIKit
 
-import ReactiveSwift
-import ReactiveCocoa
-
-
 final class SendTextField: UITextField {
 
     init() {

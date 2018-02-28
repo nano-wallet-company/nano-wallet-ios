@@ -23,8 +23,6 @@ final class SendViewModel {
     let decimalSeparator: String
 
     let nanoAmount = MutableProperty<NSDecimalNumber>(0)
-    let localCurrencyAmount = MutableProperty<NSDecimalNumber>(0)
-
     var maxAmountInUse: Bool = false
 
     let priceService = PriceService()
