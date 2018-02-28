@@ -25,6 +25,8 @@ final class HomeViewModel {
             let seed = UserService().currentUserSeed(),
             let credentials = Credentials(seedString: seed)
         else {
+            Answers.logCustomEvent(withName: "App crashed due to missing Credentials")
+
             fatalError("There should always be a seed")
         }
 
