@@ -263,7 +263,7 @@ class WelcomeViewController: UIViewController {
 
 extension WelcomeViewController: UITextViewDelegate {
 
-    // Allow any A-Z,0-9 character through for the seed as well as backspaces, prevent everything else
+    // Allow any A-F, 0-9 character through for the seed as well as backspaces, prevent everything else
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Pastes an address
         if (Address(text)) != nil || text.contains("_") {
@@ -276,11 +276,21 @@ extension WelcomeViewController: UITextViewDelegate {
         if text.count == 64 {
             // User pasted an address
             if (Address(text) != nil || text.contains("_")) {
+                Answers.logCustomEvent(withName: "Bad Wallet Seed Pasted", customAttributes: ["error_type": "Address pasted"])
+
                 showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
 
                 return false
             } else {
-                createCredentialsAndContinue(forSeed: text.flatten())
+                let seed = text.flatten()
+                let pattern = try? NSRegularExpression(pattern: "[a-fA-F0-9{64}]", options: .caseInsensitive)
+                if pattern?.numberOfMatches(in: seed, options: [], range: text.entireRange) == 1 {
+                    createCredentialsAndContinue(forSeed: seed)
+                } else {
+                    Answers.logCustomEvent(withName: "Bad Wallet Seed Pasted", customAttributes: ["error_type": "Didn't match regex"])
+
+                    showAlertForBadSeed(message: "There was a problem with the Wallet Seed you pasted.\n\nPlease make sure it's 64 characters, only using 0-9 and A-F.")
+                }
             }
         }
 

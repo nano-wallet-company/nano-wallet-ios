@@ -19,4 +19,8 @@ extension String {
         return self.replacingOccurrences(of: " ", with: "")
     }
 
+    var entireRange: NSRange {
+        return NSRange(location: 0, length: utf16.count)
+    }
+
 }
