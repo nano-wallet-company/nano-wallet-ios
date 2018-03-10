@@ -17,8 +17,11 @@ final class UserService {
             let path = Bundle.main.path(forResource: "Common", ofType: "plist"),
             let root = NSDictionary(contentsOfFile: path) as? [String: String],
             let keychainID = root["keychainID"]
-        else { fatalError("Could not load keychain id") }
-        // TODO: crashlytics log
+        else {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToGetKeychainKeyID)
+
+            fatalError("Could not load keychain id")
+        }
 
         // Identifier for our keychain entry - should be unique for your application
         let keychainIdentifier = keychainID

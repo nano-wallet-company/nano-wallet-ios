@@ -24,4 +24,5 @@ enum NanoWalletError: Error {
 
     case logOutError
 
+    case unableToGetKeychainKeyID
 }
