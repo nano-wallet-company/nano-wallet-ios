@@ -31,7 +31,7 @@ class ReceiveViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // TODO: add pan gesture recgnizer
+    // TODO: add pan gesture recognizer
     override func viewDidLoad() {
         super.viewDidLoad()
 

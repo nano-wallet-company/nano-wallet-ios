@@ -11,7 +11,7 @@
 
 #import "RaiCore.h"
 
-// TODO: name the functions better
+
 @implementation RaiCore
 
 // MARK: - Address validation
