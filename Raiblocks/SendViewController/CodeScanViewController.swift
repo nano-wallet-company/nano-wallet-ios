@@ -14,7 +14,7 @@ import ReactiveSwift
 
 
 @objc protocol CodeScanViewControllerDelegate: class {
-    func didReceiveAddress(address: Address, amount: Double)
+    func didReceiveAddress(address: Address, amount: NSDecimalNumber)
 }
 
 
@@ -67,26 +67,6 @@ final class CodeScanViewController: ScannerViewContoller {
                     Answers.logCustomEvent(withName: "Error Parsing QR Code", customAttributes: ["qr_code_string": string])
                 }
             }
-    }
-
-}
-
-final class AddressParser {
-
-    static func parse(string: String) -> (address: Address, amount: Double)? {
-        let _addressString = string.split(separator: ":")[1]
-        let addressString = _addressString.split(separator: "?")[0]
-
-        guard let address = Address(String(addressString)) else { return nil }
-
-        var amount: Double = 0
-        if String(_addressString).contains("amount=") {
-            // TODO: protect against strings formatted as 1,000.00
-            let val = _addressString.split(separator: "=")[1].replacingOccurrences(of: ",", with: ".")
-            amount = Double(val) ?? 0
-        }
-
-        return (address: address, amount: amount)
     }
 
 }

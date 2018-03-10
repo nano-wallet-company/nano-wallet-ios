@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
 		5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F6191FD89BD300CEAE78 /* String+Extensions.swift */; };
 		51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
@@ -123,6 +124,7 @@
 
 /* Begin PBXFileReference section */
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
+		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		5117F4CF1FD8490800CEAE78 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		5117F6191FD89BD300CEAE78 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Extensions.swift"; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */,
 				51CD15401FF86B99004102A2 /* SendKeyboard.swift */,
 				51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */,
+				510896D22053739300A5362D /* AddressParser.swift */,
 				51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */,
 				517CCCCE20250A410095590D /* SendAddressTextView.swift */,
 			);
@@ -745,6 +748,7 @@
 				51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */,
 				5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */,
 				51A520591FE32E53003F6EC7 /* Currency.swift in Sources */,
+				510896D32053739300A5362D /* AddressParser.swift in Sources */,
 				5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */,
 				515B4A4F1FD22AA20059F514 /* ReceiveViewController.swift in Sources */,
 				5122A6152017931E00F7F43A /* NanoWalletError.swift in Sources */,

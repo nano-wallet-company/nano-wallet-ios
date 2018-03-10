@@ -542,19 +542,29 @@ final class SendViewController: UIViewController {
 
 extension SendViewController: CodeScanViewControllerDelegate {
 
-    func didReceiveAddress(address: Address, amount: Double) {
+    func didReceiveAddress(address: Address, amount: NSDecimalNumber) {
         self.sendAddressIsValid.value = true
         self.isScanningAmount = true
         self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = addAttributes(forAttributedText: address.longAddressWithColor)
 
-        if amount > 0 {
-            self.nanoTextField?.text = "\(amount)"
-            viewModel.nanoAmount.value = NSDecimalNumber(floatLiteral: amount)
-        }
+        switch amount.compare(0) {
+        case .orderedSame, .orderedAscending:
+            navigationController?.dismiss(animated: true) {
+                self.nanoTextField?.becomeFirstResponder()
+            }
 
-        navigationController?.dismiss(animated: true) {
-            self.nanoTextField?.becomeFirstResponder()
+        case .orderedDescending:
+            if amount.asRawValue.compare(viewModel.sendableNanoBalance) == .orderedDescending {
+                let ac = UIAlertController(title: "Amount Too Large", message: "The amount in the QR code is greater than your Nano balance", preferredStyle: .actionSheet)
+                ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+                    self.navigationController?.dismiss(animated: true) {
+                        self.nanoTextField?.becomeFirstResponder()
+                    }
+                })
+
+                return present(ac, animated: true, completion: nil)
+            }
         }
     }
 
