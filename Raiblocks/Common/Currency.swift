@@ -101,7 +101,7 @@ enum Currency: String {
         case .thb: return "th_TH"
         case ._try: return "tr_TR"
         case .twd: return "en_TW"
-        case .zar: return "pt_BR" // Is this correct?
+        case .zar: return "pt_BR"
         case .usd: return "en_US"
         }
     }
