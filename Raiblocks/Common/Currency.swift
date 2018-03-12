@@ -176,7 +176,7 @@ enum Currency: String {
             numberFormatter.maximumFractionDigits = 8
         default:
             numberFormatter.numberStyle = .currency
-            numberFormatter.locale = locale
+            numberFormatter.locale = Locale.current
         }
 
         return numberFormatter
