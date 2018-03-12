@@ -18,7 +18,10 @@ final class AddressParser {
             var amount: NSDecimalNumber = 0
             if String(_addressString).contains("amount=") {
                 // TODO: protect against strings formatted as 1,000.00
-                let val = _addressString.split(separator: "=")[1].replacingOccurrences(of: ",", with: ".")
+                let values = _addressString.split(separator: "=")
+
+                guard values.count > 1 else { return (address: address, amount: 0) }
+                let val = values[1].replacingOccurrences(of: ",", with: ".")
                 amount = NSDecimalNumber(string: val)
             }
 
