@@ -62,8 +62,19 @@ final class SendViewController: UIViewController {
             .take(during: lifetime)
             .observe(on: UIScheduler())
             .startWithValues {
-                self.sendButton?.isEnabled = ($0 && $1)
+                let state = self.viewModel.socket.readyState == .open
+                self.sendButton?.isEnabled = ($0 && $1 && state)
             }
+
+        viewModel.socket.event.open = {
+            self.sendButton?.isEnabled = true
+        }
+
+        viewModel.socket.event.close = { _, _, _ in
+            self.sendButton?.isEnabled = false
+
+            viewModel.checkAndOpenSocket()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -248,7 +259,7 @@ final class SendViewController: UIViewController {
 
             // If the value you typed is too large
             if value.asRawValue.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
-                return self.fillOutWithMaxBalance(showAlert: true)
+                return self.fillOutWithMaxBalance()
             }
 
             self.sendableAmountIsValid.value = textField.text != ""
@@ -316,7 +327,7 @@ final class SendViewController: UIViewController {
             let raw = dividedAmount.asRawValue
 
             if raw.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
-                self.fillOutWithMaxBalance(showAlert: true)
+                self.fillOutWithMaxBalance()
             } else {
                 let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
 
@@ -397,6 +408,8 @@ final class SendViewController: UIViewController {
     }
 
     @objc func openCamera() {
+        return viewModel.socket.close()
+
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 DispatchQueue.main.async {
@@ -426,6 +439,8 @@ final class SendViewController: UIViewController {
             let address = Address(textView.attributedText.string),
             let work = viewModel.work
         else { return }
+
+        viewModel.checkAndOpenSocket() // TODO: add UI to show online state
 
         let subtractor: NSDecimalNumber
         let remainingBalance: NSDecimalNumber
@@ -556,14 +571,16 @@ extension SendViewController: CodeScanViewControllerDelegate {
 
         case .orderedDescending:
             if amount.asRawValue.compare(viewModel.sendableNanoBalance) == .orderedDescending {
-                let ac = UIAlertController(title: "Amount Too Large", message: "The amount in the QR code is greater than your Nano balance", preferredStyle: .actionSheet)
-                ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
-                    self.navigationController?.dismiss(animated: true) {
-                        self.nanoTextField?.becomeFirstResponder()
-                    }
-                })
+                navigationController?.dismiss(animated: true) {
+                    self.nanoTextField?.becomeFirstResponder()
+                }
+            } else {
+                navigationController?.dismiss(animated: true) {
+                    self.sendableAmountIsValid.value = true
 
-                return present(ac, animated: true, completion: nil)
+                    self.viewModel.nanoAmount.value = amount
+                    self.nanoTextField?.text = amount.stringValue
+                }
             }
         }
     }

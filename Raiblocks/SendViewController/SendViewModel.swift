@@ -86,4 +86,11 @@ final class SendViewModel {
         return hex
     }
 
+    func checkAndOpenSocket() {
+        switch socket.readyState {
+        case .closed: socket.open()
+        case .open, .closing, .connecting: break
+        }
+    }
+
 }
