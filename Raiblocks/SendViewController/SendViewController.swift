@@ -688,7 +688,11 @@ extension SendViewController: UITextFieldDelegate {
 
         // This guard makes sure that fields aren't zeroed out after the alert shows when you enter over your max balance
         guard !viewModel.maxAmountInUse else  {
-            return viewModel.maxAmountInUse = false
+            nanoTextField?.text = nil
+            localCurrencyTextField?.text = viewModel.localCurrency.mark
+            viewModel.maxAmountInUse = false
+
+            return
         }
 
         if !self.isScanningAmount {
@@ -712,6 +716,8 @@ extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
         guard string.count == 1 else { return false }
+
+        if viewModel.maxAmountInUse && string != "<" { return false } // only allow backspaces after the max amount
 
         if text == viewModel.localCurrency.mark && range.length == 1 && string == "<" { return false }
 

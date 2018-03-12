@@ -20,7 +20,7 @@ extension NSDecimalNumber {
         let result = rawAsUsableAmount
 
         let numberFormatter = NumberFormatter()
-        numberFormatter.locale = Locale.current
+        numberFormatter.locale = CurrencyService().localCurrency().locale
         numberFormatter.roundingMode = .floor
         numberFormatter.maximumFractionDigits = 6
 
@@ -31,7 +31,7 @@ extension NSDecimalNumber {
         let result = rawAsUsableAmount
 
         let numberFormatter = NumberFormatter()
-        numberFormatter.locale = Locale.current
+        numberFormatter.locale = CurrencyService().localCurrency().locale
         numberFormatter.roundingMode = .floor
         numberFormatter.maximumFractionDigits = 10
 

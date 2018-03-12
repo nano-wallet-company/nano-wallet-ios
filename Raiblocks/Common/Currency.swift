@@ -90,7 +90,7 @@ enum Currency: String {
         case .krw: return "ko_KR"
         case .mxn: return "es_MX" // uses $
         case .myr: return "ta_MY"
-        case .nok: return "nn_NO" // fo_FO or nb_NO
+        case .nok: return "nn_NO" // fo_FO or nn_NO
         case .nzd: return "en_NZ" // uses $
         case .php: return "fil_PH"
         case .pkr: return "en_MU"
@@ -169,6 +169,7 @@ enum Currency: String {
 
     var numberFormatter: NumberFormatter {
         let numberFormatter = NumberFormatter()
+        numberFormatter.locale = locale
 
         switch self {
         case .btc:
@@ -176,7 +177,6 @@ enum Currency: String {
             numberFormatter.maximumFractionDigits = 8
         default:
             numberFormatter.numberStyle = .currency
-            numberFormatter.locale = Locale.current
         }
 
         return numberFormatter

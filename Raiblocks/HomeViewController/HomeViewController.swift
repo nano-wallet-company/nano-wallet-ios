@@ -363,6 +363,8 @@ extension HomeViewController: SettingsViewControllerDelegate {
 
     func localCurrencyWasSelected(currency: Currency) {
         viewModel.update(localCurrency: currency)
+
+        viewModel.refresh()
     }
 
 }

@@ -42,6 +42,7 @@ class PriceViewController: UIViewController {
                     let formatter = NumberFormatter()
                     formatter.numberStyle = .decimal
                     formatter.maximumFractionDigits = 10
+                    formatter.locale = CurrencyService().localCurrency().locale
 
                     self.priceLabel?.text = formatter.string(from: nanoBalance.rawAsUsableAmount) ?? "0" + " NANO"
             }

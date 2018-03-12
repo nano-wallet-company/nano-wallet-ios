@@ -33,6 +33,7 @@ final class TransactionTableViewCell: UITableViewCell {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = isiPhoneSE() ? 7 : 10
+            formatter.locale = CurrencyService().localCurrency().locale
 
             self.amountLabel?.text = formatter.string(from: viewModel.amount) ?? "0"
             self.addressLabel?.attributedText = viewModel.address?.shortAddressWithColor
