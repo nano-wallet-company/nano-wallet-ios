@@ -408,8 +408,6 @@ final class SendViewController: UIViewController {
     }
 
     @objc func openCamera() {
-        return viewModel.socket.close()
-
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 DispatchQueue.main.async {
