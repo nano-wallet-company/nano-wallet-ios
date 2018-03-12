@@ -284,7 +284,7 @@ extension WelcomeViewController: UITextViewDelegate {
             } else {
                 let seed = text.flatten()
                 let pattern = try? NSRegularExpression(pattern: "[a-fA-F0-9{64}]", options: .caseInsensitive)
-                if pattern?.numberOfMatches(in: seed, options: [], range: text.entireRange) == 1 {
+                if pattern?.numberOfMatches(in: seed, options: [], range: text.entireRange) == 64 {
                     createCredentialsAndContinue(forSeed: seed)
                 } else {
                     Answers.logCustomEvent(withName: "Bad Wallet Seed Pasted", customAttributes: ["error_type": "Didn't match regex"])
