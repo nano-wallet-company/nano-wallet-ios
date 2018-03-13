@@ -5,7 +5,8 @@
 * Clone the repo
 * Make sure [CocoaPods](https://cocoapods.org) is installed and run `pod install` in the `Raiblocks` directory
 * Open the `Raiblocks.xcworkspace` file
-* Build and run on your device and you should be good to go!
+* You must build and run on your device due to the `RaiCoreBase` library's support for arm64 architecture.
+* You should be good to go!
 
 _Note: Nano Wallet for iOS supports devices with iOS 11+_
 
