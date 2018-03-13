@@ -314,7 +314,6 @@ final class SendViewController: UIViewController {
 
             // Code for converstion to Nano amount
             let lastTradePrice = NSDecimalNumber(value: self.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
-            // If there is an error with the PriceService
             guard lastTradePrice.compare(0) == .orderedDescending else {
                 self.nanoTextField?.text = "Error Getting Nano Price"
                 self.sendableAmountIsValid.value = false
@@ -329,7 +328,7 @@ final class SendViewController: UIViewController {
             if raw.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
                 self.fillOutWithMaxBalance()
             } else {
-                let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 2, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+                let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 6, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
 
                 let roundedAmount = dividedAmount.rounding(accordingToBehavior: numberHandler)
                 self.viewModel.nanoAmount.value = roundedAmount
