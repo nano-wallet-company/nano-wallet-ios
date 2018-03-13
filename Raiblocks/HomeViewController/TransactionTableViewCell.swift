@@ -47,7 +47,7 @@ final class TransactionTableViewCell: UITableViewCell {
         let icon = UIImageView()
         addSubview(icon)
         constrain(icon) {
-            $0.left == $0.superview!.left + CGFloat(40)
+            $0.left == $0.superview!.left + CGFloat(24)
             $0.centerY == $0.superview!.centerY
         }
         self.icon = icon
@@ -55,7 +55,7 @@ final class TransactionTableViewCell: UITableViewCell {
         let nanoCurrencySymbol = UIImageView()
         addSubview(nanoCurrencySymbol)
         constrain(nanoCurrencySymbol, icon) {
-            $0.left == $1.right + CGFloat(16)
+            $0.left == $1.right + (isiPhoneSE() ? CGFloat(8) : CGFloat(16))
             $0.top == $1.top
         }
         self.nanoCurrencySymbol = nanoCurrencySymbol
