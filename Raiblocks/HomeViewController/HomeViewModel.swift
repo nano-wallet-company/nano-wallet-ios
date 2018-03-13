@@ -222,9 +222,8 @@ final class HomeViewModel {
 
     func checkAndOpenSockets() {
         switch socket.readyState {
-        case .open: socket.send(endpoint: .accountBlockCount(address: address))
         case .closed: socket.open()
-        case .closing, .connecting: break
+        case .open, .closing, .connecting: break
         }
 
         switch hashStreamingSocket.readyState {
