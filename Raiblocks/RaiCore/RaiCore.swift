@@ -24,6 +24,7 @@ extension RaiCore {
         return URL(string: urlString)
     }
 
+    // TODO: refactor these after ublocks comes out
     func createWorkForOpenBlock(withPublicKey publicKey: String, completion: ((_ work: String) -> Void)?) {
         guard let data = Endpoint.createWorkForOpenBlock(publicKey: publicKey) else { return }
 
@@ -34,6 +35,16 @@ extension RaiCore {
         guard let data = Endpoint.createWork(previousHash: previous) else { return }
 
         doWork(forData: data) { completion?($0) }
+    }
+
+    func createWorkForSending(previousHash previous: String, completion: @escaping ((_ work: String?) -> Void)) {
+        guard let data = Endpoint.createWork(previousHash: previous) else {
+            Answers.logCustomEvent(withName: "Unable to generate work for Send")
+
+            return completion(nil)
+        }
+
+        doWork(forData: data) { completion($0) }
     }
 
     private func doWork(forData data: Data, completion: ((_ work: String) -> Void)?) {

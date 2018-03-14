@@ -218,6 +218,16 @@ final class SendViewController: UIViewController {
             $0.centerX == $0.superview!.centerX
         }
 
+        viewModel.workErrorClosure = {
+            let ac = UIAlertController(title: "Error Generating Work", message: "There was a problem creating work for your transaction.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+                self.delegate?.didFinishWithViewController()
+            })
+
+            self.present(ac, animated: true, completion: nil)
+        }
+
+
         // MARK: - SendTextField producers (handles text)
 
         // Refactor all of this to be more functional

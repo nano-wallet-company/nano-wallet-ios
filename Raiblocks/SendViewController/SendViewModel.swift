@@ -8,6 +8,7 @@
 
 import Foundation
 
+import Crashlytics
 import ReactiveSwift
 import SwiftWebSocket
 
@@ -28,6 +29,7 @@ final class SendViewModel {
     let priceService = PriceService()
 
     private (set) var work: String?
+    var workErrorClosure: (() -> Void)?
 
     init(sendableNanoBalance: NSDecimalNumber, privateKeyData: Data, previousFrontierHash: String, socket: WebSocket, localCurrency: Currency) {
         self.sendableNanoBalance = sendableNanoBalance
@@ -42,7 +44,17 @@ final class SendViewModel {
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {
-            RaiCore().createWork(previousHash: previousFrontierHash) { self.work = $0 }
+            RaiCore().createWorkForSending(previousHash: previousFrontierHash) { createdWork in
+                if let createdWork = createdWork {
+                    self.work = createdWork
+                } else {
+                    Answers.logCustomEvent(withName: "Error Generating Work for Sending")
+
+                    DispatchQueue.main.async {
+                        self.workErrorClosure?()
+                    }
+                }
+            }
         }
 
         priceService.fetchLatestBTCLocalCurrencyPrice()
