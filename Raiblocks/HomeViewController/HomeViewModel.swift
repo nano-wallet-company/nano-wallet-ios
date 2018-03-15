@@ -120,6 +120,12 @@ final class HomeViewModel {
 
         NotificationCenter.default.addObserver(self, selector: #selector(appWasReopened(_:)), name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
 
+        transactions.producer.startWithValues { txn in
+            print(txn)
+
+            print("---")
+        }
+
         socket.event.open = {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
@@ -142,7 +148,7 @@ final class HomeViewModel {
         }
 
         self.socket.event.message = { message in
-//            print(message) // Uncomment for development
+            print(message) // Uncomment for development
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
             if let accountCheck = self.genericDecoder(decodable: AccountCheck.self, from: data) {
@@ -194,7 +200,7 @@ final class HomeViewModel {
                 return self._previousFrontierHash = newFrontierHash.hash
             }
 
-//            print("fail, did not have an object for \(message)")
+            print("fail, did not have an object for \(message)")
         }
 
         socket.open()
@@ -304,7 +310,13 @@ final class HomeViewModel {
     }
 
     private func createOpenBlock(forSource source: String, completion: (() -> Void)? = nil) {
-        RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
+        RaiCore().newCreateWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
+            guard let work = work else {
+                // log
+
+                fatalError() // don't actually do this
+            }
+
             let pendingBlock = Endpoint.createOpenBlock(
                 source: source,
                 work: work,
@@ -317,6 +329,20 @@ final class HomeViewModel {
 
             completion?()
         }
+
+//        RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
+//            let pendingBlock = Endpoint.createOpenBlock(
+//                source: source,
+//                work: work,
+//                representative: self.randomRepresentative(),
+//                address: self.address,
+//                privateKey: self.privateKey
+//            )
+//
+//            self.socket.send(endpoint: pendingBlock)
+//
+//            completion?()
+//        }
     }
 
     private func processPendingBlocks() {
@@ -388,7 +414,13 @@ final class HomeViewModel {
         self.currentlyReceivingHash.value = source
 
         if let previous = previous {
-            RaiCore().createWork(previousHash: previous) { work in
+            RaiCore().newCreateWork(previousHash: previous) { work in
+                guard let work = work else {
+                    // log
+
+                    return completion()
+                }
+
                 self.createReceiveBlock(previousFrontierHash: previous, source: source, work: work)
 
                 self.pendingBlocks[source] = nil

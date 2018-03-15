@@ -24,7 +24,7 @@ enum Endpoint {
     case createSendBlock(destination: Address, balanceHex: String, previous: String, work: String, privateKey: Data)
 
     case createWorkForOpenBlock(publicKey: String)
-    case createWork(previous: String)
+    case createWork(previousHash: String)
 
     private var name: String {
         switch self {
@@ -116,23 +116,23 @@ enum Endpoint {
         return String(bytes: serializedJSON, encoding: .utf8)
     }
 
-    static func createWorkForOpenBlock(publicKey: String) -> Data? {
-        let dict: [String: String] = [
-            "action": "work_generate",
-            "hash": publicKey
-        ]
+//    static func createWorkForOpenBlock(publicKey: String) -> Data? {
+//        let dict: [String: String] = [
+//            "action": "work_generate",
+//            "hash": publicKey
+//        ]
+//
+//        return try? JSONSerialization.data(withJSONObject: dict)
+//    }
 
-        return try? JSONSerialization.data(withJSONObject: dict)
-    }
-
-    static func createWork(previousHash previous: String) -> Data? {
-        let dict: [String: String] = [
-            "action": "work_generate",
-            "hash": previous
-        ]
-
-        return try? JSONSerialization.data(withJSONObject: dict)
-    }
+//    static func createWork(previousHash previous: String) -> Data? {
+//        let dict: [String: String] = [
+//            "action": "work_generate",
+//            "hash": previous
+//        ]
+//
+//        return try? JSONSerialization.data(withJSONObject: dict)
+//    }
 
     // MARK: - Private Functions
 

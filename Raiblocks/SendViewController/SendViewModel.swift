@@ -44,7 +44,7 @@ final class SendViewModel {
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {
-            RaiCore().createWorkForSending(previousHash: previousFrontierHash) { createdWork in
+            RaiCore().newCreateWork(previousHash: previousFrontierHash) { createdWork in
                 if let createdWork = createdWork {
                     self.work = createdWork
                 } else {
