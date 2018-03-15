@@ -23,6 +23,9 @@ enum Endpoint {
     case createReceiveBlock(previous: String, source: String, work: String, privateKey: Data)
     case createSendBlock(destination: Address, balanceHex: String, previous: String, work: String, privateKey: Data)
 
+    case createWorkForOpenBlock(publicKey: String)
+    case createWork(previous: String)
+
     private var name: String {
         switch self {
         case .accountBlockCount: return "account_block_count"
@@ -33,6 +36,7 @@ enum Endpoint {
         case .accountPending: return "pending" // Pending is for 1 account
         case .accountsPending: return "accounts_pending" // Accounts Pending is for all accounts
         case .accountSubscribe: return "account_subscribe"
+        case .createWork, .createWorkForOpenBlock: return "work_generate"
         case .createOpenBlock, .createReceiveBlock, .createSendBlock: return "process"
         }
     }
@@ -102,6 +106,9 @@ enum Endpoint {
             guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
 
             return String(bytes: serializedJSON, encoding: .utf8)
+
+        case let .createWork(hash), let .createWorkForOpenBlock(hash):
+            dict["hash"] = hash
         }
 
         guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
