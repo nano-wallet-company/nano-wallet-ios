@@ -75,8 +75,35 @@ final class UserService {
         } catch {
             Crashlytics.sharedInstance().recordError(NanoWalletError.credentialStorageError)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LogOut"), object: nil)
+        }
+    }
 
-            return
+    func fetchCredentials() -> Credentials? {
+        do {
+            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
+            let realm = try Realm(configuration: config)
+
+            return realm.objects(Credentials.self).first
+
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToFetchCredentials)
+
+            return nil
+        }
+    }
+
+    /// Used for updating with UUID
+    func update(credentials: Credentials) {
+        do {
+            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
+            let realm = try Realm(configuration: config)
+
+            try realm.write {
+                realm.add(credentials, update: true)
+                realm.refresh()
+            }
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithUUID)
         }
     }
 

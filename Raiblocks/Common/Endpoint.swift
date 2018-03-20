@@ -17,7 +17,7 @@ enum Endpoint {
     case accountInfo(address: Address)
     case accountPending(address: Address)
     case accountsPending(address: Address, count: Int)
-    case accountSubscribe(address: Address)
+    case accountSubscribe(uuid: String?, address: Address)
 
     case createOpenBlock(source: String, work: String, representative: String, address: Address, privateKey: Data)
     case createReceiveBlock(previous: String, source: String, work: String, privateKey: Data)
@@ -49,9 +49,15 @@ enum Endpoint {
         case let .accountBalance(address),
              let .accountBlockCount(address),
              let .accountCheck(address),
-             let .accountInfo(address),
-             let .accountSubscribe(address):
+             let .accountInfo(address):
             dict["account"] = address.longAddress
+
+        case let .accountSubscribe(uuid, address):
+            if let uuid = uuid {
+                dict["uuid"] = uuid
+            } else {
+                dict["account"] = address.longAddress
+            }
 
         case let .accountHistory(address, count):
             dict["account"] = address.longAddress

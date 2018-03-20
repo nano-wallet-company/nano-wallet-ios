@@ -16,13 +16,13 @@ import SwiftWebSocket
 final class HomeViewModel {
 
     let socket: WebSocket
-    private let hashStreamingSocket: WebSocket
 
+    private let userService = UserService()
     private let priceService = PriceService()
 
     var credentials: Credentials {
         guard
-            let seed = UserService().currentUserSeed(),
+            let seed = userService.currentUserSeed(),
             let credentials = Credentials(seedString: seed)
         else {
             Answers.logCustomEvent(withName: "App crashed due to missing Credentials")
@@ -32,6 +32,7 @@ final class HomeViewModel {
 
         return credentials
     }
+
     var privateKey: Data {
         return credentials.privateKey
     }
@@ -130,7 +131,7 @@ final class HomeViewModel {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
             self.socket.sendMultiple(endpoints: [
-                .accountSubscribe(address: self.address),
+                .accountSubscribe(uuid: self.userService.fetchCredentials()?.uuid, address: self.address),
                 .accountCheck(address: self.address),
             ])
         }
@@ -257,6 +258,13 @@ final class HomeViewModel {
     private func handle(accountSubscribe: AccountSubscribe, completion: (() -> Void)) {
         // Subscribe and update the Nano account balance text
         self.accountSubscribe = accountSubscribe
+
+        if userService.fetchCredentials()?.uuid == nil {
+            let creds = credentials
+            creds.uuid = accountSubscribe.uuid
+            userService.update(credentials: creds)
+        }
+
         self.lastBlockCount.value = accountSubscribe.blockCount
 
         self._accountBalance.value = accountSubscribe.totalBalance ?? 0

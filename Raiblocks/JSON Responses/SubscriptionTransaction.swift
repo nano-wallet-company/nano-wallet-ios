@@ -6,8 +6,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-// NOTE: need to get new Frontier (use Account Info endpoint and JSON response)
-struct SubscriptionTransaction : Decodable {
+struct SubscriptionTransaction: Decodable {
 
     private let account: String
     private let amount: String
