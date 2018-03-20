@@ -122,24 +122,6 @@ enum Endpoint {
         return String(bytes: serializedJSON, encoding: .utf8)
     }
 
-//    static func createWorkForOpenBlock(publicKey: String) -> Data? {
-//        let dict: [String: String] = [
-//            "action": "work_generate",
-//            "hash": publicKey
-//        ]
-//
-//        return try? JSONSerialization.data(withJSONObject: dict)
-//    }
-
-//    static func createWork(previousHash previous: String) -> Data? {
-//        let dict: [String: String] = [
-//            "action": "work_generate",
-//            "hash": previous
-//        ]
-//
-//        return try? JSONSerialization.data(withJSONObject: dict)
-//    }
-
     // MARK: - Private Functions
 
     private static func createEmptyBlock(forTransactionType type: TransactionType) -> [String: String] {

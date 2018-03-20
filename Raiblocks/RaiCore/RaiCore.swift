@@ -36,9 +36,9 @@ extension RaiCore {
             }
 
             if let work = try? JSONDecoder().decode(WorkGenerate.self, from: data) {
-                completion(work.work)
-
                 socket.close()
+
+                completion(work.work)
             }
         }
 
@@ -57,62 +57,14 @@ extension RaiCore {
             }
 
             if let work = try? JSONDecoder().decode(WorkGenerate.self, from: data) {
-                completion(work.work)
-
                 socket.close()
+
+                completion(work.work)
             }
         }
 
         socket.open()
         socket.send(endpoint: Endpoint.createWork(previousHash: previous))
-    }
-
-    // TODO: refactor these after ublocks comes out
-//    func createWorkForOpenBlock(withPublicKey publicKey: String, completion: ((_ work: String) -> Void)?) {
-//        guard let data = Endpoint.createWorkForOpenBlock(publicKey: publicKey) else { return }
-//        Endpoint.createWorkForOpenBlock(publicKey: publicKey).stringify()!
-
-//        doWork(forData: data) { completion?($0) }
-//    }
-
-//    func createWork(previousHash previous: String, completion: ((_ work: String) -> Void)?) {
-//        guard let data = Endpoint.createWork(previousHash: previous) else { return }
-////        Endpoint.createWork(previous: previous).stringify()!
-//
-//        doWork(forData: data) { completion?($0) }
-//    }
-
-    func createWorkForSending(previousHash previous: String, completion: @escaping ((_ work: String?) -> Void)) {
-        return completion(nil)
-
-
-//        guard let data = Endpoint.createWork(previousHash: previous) else {
-//            Answers.logCustomEvent(withName: "Unable to generate work for Send")
-//
-//            return completion(nil)
-//        }
-//
-//        doWork(forData: data) { completion($0) }
-    }
-
-    private func doWork(forData data: Data, completion: ((_ work: String) -> Void)?) {
-        guard let url = gpuServerURL else { return }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = data
-
-        URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                // TODO: check for fundamental networking error
-                Answers.logCustomEvent(withName: "Unable to Generate Work", customAttributes: ["error": error?.localizedDescription ?? ""])
-                return
-            }
-
-            guard let work = try? JSONDecoder().decode(WorkGenerate.self, from: data) else { return }
-
-            completion?(work.work)
-        }.resume()
     }
 
 }
