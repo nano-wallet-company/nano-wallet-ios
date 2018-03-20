@@ -20,6 +20,6 @@ enum ErrorMessageType: String, Decodable {
 
 struct ErrorMessage: Decodable {
 
-    let errorType: ErrorMessageType
+    let error: ErrorMessageType
 
 }

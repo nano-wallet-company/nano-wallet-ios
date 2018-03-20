@@ -18,6 +18,7 @@ struct PendingBlocks: Decodable {
 
     private (set) var blocks: [String: PendingHistoryItem]
 
+    // I don't think this is needed anymore
     mutating func setPendingItemHashes() -> [String: PendingHistoryItem] {
         for (_, block) in blocks.enumerated() {
             blocks[block.key]?.hash = block.key
