@@ -107,7 +107,7 @@ class SeedConfirmationViewController: UIViewController {
         self.textView = textView
 
         let smallCopy = UILabel()
-        smallCopy.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        smallCopy.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         smallCopy.textColor = Styleguide.Colors.darkBlue.color
         smallCopy.attributedText = NSAttributedString(string: "Tap to copy", attributes: [.kern: 1.0])
         view.addSubview(smallCopy)

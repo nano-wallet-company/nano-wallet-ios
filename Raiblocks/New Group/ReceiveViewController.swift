@@ -42,7 +42,7 @@ class ReceiveViewController: UIViewController {
         navigationController?.navigationBar.tintColor = Styleguide.Colors.lightBlue.color
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: Styleguide.Colors.darkBlue.color,
-            .font: Styleguide.Fonts.sofiaRegular.font(ofSize: 17),
+            .font: Styleguide.Fonts.notoSansRegular.font(ofSize: 17),
             .kern: 5.0
         ]
 
@@ -151,7 +151,7 @@ class ReceiveViewController: UIViewController {
         let nanoAddressLabel = UILabel()
         nanoAddressLabel.attributedText = NSAttributedString(string: "NANO Address".uppercased(), attributes: [.kern: 5.0])
         nanoAddressLabel.textColor = Styleguide.Colors.darkBlue.color
-        nanoAddressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        nanoAddressLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         view.addSubview(nanoAddressLabel)
         constrain(nanoAddressLabel, addressLabelHolder) {
             $0.centerX == $1.centerX

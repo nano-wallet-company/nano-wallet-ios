@@ -61,7 +61,7 @@ final class TransactionTableViewCell: UITableViewCell {
         self.nanoCurrencySymbol = nanoCurrencySymbol
 
         let amountLabel = UILabel()
-        amountLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 20)
+        amountLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 20)
         amountLabel.textColor = Styleguide.Colors.darkBlue.color
         addSubview(amountLabel)
         constrain(amountLabel, nanoCurrencySymbol) {
@@ -71,7 +71,7 @@ final class TransactionTableViewCell: UITableViewCell {
         self.amountLabel = amountLabel
 
         let addressLabel = UILabel()
-        addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        addressLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         addSubview(addressLabel)
         constrain(addressLabel) {
             $0.top == $0.superview!.top + CGFloat(24)

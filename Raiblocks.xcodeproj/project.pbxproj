@@ -51,6 +51,7 @@
 		51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */; };
 		51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */; };
 		5193E8B5205C354D000B45B5 /* RealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5193E8B4205C354D000B45B5 /* RealmMigration.swift */; };
+		5193E8BF2061B3E5000B45B5 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */; };
 		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
 		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
@@ -67,7 +68,6 @@
 		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
 		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
-		51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */; };
 		51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */; };
 		51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* ShareCard.swift */; };
 		51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EADEA120067C6B00660E4A /* RaiCoreBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -171,6 +171,7 @@
 		51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		51912ECD1FDB513F001BDF2C /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
 		5193E8B4205C354D000B45B5 /* RealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigration.swift; sourceTree = "<group>"; };
+		5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		519B4D371FD23521006B7B6E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Raiblocks-Bridging-Header.h"; sourceTree = "<group>"; };
 		519B4D7E1FD7493E006B7B6E /* RaiCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCore.h; sourceTree = "<group>"; };
@@ -340,8 +341,9 @@
 			isa = PBXGroup;
 			children = (
 				515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */,
-				515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */,
 				515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */,
+				515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */,
+				5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -599,8 +601,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5193E8BF2061B3E5000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
-				51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,

@@ -23,7 +23,7 @@ enum Styleguide {
     enum Fonts: String {
         case nunitoLight = "Nunito-Light"
         case nunitoRegular = "Nunito-Regular"
-        case sofiaRegular = "SofiaProRegular"
+        case notoSansRegular = "NotoSans-Regular"
 
         func font(ofSize size: CGFloat) -> UIFont {
             return UIFont(name: self.rawValue, size: size) ?? UIFont.systemFont(ofSize: size)

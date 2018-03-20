@@ -89,9 +89,9 @@ class ShareCard: UIView {
         addressLabel.numberOfLines = 0
         addressLabel.lineBreakMode = .byCharWrapping
         if isiPhoneSE() {
-            addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+            addressLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         } else {
-            addressLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+            addressLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         }
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
@@ -107,9 +107,9 @@ class ShareCard: UIView {
         let cashtag = UILabel()
         cashtag.text = "$nano"
         if isiPhoneSE() {
-            cashtag.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+            cashtag.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         } else {
-            cashtag.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+            cashtag.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         }
         cashtag.textColor = Styleguide.Colors.lightBlue.color
         rightView.addSubview(cashtag)
@@ -121,9 +121,9 @@ class ShareCard: UIView {
         let website = UILabel()
         website.text = "nano.org"
         if isiPhoneSE() {
-            website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+            website.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         } else {
-            website.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+            website.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         }
         website.textColor = Styleguide.Colors.lightBlue.color
         rightView.addSubview(website)

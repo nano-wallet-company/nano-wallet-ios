@@ -49,7 +49,7 @@ final class NanoButton: UIButton {
         clipsToBounds = true
 
         titleLabel?.textColor = type.textColor
-        titleLabel?.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 17)
+        titleLabel?.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 17)
         setBackgroundColor(color: type.backgroundColor, forState: .normal)
         setBackgroundColor(color: type.backgroundColor.darkerColor(percent: 0.2), forState: .highlighted)
 

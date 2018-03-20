@@ -16,7 +16,7 @@ final class SettingsButton: UIButton {
         super.init(frame: .zero)
 
         titleLabel?.textAlignment = .center
-        titleLabel?.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 18)
+        titleLabel?.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 18)
         titleLabel?.textColor = Styleguide.Colors.darkBlue.color
 
         setTitleColor(Styleguide.Colors.darkBlue.color, for: .normal)
@@ -72,7 +72,7 @@ final class SettingsViewController: UIViewController {
         navigationController?.navigationBar.tintColor = Styleguide.Colors.lightBlue.color
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: Styleguide.Colors.darkBlue.color,
-            .font: Styleguide.Fonts.sofiaRegular.font(ofSize: 17),
+            .font: Styleguide.Fonts.notoSansRegular.font(ofSize: 17),
             .kern: 5.0
         ]
 
@@ -193,7 +193,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let versionLabel = UILabel()
-        versionLabel.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 16)
+        versionLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         versionLabel.textColor = UIColor.black.withAlphaComponent(0.4)
         view.addSubview(versionLabel)
         constrain(versionLabel, divider3) {
