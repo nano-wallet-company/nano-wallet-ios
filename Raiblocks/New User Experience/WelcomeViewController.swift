@@ -34,7 +34,7 @@ class WelcomeViewController: UIViewController {
         view.backgroundColor = .white
 
         let welcomeLabel = UILabel()
-        welcomeLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        welcomeLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
         welcomeLabel.text = "Welcome to Nano Wallet"
         welcomeLabel.textColor = Styleguide.Colors.darkBlue.color
         view.addSubview(welcomeLabel)
@@ -70,6 +70,52 @@ class WelcomeViewController: UIViewController {
             $0.centerX == $1.centerX
             $0.width == $0.superview!.width * CGFloat(0.8)
             $0.height == CGFloat(44)
+        }
+
+        let legalCopyFirstLine = UILabel()
+        legalCopyFirstLine.text = "By continuing, you agree to the Nano"
+        legalCopyFirstLine.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        legalCopyFirstLine.textColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(legalCopyFirstLine)
+        constrain(legalCopyFirstLine, existingWalletButton) {
+            $0.top == $1.bottom + CGFloat(22)
+            $0.centerX == $1.centerX
+        }
+
+        let andLabel = UILabel()
+        andLabel.text = "and"
+        andLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        andLabel.textColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(andLabel)
+        constrain(andLabel, legalCopyFirstLine) {
+            $0.centerX == $1.centerX + CGFloat(8)
+            $0.top == $1.bottom + CGFloat(4)
+        }
+
+        let termsOfService = UIButton()
+        termsOfService.addTarget(self, action: #selector(viewTerms), for: .touchUpInside)
+        termsOfService.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
+        termsOfService.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
+        termsOfService.setTitle("Terms of Service", for: .normal)
+        termsOfService.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        termsOfService.underline()
+        view.addSubview(termsOfService)
+        constrain(termsOfService, andLabel) {
+            $0.centerY == $1.centerY
+            $0.right == $1.left - CGFloat(4)
+        }
+
+        let privacyPolicy = UIButton()
+        privacyPolicy.addTarget(self, action: #selector(viewPrivacyPolicy), for: .touchUpInside)
+        privacyPolicy.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
+        privacyPolicy.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
+        privacyPolicy.setTitle("Privacy Policy", for: .normal)
+        privacyPolicy.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        privacyPolicy.underline()
+        view.addSubview(privacyPolicy)
+        constrain(privacyPolicy, andLabel) {
+            $0.centerY == $1.centerY
+            $0.left == $1.right + CGFloat(4)
         }
 
         let textView = SeedTextView()
@@ -170,6 +216,14 @@ class WelcomeViewController: UIViewController {
         UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
         }
+    }
+
+    @objc func viewTerms() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-terms-of-service")!), animated: true)
+    }
+
+    @objc func viewPrivacyPolicy() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!), animated: true)
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
