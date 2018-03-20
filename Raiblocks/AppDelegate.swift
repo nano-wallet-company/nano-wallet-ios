@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+        RealmMigration.migrate()
+
         if let _ = UserService().currentUserSeed() {
             self.navigationController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
         } else {
