@@ -7,17 +7,19 @@
 //
 
 enum ErrorMessageType: String, Decodable {
+
     case accountNotFound = "Account not found"
-    case unableToDecode
+    case fork = "Fork"
+    case oldBlock = "Old block"
 
     var description: String {
         return self.rawValue
     }
+
 }
 
 struct ErrorMessage: Decodable {
 
-    let error: ErrorMessageType
-    let uuid: String
+    let errorType: ErrorMessageType
 
 }
