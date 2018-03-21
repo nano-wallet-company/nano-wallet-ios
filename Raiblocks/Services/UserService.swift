@@ -92,7 +92,7 @@ final class UserService {
         }
     }
 
-    /// Used for updating with UUID
+    /// Used for updating with socketUUID and hasCompletedLegalAgreements
     func update(credentials: Credentials) {
         do {
             let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)

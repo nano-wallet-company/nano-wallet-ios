@@ -126,7 +126,7 @@ final class HomeViewModel {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
             self.socket.sendMultiple(endpoints: [
-                .accountSubscribe(uuid: self.userService.fetchCredentials()?.uuid, address: self.address),
+                .accountSubscribe(uuid: self.userService.fetchCredentials()?.socketUUID, address: self.address),
                 .accountCheck(address: self.address),
             ])
         }
@@ -274,9 +274,9 @@ final class HomeViewModel {
         // Subscribe and update the Nano account balance text
         self.accountSubscribe = accountSubscribe
 
-        if userService.fetchCredentials()?.uuid == nil {
+        if userService.fetchCredentials()?.socketUUID == nil {
             let creds = credentials
-            creds.uuid = accountSubscribe.uuid
+            creds.socketUUID = accountSubscribe.uuid
             userService.update(credentials: creds)
         }
 
