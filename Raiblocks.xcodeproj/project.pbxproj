@@ -51,7 +51,7 @@
 		51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */; };
 		51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */; };
 		5193E8B5205C354D000B45B5 /* RealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5193E8B4205C354D000B45B5 /* RealmMigration.swift */; };
-		5193E8BF2061B3E5000B45B5 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */; };
+		5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */; };
 		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
 		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
@@ -146,7 +146,6 @@
 		515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReceiveViewController.swift; path = "Raiblocks/New Group/ReceiveViewController.swift"; sourceTree = SOURCE_ROOT; };
 		515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
 		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
-		515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SofiaPro-Regular.otf"; sourceTree = "<group>"; };
 		515E72A31FEC6B08001272D4 /* SendTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextField.swift; sourceTree = "<group>"; };
 		515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreconfiguredRepresentatives.swift; sourceTree = "<group>"; };
 		516C54A32008130E0044E0D2 /* Common.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Common.plist; sourceTree = "<group>"; };
@@ -171,7 +170,7 @@
 		51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		51912ECD1FDB513F001BDF2C /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
 		5193E8B4205C354D000B45B5 /* RealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigration.swift; sourceTree = "<group>"; };
-		5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		519B4D371FD23521006B7B6E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Raiblocks-Bridging-Header.h"; sourceTree = "<group>"; };
 		519B4D7E1FD7493E006B7B6E /* RaiCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCore.h; sourceTree = "<group>"; };
@@ -342,8 +341,7 @@
 			children = (
 				515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */,
 				515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */,
-				515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */,
-				5193E8BB2061B34B000B45B5 /* NotoSans-Regular.ttf */,
+				5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -601,7 +599,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5193E8BF2061B3E5000B45B5 /* NotoSans-Regular.ttf in Resources */,
+				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
