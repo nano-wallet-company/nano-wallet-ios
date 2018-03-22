@@ -64,8 +64,7 @@ final class UserService {
 
     func store(credentials: Credentials, completion: (() -> Void)? = nil) {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             try realm.write {
                 realm.add(credentials)
@@ -80,8 +79,7 @@ final class UserService {
 
     func fetchCredentials() -> Credentials? {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             return realm.objects(Credentials.self).first
 
@@ -95,8 +93,7 @@ final class UserService {
     /// Used for updating with socketUUID and hasCompletedLegalAgreements
     func update(credentials: Credentials) {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             try realm.write {
                 realm.add(credentials, update: true)
@@ -109,8 +106,7 @@ final class UserService {
 
     func currentUserSeed() -> String? {
         do {
-            let configuration = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: configuration)
+            let realm = try Realm()
 
             return realm.objects(Credentials.self).first?.seed
         } catch {
@@ -121,10 +117,8 @@ final class UserService {
     }
 
     static func logOut() {
-        let configuration = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-
         do {
-            let realm = try Realm(configuration: configuration)
+            let realm = try Realm()
 
             try realm.write {
                 realm.deleteAll()

@@ -50,7 +50,6 @@
 		51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC01FDA290F001BDF2C /* SendViewController.swift */; };
 		51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */; };
 		51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */; };
-		5193E8B5205C354D000B45B5 /* RealmMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5193E8B4205C354D000B45B5 /* RealmMigration.swift */; };
 		5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */; };
 		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
 		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
@@ -169,7 +168,6 @@
 		51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewContoller.swift; sourceTree = "<group>"; };
 		51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		51912ECD1FDB513F001BDF2C /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
-		5193E8B4205C354D000B45B5 /* RealmMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigration.swift; sourceTree = "<group>"; };
 		5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		519B4D371FD23521006B7B6E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Raiblocks-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 				517FA64C1FE1D1DB00FE04B6 /* Address.swift */,
 				51394038202B64BB0073B90F /* ExchaingePairs.swift */,
 				5117F4CF1FD8490800CEAE78 /* Credentials.swift */,
-				5193E8B4205C354D000B45B5 /* RealmMigration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -750,7 +747,6 @@
 				51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */,
 				51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */,
 				5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */,
-				5193E8B5205C354D000B45B5 /* RealmMigration.swift in Sources */,
 				51A520591FE32E53003F6EC7 /* Currency.swift in Sources */,
 				510896D32053739300A5362D /* AddressParser.swift in Sources */,
 				5125E4531FD21C33004DB451 /* TransactionTableViewCell.swift in Sources */,

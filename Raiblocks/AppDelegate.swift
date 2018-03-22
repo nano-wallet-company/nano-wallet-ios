@@ -25,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appBackgroundingForSeedOrSend: Bool = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let currentSchemaVersion: UInt64 = 1
+        let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
+        Realm.Configuration.defaultConfiguration = config
+
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()
 
@@ -36,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        RealmMigration.migrate()
 
         if let _ = UserService().currentUserSeed() {
             self.navigationController = UINavigationController(rootViewController: HomeViewController(viewModel: HomeViewModel()))
