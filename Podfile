@@ -14,6 +14,7 @@ target 'Raiblocks' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'RealmSwift', '~> 3.3.0'
+  pod 'M13Checkbox'
 end
 
 post_install do |installer|

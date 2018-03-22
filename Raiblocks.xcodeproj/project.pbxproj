@@ -64,6 +64,7 @@
 		51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */; };
 		51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520841FE99C63003F6EC7 /* RaiCore.swift */; };
 		51A520871FE9AD3F003F6EC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */; };
+		51A890752064589500BBA280 /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A890742064589500BBA280 /* LegalViewController.swift */; };
 		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
 		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
@@ -186,6 +187,7 @@
 		51A520801FE8462D003F6EC7 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		51A520841FE99C63003F6EC7 /* RaiCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiCore.swift; sourceTree = "<group>"; };
 		51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		51A890742064589500BBA280 /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
 		51C684941FEB05C000943815 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
 		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */,
 				51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */,
 				5122A61220124ACF00F7F43A /* SeedConfirmationViewController.swift */,
+				51A890742064589500BBA280 /* LegalViewController.swift */,
 			);
 			path = "New User Experience";
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
 				"${BUILT_PRODUCTS_DIR}/EFQRCode/EFQRCode.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -654,6 +658,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EFQRCode.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -774,6 +779,7 @@
 				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,
 				51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */,
 				51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */,
+				51A890752064589500BBA280 /* LegalViewController.swift in Sources */,
 				51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */,
 				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
 				51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */,
