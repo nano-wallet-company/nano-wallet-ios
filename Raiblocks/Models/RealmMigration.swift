@@ -13,9 +13,10 @@ import RealmSwift
 final class RealmMigration {
 
     static func migrate() {
-        let currentSchemaVersion: UInt64 = 3
+        let currentSchemaVersion: UInt64 = 1
+        let key = UserService.getKeychainKeyID() as Data
         Realm.Configuration.defaultConfiguration = Realm.Configuration(
-            encryptionKey: UserService.getKeychainKeyID() as Data,
+            encryptionKey: key,
             readOnly: false,
             schemaVersion: currentSchemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
@@ -24,8 +25,7 @@ final class RealmMigration {
                 migration.enumerateObjects(ofType: Credentials.className()) { oldObject, newObject in
                     print("oldSchemaVersion = \(oldSchemaVersion)")
                 }
-
-        }, deleteRealmIfMigrationNeeded: true)
+        })
     }
 
 }
