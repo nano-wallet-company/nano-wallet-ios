@@ -16,8 +16,7 @@ final class CurrencyService {
 
     func store(currency: StorableCurrency, completion: (() -> Void)) {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             try realm.write {
                 realm.add(currency)
@@ -34,8 +33,7 @@ final class CurrencyService {
 
     func localCurrency() -> Currency {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             guard
                 let currencySymbol = realm.objects(StorableCurrency.self).last?.symbol,
