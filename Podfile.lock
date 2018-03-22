@@ -8,11 +8,11 @@ PODS:
     - ReactiveSwift (~> 3.0)
   - ReactiveSwift (3.1.0):
     - Result (~> 3.2)
-  - Realm (3.1.0):
-    - Realm/Headers (= 3.1.0)
-  - Realm/Headers (3.1.0)
-  - RealmSwift (3.1.0):
-    - Realm (= 3.1.0)
+  - Realm (3.3.0):
+    - Realm/Headers (= 3.3.0)
+  - Realm/Headers (3.3.0)
+  - RealmSwift (3.3.0):
+    - Realm (= 3.3.0)
   - Result (3.2.4)
   - SwiftWebSocket (2.6.5)
 
@@ -23,7 +23,7 @@ DEPENDENCIES:
   - Fabric
   - ReactiveCocoa (~> 7.0.1)
   - ReactiveSwift (~> 3.0)
-  - RealmSwift
+  - RealmSwift (~> 3.3.0)
   - SwiftWebSocket
 
 SPEC CHECKSUMS:
@@ -33,11 +33,11 @@ SPEC CHECKSUMS:
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   ReactiveCocoa: a1b5d502d0d1534f9a72981a485b297b17127f83
   ReactiveSwift: 5b26d2e988fe0eed2daf48c4054d1de74db50184
-  Realm: 09513d7c054678d65cd02ce09871f805b0d758ac
-  RealmSwift: e868fee9b10e5490ad94b6b6ecd9027944da1824
+  Realm: 7d74ad6c5020432f58fe5e1df90bb6d97b2c7fef
+  RealmSwift: b2fa31a09c22e246026766557405505eeaad2b01
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SwiftWebSocket: 1ef8a0efb023544643bdf480c1ec4a62b204f293
 
-PODFILE CHECKSUM: d9a9cf838d5a26a2692a12b8fb1f609f6bfce3fe
+PODFILE CHECKSUM: 6521ccc8e310453d1730eb28c465b0eb52582009
 
 COCOAPODS: 1.4.0
