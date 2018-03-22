@@ -2,3 +2,5 @@
 xcuserdata
 .env
 *.xcworkspace
+Pods/Pods.xcodeproj/xcuserdata
+Raiblocks.xcodeproj/xcuserdata
