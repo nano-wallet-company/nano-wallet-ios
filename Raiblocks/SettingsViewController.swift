@@ -118,25 +118,48 @@ final class SettingsViewController: UIViewController {
             $0.bottom == $1.bottom
         }
 
+        let readThe = UILabel()
+        readThe.text = "Read the"
+        readThe.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        readThe.textColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(readThe)
+        constrain(readThe, divider2) {
+            $0.centerX == $1.centerX - CGFloat(56)
+            $0.top == $1.bottom + CGFloat(8)
+        }
+
+        let disclaimer = UIButton()
+        disclaimer.addTarget(self, action: #selector(viewDisclaimer), for: .touchUpInside)
+        disclaimer.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
+        disclaimer.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
+        disclaimer.setTitle("Mobile Disclaimer", for: .normal)
+        disclaimer.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        disclaimer.underline()
+        view.addSubview(disclaimer)
+        constrain(disclaimer, readThe) {
+            $0.centerY == $1.centerY
+            $0.left == $1.right + CGFloat(4)
+        }
+
         let andLabel = UILabel()
         andLabel.text = "and"
         andLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         andLabel.textColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(andLabel)
-        constrain(andLabel, divider2) {
-            $0.centerX == $1.centerX + CGFloat(8)
-            $0.top == $1.bottom + CGFloat(8)
+        constrain(andLabel, readThe) {
+            $0.right == $1.right + CGFloat(16)
+            $0.top == $1.bottom + CGFloat(4)
         }
 
-        let termsOfService = UIButton()
-        termsOfService.addTarget(self, action: #selector(viewTerms), for: .touchUpInside)
-        termsOfService.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
-        termsOfService.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
-        termsOfService.setTitle("Terms of Service", for: .normal)
-        termsOfService.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
-        termsOfService.underline()
-        view.addSubview(termsOfService)
-        constrain(termsOfService, andLabel) {
+        let eula = UIButton()
+        eula.addTarget(self, action: #selector(viewEula), for: .touchUpInside)
+        eula.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
+        eula.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
+        eula.setTitle("EULA", for: .normal)
+        eula.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        eula.underline()
+        view.addSubview(eula)
+        constrain(eula, andLabel) {
             $0.centerY == $1.centerY
             $0.right == $1.left - CGFloat(4)
         }
@@ -215,8 +238,12 @@ final class SettingsViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    @objc func viewTerms() {
-        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-terms-of-service")!), animated: true)
+    @objc func viewDisclaimer() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!), animated: true)
+    }
+
+    @objc func viewEula() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!), animated: true)
     }
 
     @objc func viewPrivacyPolicy() {
