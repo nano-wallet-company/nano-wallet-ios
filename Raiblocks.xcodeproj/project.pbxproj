@@ -65,6 +65,7 @@
 		51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520841FE99C63003F6EC7 /* RaiCore.swift */; };
 		51A520871FE9AD3F003F6EC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */; };
 		51A890752064589500BBA280 /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A890742064589500BBA280 /* LegalViewController.swift */; };
+		51A8907720646C1900BBA280 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A8907620646C1900BBA280 /* UILabel+Extensions.swift */; };
 		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
 		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
@@ -188,6 +189,7 @@
 		51A520841FE99C63003F6EC7 /* RaiCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiCore.swift; sourceTree = "<group>"; };
 		51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		51A890742064589500BBA280 /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
+		51A8907620646C1900BBA280 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		51C684941FEB05C000943815 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
 		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */,
 				515E72A31FEC6B08001272D4 /* SendTextField.swift */,
 				5133DE6F204321A100C66199 /* Double+Extensions.swift */,
+				51A8907620646C1900BBA280 /* UILabel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -774,6 +777,7 @@
 				51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */,
 				51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */,
 				5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */,
+				51A8907720646C1900BBA280 /* UILabel+Extensions.swift in Sources */,
 				51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */,
 				51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */,
 				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,

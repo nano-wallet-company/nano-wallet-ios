@@ -204,6 +204,12 @@ class HomeViewController: UIViewController {
             $0.bottom == $1.top - CGFloat(33)
         }
         self.tableView = tableView
+
+        if !viewModel.credentials.hasCompletedLegalAgreements {
+            let vc = LegalViewController(useForLoggedInState: true)
+
+            present(vc, animated: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {

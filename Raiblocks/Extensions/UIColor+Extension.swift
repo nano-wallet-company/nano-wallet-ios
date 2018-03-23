@@ -2,7 +2,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIColor
 
 
 extension UIColor {
