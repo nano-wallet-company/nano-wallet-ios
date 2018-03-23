@@ -19,10 +19,12 @@ import Result
 final class LegalViewController: UIViewController {
 
     private let useForLoggedInState: Bool
+    private let userService = UserService()
+    private let credentials: Credentials
 
     private let dateFormatter = DateFormatter()
 
-//    private let (lifetime, token) = Lifetime.make()
+    private let (lifetime, token) = Lifetime.make()
 
     private weak var disclaimerCheckbox: M13Checkbox?
     private weak var eulaCheckbox: M13Checkbox?
@@ -36,17 +38,11 @@ final class LegalViewController: UIViewController {
     }
 
     init(useForLoggedInState: Bool) {
+        guard let credentials = userService.fetchCredentials() else { fatalError("Should always have credentials") }
+        self.credentials = credentials
         self.useForLoggedInState = useForLoggedInState
+
         super.init(nibName: nil, bundle: nil)
-
-//        let p1 = SignalProducer(reactive.trigger(for: #selector(disclaimerToggled(_:))))
-//
-//        p1.producer
-//            .take(during: lifetime)
-//            .observe(on: UIScheduler()).startWithValues {
-//                print("fired")
-//        }
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +104,6 @@ final class LegalViewController: UIViewController {
         }
 
         let disclaimerCheckbox = createCheckbox()
-        disclaimerCheckbox.addTarget(self, action: #selector(disclaimerToggled), for: .touchUpInside)
         view.addSubview(disclaimerCheckbox)
         constrain(disclaimerCheckbox, viewCopy) {
             $0.top == $1.bottom + (isiPhoneSE() ? CGFloat(20) : CGFloat(40))
@@ -129,7 +124,6 @@ final class LegalViewController: UIViewController {
         }
 
         let eulaCheckbox = createCheckbox()
-        eulaCheckbox.addTarget(self, action: #selector(eulaToggled(_:)), for: .touchUpInside)
         view.addSubview(eulaCheckbox)
         constrain(eulaCheckbox, disclaimerCheckbox) {
             $0.top == $1.bottom + CGFloat(40)
@@ -150,7 +144,6 @@ final class LegalViewController: UIViewController {
         }
 
         let privacyPolicyCheckbox = createCheckbox()
-        privacyPolicyCheckbox.addTarget(self, action: #selector(privacyPolicyToggled(_:)), for: .touchUpInside)
         view.addSubview(privacyPolicyCheckbox)
         constrain(privacyPolicyCheckbox, eulaCheckbox) {
             $0.top == $1.bottom + CGFloat(40)
@@ -170,6 +163,54 @@ final class LegalViewController: UIViewController {
             $0.left == $1.right + CGFloat(20)
         }
 
+        // MARK: - Reactive
+
+        SignalProducer(disclaimerCheckbox.reactive.valueChanged)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                Answers.logCustomEvent(withName: "Mobile Disclaimer Agreement Toggled", customAttributes: [
+                    "device_id": UIDevice.current.identifierForVendor!.uuidString,
+                    "accepted": self.disclaimerCheckbox?.checkState == .checked,
+                    "date": self.dateString
+                ])
+        }
+
+        SignalProducer(eulaCheckbox.reactive.valueChanged)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                Answers.logCustomEvent(withName: "Mobile EULA Agreement Toggled", customAttributes: [
+                    "device_id": UIDevice.current.identifierForVendor!.uuidString,
+                    "accepted": self.eulaCheckbox?.checkState == .checked,
+                    "date": self.dateString
+                ])
+        }
+
+        SignalProducer(privacyPolicyCheckbox.reactive.valueChanged)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                Answers.logCustomEvent(withName: "Mobile Privacy Policy Agreement Toggled", customAttributes: [
+                    "device_id": UIDevice.current.identifierForVendor!.uuidString,
+                    "accepted": self.privacyPolicyCheckbox?.checkState == .checked,
+                    "date": self.dateString
+                ])
+        }
+
+        SignalProducer.combineLatest(SignalProducer(disclaimerCheckbox.reactive.valueChanged), SignalProducer(eulaCheckbox.reactive.valueChanged), SignalProducer(privacyPolicyCheckbox.reactive.valueChanged))
+            .producer
+            .take(during: lifetime)
+            .observe(on: UIScheduler())
+            .startWithValues { _, _, _ in
+                if self.disclaimerCheckbox?.checkState == .checked &&
+                    self.eulaCheckbox?.checkState == .checked &&
+                    self.privacyPolicyCheckbox?.checkState == .checked {
+                    self.agreeButton?.isEnabled = true
+                } else {
+                    self.agreeButton?.isEnabled = false
+                }
+        }
     }
 
     private func createCheckbox() -> M13Checkbox {
@@ -192,14 +233,6 @@ final class LegalViewController: UIViewController {
         return button
     }
 
-    @objc func disclaimerToggled() {
-        Answers.logCustomEvent(withName: "Mobile Disclaimer Agreement Toggled", customAttributes: [
-            "device_id": UIDevice.current.identifierForVendor!.uuidString,
-            "accepted": disclaimerCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateString
-        ])
-    }
-
     @objc func viewDisclaimer() {
         Answers.logCustomEvent(withName: "Mobile Disclaimer Viewed", customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
@@ -209,14 +242,6 @@ final class LegalViewController: UIViewController {
         present(WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!), animated: true)
     }
 
-    @objc func eulaToggled(_ sender: M13Checkbox) {
-        Answers.logCustomEvent(withName: "Mobile EULA Agreement Toggled", customAttributes: [
-            "device_id": UIDevice.current.identifierForVendor!.uuidString,
-            "accepted": eulaCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateString
-        ])
-    }
-
     @objc func viewEula() {
         Answers.logCustomEvent(withName: "Mobile EULA Viewed", customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
@@ -224,14 +249,6 @@ final class LegalViewController: UIViewController {
         ])
 
         present(WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!), animated: true)
-    }
-
-    @objc func privacyPolicyToggled(_ sender: M13Checkbox) {
-        Answers.logCustomEvent(withName: "Mobile Privacy Policy Agreement Toggled", customAttributes: [
-            "device_id": UIDevice.current.identifierForVendor!.uuidString,
-            "accepted": privacyPolicyCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateString
-        ])
     }
 
     @objc func viewPrivacyPolicy() {
@@ -258,15 +275,32 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func agreeToLegal() {
-        // if all 3 are checked,
+        credentials.hasCompletedLegalAgreements = true
+        DispatchQueue.global().async {
+            self.userService.update(credentials: self.credentials)
+
+            DispatchQueue.main.sync {
+                if self.useForLoggedInState {
+                    self.dismiss(animated: true)
+                } else {
+
+                }
+            }
+        }
+
 
     }
 
     // TODO:
 
-    // Enable/disable Agree button based on 3 checkboxes
-    // Get check box action working
-    // Record legal answer on credential
-    // Implement for non-logged in peoples
+    // Record legal answer on credential (fix crash)
+    // Fix the weird nav bar thing for presenting to new users
+}
 
- }
+extension Reactive where Base: UIControl {
+
+    public var valueChanged: Signal<Bool, NoError> {
+        return mapControlEvents(.valueChanged) { $0.isSelected }
+    }
+
+}

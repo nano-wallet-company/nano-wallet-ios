@@ -51,6 +51,10 @@ class SeedConfirmationViewController: UIViewController {
 
         view.backgroundColor = .white
 
+        if !credentials.hasCompletedLegalAgreements {
+            present(LegalViewController(useForLoggedInState: false), animated: true)
+        }
+
         let logo = UIImageView(image: UIImage(named: "largeNanoMarkBlue"))
         view.addSubview(logo)
         constrain(logo) {
