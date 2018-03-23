@@ -29,6 +29,12 @@ final class LegalViewController: UIViewController {
     private weak var privacyPolicyCheckbox: M13Checkbox?
     private weak var agreeButton: NanoButton?
 
+    private var dateString: String {
+        dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
+
+        return dateFormatter.string(from: Date())
+    }
+
     init(useForLoggedInState: Bool) {
         self.useForLoggedInState = useForLoggedInState
         super.init(nibName: nil, bundle: nil)
@@ -187,44 +193,53 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func disclaimerToggled() {
-        dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
-
         Answers.logCustomEvent(withName: "Mobile Disclaimer Agreement Toggled", customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "accepted": disclaimerCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateFormatter.string(from: Date())
+            "date": dateString
         ])
     }
 
     @objc func viewDisclaimer() {
+        Answers.logCustomEvent(withName: "Mobile Disclaimer Viewed", customAttributes: [
+            "device_id": UIDevice.current.identifierForVendor!.uuidString,
+            "date": dateString
+        ])
+
         present(WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!), animated: true)
     }
 
     @objc func eulaToggled(_ sender: M13Checkbox) {
-        dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
-
         Answers.logCustomEvent(withName: "Mobile EULA Agreement Toggled", customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "accepted": eulaCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateFormatter.string(from: Date())
+            "date": dateString
         ])
     }
 
     @objc func viewEula() {
+        Answers.logCustomEvent(withName: "Mobile EULA Viewed", customAttributes: [
+            "device_id": UIDevice.current.identifierForVendor!.uuidString,
+            "date": dateString
+        ])
+
         present(WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!), animated: true)
     }
 
     @objc func privacyPolicyToggled(_ sender: M13Checkbox) {
-        dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
-
         Answers.logCustomEvent(withName: "Mobile Privacy Policy Agreement Toggled", customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "accepted": privacyPolicyCheckbox?.checkState == .unchecked ? false : true,
-            "date": dateFormatter.string(from: Date())
+            "date": dateString
         ])
     }
 
     @objc func viewPrivacyPolicy() {
+        Answers.logCustomEvent(withName: "Mobile Privacy Policy Viewed", customAttributes: [
+            "device_id": UIDevice.current.identifierForVendor!.uuidString,
+            "date": dateString
+        ])
+
         present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!), animated: true)
     }
 
