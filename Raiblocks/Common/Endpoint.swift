@@ -17,11 +17,14 @@ enum Endpoint {
     case accountInfo(address: Address)
     case accountPending(address: Address)
     case accountsPending(address: Address, count: Int)
-    case accountSubscribe(address: Address)
+    case accountSubscribe(uuid: String?, address: Address)
 
     case createOpenBlock(source: String, work: String, representative: String, address: Address, privateKey: Data)
     case createReceiveBlock(previous: String, source: String, work: String, privateKey: Data)
     case createSendBlock(destination: Address, balanceHex: String, previous: String, work: String, privateKey: Data)
+
+    case createWorkForOpenBlock(publicKey: String)
+    case createWork(previousHash: String)
 
     private var name: String {
         switch self {
@@ -33,6 +36,7 @@ enum Endpoint {
         case .accountPending: return "pending" // Pending is for 1 account
         case .accountsPending: return "accounts_pending" // Accounts Pending is for all accounts
         case .accountSubscribe: return "account_subscribe"
+        case .createWork, .createWorkForOpenBlock: return "work_generate"
         case .createOpenBlock, .createReceiveBlock, .createSendBlock: return "process"
         }
     }
@@ -45,9 +49,15 @@ enum Endpoint {
         case let .accountBalance(address),
              let .accountBlockCount(address),
              let .accountCheck(address),
-             let .accountInfo(address),
-             let .accountSubscribe(address):
+             let .accountInfo(address):
             dict["account"] = address.longAddress
+
+        case let .accountSubscribe(uuid, address):
+            if let uuid = uuid {
+                dict["uuid"] = uuid
+            } else {
+                dict["account"] = address.longAddress
+            }
 
         case let .accountHistory(address, count):
             dict["account"] = address.longAddress
@@ -102,29 +112,14 @@ enum Endpoint {
             guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
 
             return String(bytes: serializedJSON, encoding: .utf8)
+
+        case let .createWork(hash), let .createWorkForOpenBlock(hash):
+            dict["hash"] = hash
         }
 
         guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
 
         return String(bytes: serializedJSON, encoding: .utf8)
-    }
-
-    static func createWorkForOpenBlock(publicKey: String) -> Data? {
-        let dict: [String: String] = [
-            "action": "work_generate",
-            "hash": publicKey
-        ]
-
-        return try? JSONSerialization.data(withJSONObject: dict)
-    }
-
-    static func createWork(previousHash previous: String) -> Data? {
-        let dict: [String: String] = [
-            "action": "work_generate",
-            "hash": previous
-        ]
-
-        return try? JSONSerialization.data(withJSONObject: dict)
     }
 
     // MARK: - Private Functions

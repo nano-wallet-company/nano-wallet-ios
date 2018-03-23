@@ -13,23 +13,21 @@ import Cartography
 final class NanoButton: UIButton {
 
     enum ButtonType {
-        case lightBlue, lightBlueSend, darkBlue, orange
+        case lightBlue, lightBlueSend, darkBlue, orange, grey
 
         var textColor: UIColor {
             switch self {
             case .darkBlue, .lightBlueSend: return .white
-            case .lightBlue, .orange: return Styleguide.Colors.darkBlue.color
+            case .lightBlue, .orange, .grey: return Styleguide.Colors.darkBlue.color
             }
         }
 
         var backgroundColor: UIColor {
             switch self {
-            case .lightBlue, .darkBlue:
-                return Styleguide.Colors.lightBlue.color.withAlphaComponent(0.2)
-            case .orange:
-                return Styleguide.Colors.orange.color.withAlphaComponent(0.2)
-            case .lightBlueSend:
-                return Styleguide.Colors.lightBlue.color
+            case .lightBlue, .darkBlue: return Styleguide.Colors.lightBlue.color.withAlphaComponent(0.2)
+            case .orange: return Styleguide.Colors.orange.color.withAlphaComponent(0.2)
+            case .lightBlueSend: return Styleguide.Colors.lightBlue.color
+            case .grey: return UIColor.from(rgb: 0xE9E9E9)
             }
         }
     }
@@ -49,7 +47,7 @@ final class NanoButton: UIButton {
         clipsToBounds = true
 
         titleLabel?.textColor = type.textColor
-        titleLabel?.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 17)
+        titleLabel?.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 17)
         setBackgroundColor(color: type.backgroundColor, forState: .normal)
         setBackgroundColor(color: type.backgroundColor.darkerColor(percent: 0.2), forState: .highlighted)
 

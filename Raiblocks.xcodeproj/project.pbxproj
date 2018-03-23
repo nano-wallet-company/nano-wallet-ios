@@ -50,6 +50,7 @@
 		51912EC11FDA290F001BDF2C /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC01FDA290F001BDF2C /* SendViewController.swift */; };
 		51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC21FDA3190001BDF2C /* CodeScanViewController.swift */; };
 		51912EC91FDB23BD001BDF2C /* ScannerViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */; };
+		5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */; };
 		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
 		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
@@ -63,10 +64,11 @@
 		51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */; };
 		51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520841FE99C63003F6EC7 /* RaiCore.swift */; };
 		51A520871FE9AD3F003F6EC7 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */; };
+		51A890752064589500BBA280 /* LegalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A890742064589500BBA280 /* LegalViewController.swift */; };
+		51A8907720646C1900BBA280 /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A8907620646C1900BBA280 /* UILabel+Extensions.swift */; };
 		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
 		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
-		51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */; };
 		51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */; };
 		51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* ShareCard.swift */; };
 		51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EADEA120067C6B00660E4A /* RaiCoreBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -145,7 +147,6 @@
 		515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReceiveViewController.swift; path = "Raiblocks/New Group/ReceiveViewController.swift"; sourceTree = SOURCE_ROOT; };
 		515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
 		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
-		515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SofiaPro-Regular.otf"; sourceTree = "<group>"; };
 		515E72A31FEC6B08001272D4 /* SendTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextField.swift; sourceTree = "<group>"; };
 		515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreconfiguredRepresentatives.swift; sourceTree = "<group>"; };
 		516C54A32008130E0044E0D2 /* Common.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Common.plist; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewContoller.swift; sourceTree = "<group>"; };
 		51912ECB1FDB4F69001BDF2C /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		51912ECD1FDB513F001BDF2C /* SendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendViewModel.swift; sourceTree = "<group>"; };
+		5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
 		519B4D371FD23521006B7B6E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Raiblocks-Bridging-Header.h"; sourceTree = "<group>"; };
 		519B4D7E1FD7493E006B7B6E /* RaiCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCore.h; sourceTree = "<group>"; };
@@ -186,6 +188,8 @@
 		51A520801FE8462D003F6EC7 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		51A520841FE99C63003F6EC7 /* RaiCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiCore.swift; sourceTree = "<group>"; };
 		51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		51A890742064589500BBA280 /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
+		51A8907620646C1900BBA280 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		51C684941FEB05C000943815 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
 		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */,
 				515E72A31FEC6B08001272D4 /* SendTextField.swift */,
 				5133DE6F204321A100C66199 /* Double+Extensions.swift */,
+				51A8907620646C1900BBA280 /* UILabel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -337,8 +342,8 @@
 			isa = PBXGroup;
 			children = (
 				515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */,
-				515E72A21FEC5094001272D4 /* SofiaPro-Regular.otf */,
 				515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */,
+				5193E8E62062A622000B45B5 /* NotoSans-Regular.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -364,6 +369,7 @@
 				5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */,
 				51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */,
 				5122A61220124ACF00F7F43A /* SeedConfirmationViewController.swift */,
+				51A890742064589500BBA280 /* LegalViewController.swift */,
 			);
 			path = "New User Experience";
 			sourceTree = "<group>";
@@ -596,8 +602,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
-				51E945C91FF6D4B6006B7081 /* SofiaPro-Regular.otf in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
@@ -643,6 +649,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
 				"${BUILT_PRODUCTS_DIR}/EFQRCode/EFQRCode.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -654,6 +661,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cartography.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EFQRCode.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -769,11 +777,13 @@
 				51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */,
 				51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */,
 				5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */,
+				51A8907720646C1900BBA280 /* UILabel+Extensions.swift in Sources */,
 				51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */,
 				51A520621FE430D2003F6EC7 /* SeedScanViewController.swift in Sources */,
 				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,
 				51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */,
 				51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */,
+				51A890752064589500BBA280 /* LegalViewController.swift in Sources */,
 				51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */,
 				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
 				51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */,

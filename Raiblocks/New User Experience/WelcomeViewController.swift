@@ -34,7 +34,7 @@ class WelcomeViewController: UIViewController {
         view.backgroundColor = .white
 
         let welcomeLabel = UILabel()
-        welcomeLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        welcomeLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
         welcomeLabel.text = "Welcome to Nano Wallet"
         welcomeLabel.textColor = Styleguide.Colors.darkBlue.color
         view.addSubview(welcomeLabel)
@@ -170,6 +170,14 @@ class WelcomeViewController: UIViewController {
         UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
         }
+    }
+
+    @objc func viewTerms() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-terms-of-service")!), animated: true)
+    }
+
+    @objc func viewPrivacyPolicy() {
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!), animated: true)
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {

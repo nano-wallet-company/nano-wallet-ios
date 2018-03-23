@@ -25,4 +25,7 @@ enum NanoWalletError: Error {
     case logOutError
 
     case unableToGetKeychainKeyID
+    case unableToFetchCredentials
+    case unableToUpdateCredentialsWithUUID
+    case unableToUpdateCredentialsWithLegalAgreement
 }

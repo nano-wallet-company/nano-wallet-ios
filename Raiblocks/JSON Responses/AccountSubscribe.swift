@@ -14,16 +14,16 @@ struct AccountSubscribe: Decodable {
     private let _pendingBalance: String
 
     let representativeBlock: String
-    let openBlock: String // I may not need this
     let frontierBlockHash: String
+    let uuid: String?
 
     enum CodingKeys: String, CodingKey {
         case _blockCount = "block_count"
         case balance
         case _pendingBalance = "pending"
         case representativeBlock = "representative_block"
-        case openBlock = "open_block"
         case frontierBlockHash = "frontier"
+        case uuid
     }
 
     var blockCount: Int {
@@ -55,8 +55,13 @@ struct AccountSubscribe: Decodable {
         self.balance = try container.decode(String.self, forKey: .balance)
         self._pendingBalance = try container.decode(String.self, forKey: ._pendingBalance)
         self.representativeBlock = try container.decode(String.self, forKey: .representativeBlock)
-        self.openBlock = try container.decode(String.self, forKey: .openBlock)
         self.frontierBlockHash = try container.decode(String.self, forKey: .frontierBlockHash)
+
+        if container.contains(.uuid) {
+            self.uuid = try container.decode(String.self, forKey: .uuid)
+        } else {
+            self.uuid = nil
+        }
     }
 
 }

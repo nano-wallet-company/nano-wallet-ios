@@ -40,7 +40,9 @@ class SeedConfirmationViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
 
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        if let credentials = UserService().fetchCredentials(), credentials.hasCompletedLegalAgreements {
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
         super.viewWillDisappear(animated)
     }
 
@@ -50,6 +52,10 @@ class SeedConfirmationViewController: UIViewController {
         Answers.logCustomEvent(withName: "Seed Confirmation VC Viewed")
 
         view.backgroundColor = .white
+
+        if !credentials.hasCompletedLegalAgreements {
+            present(LegalViewController(useForLoggedInState: false), animated: true)
+        }
 
         let logo = UIImageView(image: UIImage(named: "largeNanoMarkBlue"))
         view.addSubview(logo)
@@ -107,7 +113,7 @@ class SeedConfirmationViewController: UIViewController {
         self.textView = textView
 
         let smallCopy = UILabel()
-        smallCopy.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        smallCopy.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         smallCopy.textColor = Styleguide.Colors.darkBlue.color
         smallCopy.attributedText = NSAttributedString(string: "Tap to copy", attributes: [.kern: 1.0])
         view.addSubview(smallCopy)

@@ -13,7 +13,8 @@ target 'Raiblocks' do
   pod "EFQRCode", '~> 4.1.0'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'RealmSwift'
+  pod 'RealmSwift', '~> 3.3.0'
+  pod 'M13Checkbox'
 end
 
 post_install do |installer|

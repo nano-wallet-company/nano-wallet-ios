@@ -16,13 +16,13 @@ import SwiftWebSocket
 final class HomeViewModel {
 
     let socket: WebSocket
-    private let hashStreamingSocket: WebSocket
 
+    let userService = UserService()
     private let priceService = PriceService()
 
     var credentials: Credentials {
         guard
-            let seed = UserService().currentUserSeed(),
+            let seed = userService.currentUserSeed(),
             let credentials = Credentials(seedString: seed)
         else {
             Answers.logCustomEvent(withName: "App crashed due to missing Credentials")
@@ -32,8 +32,13 @@ final class HomeViewModel {
 
         return credentials
     }
+
     var privateKey: Data {
         return credentials.privateKey
+    }
+
+    var hasCompletedLegalAgreements: Bool {
+        return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)
@@ -54,6 +59,7 @@ final class HomeViewModel {
     let currentlyReceivingHash = MutableProperty<String?>(nil)
 
     let addressIsOnNetwork = MutableProperty<Bool>(false)
+
     var address: Address {
         return credentials.address
     }
@@ -88,11 +94,10 @@ final class HomeViewModel {
     }
 
     // This is gross, will refactor, just used to set when we get a new one
-    private var _previousFrontierHash: String?
     var previousFrontierHash: String? {
         get {
-            if let _ = self._previousFrontierHash {
-                return self._previousFrontierHash
+            if let value = self._previousFrontierHash.value {
+                return value
             } else if let _ = accountSubscribe?.frontierBlockHash {
                 return accountSubscribe?.frontierBlockHash
             } else {
@@ -100,6 +105,8 @@ final class HomeViewModel {
             }
         }
     }
+
+    private let _previousFrontierHash = MutableProperty<String?>(nil)
 
     init() {
         guard
@@ -116,7 +123,6 @@ final class HomeViewModel {
         // MARK: - Socket Setup
 
         self.socket = WebSocket(urlString)
-        self.hashStreamingSocket = WebSocket(urlString)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appWasReopened(_:)), name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
 
@@ -124,7 +130,7 @@ final class HomeViewModel {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
             self.socket.sendMultiple(endpoints: [
-                .accountSubscribe(address: self.address),
+                .accountSubscribe(uuid: self.userService.fetchCredentials()?.socketUUID, address: self.address),
                 .accountCheck(address: self.address),
             ])
         }
@@ -143,6 +149,7 @@ final class HomeViewModel {
 
         self.socket.event.message = { message in
 //            print(message) // Uncomment for development
+//            print("")
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
             if let accountCheck = self.genericDecoder(decodable: AccountCheck.self, from: data) {
@@ -152,13 +159,14 @@ final class HomeViewModel {
             }
 
             if let subscriptionBlock = self.genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
-                return self.handle(subscriptionBlock: subscriptionBlock) {
-                    self.socket.sendMultiple(endpoints: [
-                        .accountHistory(address: self.address, count: self.lastBlockCount.value),
-                        .accountBalance(address: self.address)
-                    ])
+                // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
+                guard self.currentlyReceivingHash.value == nil else { return }
 
-                    self.priceService.fetchLatestPrices()
+                self.currentlyReceivingHash.value = subscriptionBlock.source
+                return self.handle(subscriptionBlock: subscriptionBlock) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.socket.send(endpoint: .accountBlockCount(address: self.address))
+                    }
                 }
             }
 
@@ -191,20 +199,42 @@ final class HomeViewModel {
             }
 
             if let newFrontierHash = self.genericDecoder(decodable: HashReceive.self, from: data) {
-                return self._previousFrontierHash = newFrontierHash.hash
+//                print("new frontier received:", newFrontierHash.hash)
+                self._previousFrontierHash.value = newFrontierHash.hash
+
+                return
+            }
+
+            if let errorMessage = self.genericDecoder(decodable: ErrorMessage.self, from: data) {
+                switch errorMessage.error {
+                case .oldBlock: self.socket.send(endpoint: .accountBlockCount(address: self.address))
+                case .fork, .accountNotFound: break
+                }
             }
 
 //            print("fail, did not have an object for \(message)")
         }
 
+        // Mark: - Open the web socket
+
         socket.open()
-        hashStreamingSocket.open()
+
+        // Mark: - Producer for _previousFrontierHash
+
+        _previousFrontierHash.producer.startWithValues { hash in
+                guard let source = self.pendingBlocks.keys.first else {
+                    self.isCurrentlySyncing.value = false
+                    self.currentlyReceivingHash.value = nil
+
+                    return
+                }
+
+                self.processReceive(source: source, previous: hash)
+        }
     }
 
     deinit {
         socket.close()
-        hashStreamingSocket.close()
-
         disposable.dispose()
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
@@ -217,17 +247,13 @@ final class HomeViewModel {
     func refresh() {
         priceService.fetchLatestPrices()
 
+        socket.send(endpoint: .accountBlockCount(address: address))
         checkAndOpenSockets()
     }
 
     func checkAndOpenSockets() {
         switch socket.readyState {
         case .closed: socket.open()
-        case .open, .closing, .connecting: break
-        }
-
-        switch hashStreamingSocket.readyState {
-        case .closed: hashStreamingSocket.open()
         case .open, .closing, .connecting: break
         }
     }
@@ -251,6 +277,13 @@ final class HomeViewModel {
     private func handle(accountSubscribe: AccountSubscribe, completion: (() -> Void)) {
         // Subscribe and update the Nano account balance text
         self.accountSubscribe = accountSubscribe
+
+        if userService.fetchCredentials()?.socketUUID == nil {
+            let creds = credentials
+            creds.socketUUID = accountSubscribe.uuid
+            userService.update(credentials: creds)
+        }
+
         self.lastBlockCount.value = accountSubscribe.blockCount
 
         self._accountBalance.value = accountSubscribe.totalBalance ?? 0
@@ -285,26 +318,21 @@ final class HomeViewModel {
         }
     }
 
+    /// Result of .accountPending
     private func handle(pendingBlocks: PendingBlocks) {
-        // result of .accountPending
         var pending = pendingBlocks
-        self.pendingBlocks = pending.setPendingItemHashes()
+        self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove
 
-        let transactions = pending.blocks.map({ $0.value })
+        // Process first pending block, rest will follow in the producer above
+        guard let source = self.pendingBlocks.first?.key else { return }
 
-        let newTransactions: [NanoTransaction] = transactions.flatMap { txn in
-            guard let hash = txn.hash else { return nil }
-            let hashes = self.transactions.value.flatMap { $0.hash }
-
-            return hashes.contains(hash) ? nil : .pending(txn)
-        }
-        self.transactions.value.insert(contentsOf: newTransactions, at: 0)
-
-        processPendingBlocks()
+        processReceive(source: source, previous: previousFrontierHash)
     }
 
-    private func createOpenBlock(forSource source: String, completion: (() -> Void)? = nil) {
+    private func createOpenBlock(forSource source: String, completion: @escaping (() -> Void)) {
         RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
+            guard let work = work else { return completion() }
+
             let pendingBlock = Endpoint.createOpenBlock(
                 source: source,
                 work: work,
@@ -315,116 +343,62 @@ final class HomeViewModel {
 
             self.socket.send(endpoint: pendingBlock)
 
-            completion?()
+            completion()
         }
-    }
-
-    private func processPendingBlocks() {
-        self.isCurrentlySyncing.value = true
-
-        let (signal, observer) = Signal<String, NoError>.pipe()
-        let hashProducer: SignalProducer<String, NoError> = SignalProducer(signal)
-
-        guard let firstPendingBlock = pendingBlocks.first else {
-            self.isCurrentlySyncing.value = false
-            self.currentlyReceivingHash.value = nil
-
-            return
-        }
-
-        // Process first block
-        processReceiveAndRemoveTransaction(source: firstPendingBlock.key, previous: previousFrontierHash)
-
-        // Send values through the observer that the hashProducer below is listening to
-        hashStreamingSocket.event.message = { message in
-            guard let str = message as? String, let data = str.asUTF8Data() else { return }
-
-            if let newFrontierHash = self.genericDecoder(decodable: HashReceive.self, from: data) {
-                self._previousFrontierHash = newFrontierHash.hash
-
-                observer.send(value: newFrontierHash.hash)
-            }
-        }
-
-        disposable.inner = hashProducer.on(
-                completed: {
-                    self.isCurrentlySyncing.value = false
-                    self.currentlyReceivingHash.value = nil
-                    self.disposable.dispose()
-                },
-
-                value: { _ in
-                    guard let firstPendingBlock = self.pendingBlocks.first, let previous = self.previousFrontierHash else {
-                        self.isCurrentlySyncing.value = false
-                        self.currentlyReceivingHash.value = nil
-
-                        return
-                    }
-
-                    self.processReceiveAndRemoveTransaction(source: firstPendingBlock.key, previous: previous)
-            }
-        ).start()
     }
 
     private func createReceiveBlock(previousFrontierHash previous: String, source: String, work: String) {
         socket.send(endpoint: .createReceiveBlock(previous: previous, source: source, work: work, privateKey: credentials.privateKey))
     }
 
-    private func handle(accountBlockCount: AccountBlockCount, completion: (() -> Void)) {
+    private func handle(accountBlockCount: AccountBlockCount, completion: () -> Void) {
         self.lastBlockCount.value = accountBlockCount.count
 
         completion()
     }
 
     /// These are blocks sent over the wire when your app is open for you to receive
-    private func handle(subscriptionBlock: SubscriptionTransaction, completion: @escaping (() -> Void)) {
+    private func handle(subscriptionBlock: SubscriptionTransaction, completion: @escaping () -> Void) {
         guard let myAddress = subscriptionBlock.toAddress, subscriptionBlock.transactionType == .send, myAddress == address else { return }
 
         processReceive(source: subscriptionBlock.source, previous: previousFrontierHash) { completion() }
     }
 
     /// A general function that either processes the block as an open block or a receive block
-    private func processReceive(source: String, previous: String?, completion: @escaping (() -> Void)) {
+    private func processReceive(source: String, previous: String?, completion: (() -> Void)? = nil) {
         self.currentlyReceivingHash.value = source
 
         if let previous = previous {
             RaiCore().createWork(previousHash: previous) { work in
-                self.createReceiveBlock(previousFrontierHash: previous, source: source, work: work)
+                guard let work = work else { return }
 
                 self.pendingBlocks[source] = nil
-                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
-                self.lastBlockCount.value += self.lastBlockCount.value + 1
 
-                completion()
+                self.createReceiveBlock(previousFrontierHash: previous, source: source, work: work)
+
+                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
+                self.lastBlockCount.value = self.lastBlockCount.value + 1
+                self.currentlyReceivingHash.value = nil
+
+                completion?()
             }
         } else {
-            guard lastBlockCount.value == 0 else { return completion() }
+            guard lastBlockCount.value == 0 else { return }
 
             self.createOpenBlock(forSource: source) {
                 self.pendingBlocks[source] = nil
+
                 if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = 1
+                self.currentlyReceivingHash.value = nil
 
-                completion()
+                completion?()
             }
-        }
-    }
-
-    private func processReceiveAndRemoveTransaction(source: String, previous: String?) {
-        processReceive(source: source, previous: previous) {
-            if let justWorkedTransaction = self.transactions.value.filter({ $0.hash == self.currentlyReceivingHash.value && $0.isPending }).first,
-                let index = self.transactions.value.index(of: justWorkedTransaction) {
-                self.transactions.value.remove(at: index)
-            }
-            self.currentlyReceivingHash.value = nil
-
-            self.socket.send(endpoint: .accountBlockCount(address: self.address))
         }
     }
 
     private func randomRepresentative() -> String {
         let count = UInt32(preconfiguredRepresentatives.count)
-
         let int = Int(arc4random_uniform(count - 1))
 
         return preconfiguredRepresentatives[int]

@@ -2,10 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>gpuServerURL</key>
-	<string>http://51.255.74.8:7777</string>
 	<key>socketServerURL</key>
-	<string>wss://raicast.lightrai.com</string>
+	<string>wss://light.nano.org</string>
 	<key>keychainID</key>
 	<string>io.Realm.NanoWalletiOS</string>
 </dict>

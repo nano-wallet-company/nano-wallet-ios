@@ -57,7 +57,7 @@
 	<array>
 		<string>Nunito-Light.ttf</string>
 		<string>Nunito-Regular.ttf</string>
-		<string>SofiaPro-Regular.otf</string>
+		<string>NotoSans-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

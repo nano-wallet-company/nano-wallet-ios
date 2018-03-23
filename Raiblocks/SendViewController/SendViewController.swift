@@ -91,7 +91,7 @@ final class SendViewController: UIViewController {
 
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: Styleguide.Colors.lightBlue.color,
-            .font: Styleguide.Fonts.sofiaRegular.font(ofSize: 16),
+            .font: Styleguide.Fonts.notoSansRegular.font(ofSize: 16),
             .kern: 5.0
         ]
 
@@ -144,7 +144,7 @@ final class SendViewController: UIViewController {
         let title = NSMutableAttributedString(string: "MAX")
         title.addAttribute(.kern, value: 3.0, range: NSMakeRange(0, title.length))
         title.addAttribute(.foregroundColor, value: UIColor.white, range: NSMakeRange(0, title.length))
-        maxButton.titleLabel?.font = Styleguide.Fonts.sofiaRegular.font(ofSize: 14)
+        maxButton.titleLabel?.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         maxButton.setAttributedTitle(title, for: .normal)
         maxButton.titleLabel?.textAlignment = .center
         maxButton.titleLabel?.numberOfLines = 1

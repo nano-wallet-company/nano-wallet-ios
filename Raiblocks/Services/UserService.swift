@@ -64,8 +64,7 @@ final class UserService {
 
     func store(credentials: Credentials, completion: (() -> Void)? = nil) {
         do {
-            let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: config)
+            let realm = try Realm()
 
             try realm.write {
                 realm.add(credentials)
@@ -75,6 +74,50 @@ final class UserService {
         } catch {
             Crashlytics.sharedInstance().recordError(NanoWalletError.credentialStorageError)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LogOut"), object: nil)
+        }
+    }
+
+    func fetchCredentials() -> Credentials? {
+        do {
+            let realm = try Realm()
+
+            return realm.objects(Credentials.self).first
+
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToFetchCredentials)
+
+            return nil
+        }
+    }
+
+    /// Used for updating with socketUUID and hasCompletedLegalAgreements
+    func update(credentials: Credentials) {
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                realm.add(credentials, update: true)
+                realm.refresh()
+            }
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithUUID)
+        }
+    }
+
+    func updateLegal() {
+        guard let credentials = fetchCredentials() else { return }
+
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                credentials.hasCompletedLegalAgreements = true
+                realm.add(credentials, update: true)
+
+                realm.refresh()
+            }
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithLegalAgreement)
 
             return
         }
@@ -82,8 +125,7 @@ final class UserService {
 
     func currentUserSeed() -> String? {
         do {
-            let configuration = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-            let realm = try Realm(configuration: configuration)
+            let realm = try Realm()
 
             return realm.objects(Credentials.self).first?.seed
         } catch {
@@ -94,10 +136,8 @@ final class UserService {
     }
 
     static func logOut() {
-        let configuration = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data)
-
         do {
-            let realm = try Realm(configuration: configuration)
+            let realm = try Realm()
 
             try realm.write {
                 realm.deleteAll()
