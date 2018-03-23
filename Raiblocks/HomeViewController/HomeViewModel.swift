@@ -17,7 +17,7 @@ final class HomeViewModel {
 
     let socket: WebSocket
 
-    private let userService = UserService()
+    let userService = UserService()
     private let priceService = PriceService()
 
     var credentials: Credentials {
@@ -35,6 +35,10 @@ final class HomeViewModel {
 
     var privateKey: Data {
         return credentials.privateKey
+    }
+
+    var hasCompletedLegalAgreements: Bool {
+        return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)

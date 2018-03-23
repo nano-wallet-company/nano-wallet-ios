@@ -38,9 +38,10 @@ final class LegalViewController: UIViewController {
     }
 
     init(useForLoggedInState: Bool) {
+        self.useForLoggedInState = useForLoggedInState
+
         guard let credentials = userService.fetchCredentials() else { fatalError("Should always have credentials") }
         self.credentials = credentials
-        self.useForLoggedInState = useForLoggedInState
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -275,27 +276,13 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func agreeToLegal() {
-        credentials.hasCompletedLegalAgreements = true
-        DispatchQueue.global().async {
-            self.userService.update(credentials: self.credentials)
+        userService.updateLegal()
 
-            DispatchQueue.main.sync {
-                if self.useForLoggedInState {
-                    self.dismiss(animated: true)
-                } else {
-
-                }
-            }
-        }
-
-
+        self.dismiss(animated: true)
     }
 
-    // TODO:
-
-    // Record legal answer on credential (fix crash)
-    // Fix the weird nav bar thing for presenting to new users
 }
+
 
 extension Reactive where Base: UIControl {
 

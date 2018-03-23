@@ -205,7 +205,7 @@ class HomeViewController: UIViewController {
         }
         self.tableView = tableView
 
-        if !viewModel.credentials.hasCompletedLegalAgreements {
+        if !viewModel.hasCompletedLegalAgreements {
             let vc = LegalViewController(useForLoggedInState: true)
 
             present(vc, animated: true)

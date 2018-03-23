@@ -27,4 +27,5 @@ enum NanoWalletError: Error {
     case unableToGetKeychainKeyID
     case unableToFetchCredentials
     case unableToUpdateCredentialsWithUUID
+    case unableToUpdateCredentialsWithLegalAgreement
 }

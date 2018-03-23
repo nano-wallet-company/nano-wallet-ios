@@ -104,6 +104,25 @@ final class UserService {
         }
     }
 
+    func updateLegal() {
+        guard let credentials = fetchCredentials() else { return }
+
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                credentials.hasCompletedLegalAgreements = true
+                realm.add(credentials, update: true)
+
+                realm.refresh()
+            }
+        } catch {
+            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithLegalAgreement)
+
+            return
+        }
+    }
+
     func currentUserSeed() -> String? {
         do {
             let realm = try Realm()

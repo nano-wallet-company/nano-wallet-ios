@@ -40,7 +40,9 @@ class SeedConfirmationViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
 
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        if let credentials = UserService().fetchCredentials(), credentials.hasCompletedLegalAgreements {
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
         super.viewWillDisappear(animated)
     }
 
