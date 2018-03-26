@@ -170,9 +170,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
+                guard let checkbox = self.disclaimerCheckbox else { return }
+
                 Answers.logCustomEvent(withName: "Mobile Disclaimer Agreement Toggled", customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.disclaimerCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue, // 0 = unchecked, 1 = checked
                     "date": self.dateString
                 ])
         }
@@ -181,9 +183,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
+                guard let checkbox = self.eulaCheckbox else { return }
+
                 Answers.logCustomEvent(withName: "Mobile EULA Agreement Toggled", customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.eulaCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue,
                     "date": self.dateString
                 ])
         }
@@ -192,9 +196,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
+                guard let checkbox = self.privacyPolicyCheckbox else { return }
+
                 Answers.logCustomEvent(withName: "Mobile Privacy Policy Agreement Toggled", customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.privacyPolicyCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue,
                     "date": self.dateString
                 ])
         }
