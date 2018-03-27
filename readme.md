@@ -53,4 +53,4 @@ If you need any help, please visit our [GitHub Issues](https://github.com/nanocu
 
 ### License
 
-(to come)
+Nano Wallet is released under the [BSD-2 License](https://github.com/nanocurrency/nano-ios-wallet/blob/master/LICENSE)
