@@ -13,9 +13,24 @@ _Note: Nano Wallet for iOS supports devices with iOS 11+_
 
 ### Contributing
 
+All Nano Wallet development happens on GitHub. Contributions make for good karma and
+we [welcome new](https://blog.cocoapods.org/starting-open-source/) contributors with joy. We take contributors seriously, and thus have a
+contributor [code of conduct](CODE_OF_CONDUCT.md).
+
 * Fork the codebase
-* Make changes
-* Submit a pull request for review
+* See [Issues](https://github.com/nanocurrency/nano-ios-wallet/issues) for open bugs or feature requests
+* Make changes in your local branch
+* Submit a pull request for review, discussion and possible merge
+
+### Links
+
+| Link | Description |
+| :----- | :------ |
+[Nano.org](https://nano.org/) | Nano Homepage
+[@NanoCurrency](https://twitter.com/nanocurrency) | Follow Nano on Twitter to stay up to date.
+[Releases](https://github.com/nanocurrency/nano-ios-wallet/releases) | Check out the releases and their changelogs.
+[Code of Conduct](CODE_OF_CONDUCT.md) | Find out the standards we hold ourselves to.
+
 
 ### How to update RaiCoreBase if a new `.dylib` file is provided:
 
