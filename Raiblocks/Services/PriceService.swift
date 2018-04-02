@@ -9,8 +9,6 @@
 import ReactiveSwift
 import Result
 
-import Crashlytics
-
 
 final class PriceService {
 
@@ -47,7 +45,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting exchange price data", customAttributes: ["name": exchange.rawValue, "location": "error case", "response": response?.description ?? ""])
+                AnalyticsEvent.errorGettingExchangePriceData.track(customAttributes: ["name": exchange.rawValue, "location": "error case", "response": response?.description ?? ""])
 
                 switch exchange {
                 case .binance: return self.fetchLatestPrice(exchange: .okex, decodable: OkExNanoBTCPair.self)
@@ -59,7 +57,7 @@ final class PriceService {
             if let data = data, let json = try? JSONDecoder().decode(decodable, from: data) {
                 self._lastBTCTradePrice.value = json.last
             } else {
-                Answers.logCustomEvent(withName: "Error getting exchange price data", customAttributes: ["name": exchange.rawValue, "location": "unable to decode data", "response": response?.description ?? ""])
+                AnalyticsEvent.errorGettingExchangePriceData.track(customAttributes: ["name": exchange.rawValue, "location": "unable to decode data", "response": response?.description ?? ""])
 
                 switch exchange {
                 case .binance: return self.fetchLatestPrice(exchange: .okex, decodable: OkExNanoBTCPair.self)
@@ -75,7 +73,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap BTC price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
+                AnalyticsEvent.errorGettingCMCBTCPriceData.track(customAttributes: ["error_description": error?.localizedDescription ?? ""])
 
                 return self._lastBTCLocalCurrencyPrice.value = 0
             }
@@ -84,7 +82,7 @@ final class PriceService {
             if let data = data, let price = try? pair.decode(fromData: data) {
                 self._lastBTCLocalCurrencyPrice.value = price
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap BTC price data", customAttributes: ["error_description": "No description", "url": url.absoluteString])
+                AnalyticsEvent.errorDecodingCMCBTCPriceData.track(customAttributes: ["error_description": "No description", "url": url.absoluteString])
 
                 self._lastBTCLocalCurrencyPrice.value = 0
             }
@@ -96,7 +94,7 @@ final class PriceService {
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
-                Answers.logCustomEvent(withName: "Error getting CoinMarketCap Nano price data", customAttributes: ["error_description": error?.localizedDescription ?? ""])
+                AnalyticsEvent.errorGettingCMCNanoPriceData.track(customAttributes: ["error_description": error?.localizedDescription ?? ""])
 
                 return self._lastNanoLocalCurrencyPrice.value = 0
             }
@@ -105,7 +103,7 @@ final class PriceService {
             if let data = data, let price = try? pair.decode(fromData: data) {
                 self._lastNanoLocalCurrencyPrice.value = price
             } else {
-                Answers.logCustomEvent(withName: "Error decoding CoinMarketCap Nano price data", customAttributes: ["url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
+                AnalyticsEvent.errorDecodingCMCNanoPriceData.track(customAttributes: ["url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
 
                 self._lastNanoLocalCurrencyPrice.value = 0
             }

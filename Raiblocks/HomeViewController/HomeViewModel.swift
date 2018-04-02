@@ -6,7 +6,6 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-import Crashlytics
 import ReactiveSwift
 import RealmSwift
 import Result
@@ -25,7 +24,7 @@ final class HomeViewModel {
             let seed = userService.currentUserSeed(),
             let credentials = Credentials(seedString: seed)
         else {
-            Answers.logCustomEvent(withName: "App crashed due to missing Credentials")
+            AnalyticsEvent.missingCredentials.track()
 
             fatalError("There should always be a seed")
         }
@@ -136,14 +135,14 @@ final class HomeViewModel {
         }
 
         socket.event.close = { code, reason, clean in
-            Answers.logCustomEvent(withName: "Socked Closed in HomeVM", customAttributes: ["code": code, "reason": reason])
+            AnalyticsEvent.socketClosedHome.track(customAttributes: ["code": code, "reason": reason])
 
             self._hasNetworkConnection.value = false
             // print("CONNECTION WAS CLOSED")
         }
 
         socket.event.error = { error in
-            Answers.logCustomEvent(withName: "Socket Error in HomeVM", customAttributes: ["error": error.localizedDescription])
+            AnalyticsEvent.socketErrorHome.track(customAttributes: ["error": error.localizedDescription])
             // print("error \(error)")
         }
 

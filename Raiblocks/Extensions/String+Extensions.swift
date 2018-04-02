@@ -23,4 +23,15 @@ extension String {
         return NSRange(location: 0, length: utf16.count)
     }
 
+    // turns iLoveNano into "I Love Nano"
+    func camelCaseToWords() -> String {
+        return unicodeScalars.reduce("") {
+            guard CharacterSet.uppercaseLetters.contains($1) else {
+                return ($0 + String($1)).capitalized
+            }
+
+            return ($0 + " " + String($1)).capitalized
+        }
+    }
+
 }

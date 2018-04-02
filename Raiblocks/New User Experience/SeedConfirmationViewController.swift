@@ -11,7 +11,6 @@ import LocalAuthentication
 import MobileCoreServices
 
 import Cartography
-import Crashlytics
 
 
 class SeedConfirmationViewController: UIViewController {
@@ -23,7 +22,7 @@ class SeedConfirmationViewController: UIViewController {
 
     init() {
         guard let credentials = Credentials(seed: RaiCore().createSeed()) else {
-            Crashlytics.sharedInstance().recordCustomExceptionName("Credential Creation Failed", reason: nil, frameArray: [])
+            AnalyticsEvent.trackCustomException("Credential Creation Failed")
 
             fatalError()
         }
@@ -49,7 +48,7 @@ class SeedConfirmationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Answers.logCustomEvent(withName: "Seed Confirmation VC Viewed")
+        AnalyticsEvent.seedConfirmationViewed.track()
 
         view.backgroundColor = .white
 
@@ -154,7 +153,7 @@ class SeedConfirmationViewController: UIViewController {
     }
 
     @objc func copySeed() {
-        Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "seed confirmation"])
+        AnalyticsEvent.seedCopied.track(customAttributes: ["location": "seed confirmation"])
 
         textView?.selectedTextRange = nil
 
@@ -171,7 +170,7 @@ class SeedConfirmationViewController: UIViewController {
     }
 
     @objc func continueButtonWasPressed() {
-        Answers.logCustomEvent(withName: "Seed Confirmation Continue Button Pressed")
+        AnalyticsEvent.seedConfirmatonContinueButtonPressed.track()
 
         let ac = UIAlertController(title: "Welcome to Nano Wallet!", message: "Please confirm you have properly stored your Wallet Seed somewhere safe.", preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "I have backed up my Wallet Seed", style: .default) { _ in

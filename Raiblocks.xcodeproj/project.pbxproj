@@ -22,6 +22,7 @@
 		5133DE70204321A100C66199 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5133DE6F204321A100C66199 /* Double+Extensions.swift */; };
 		5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5135307B201A246E00B615D4 /* BackgroundViewController.swift */; };
 		51394039202B64BB0073B90F /* ExchaingePairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51394038202B64BB0073B90F /* ExchaingePairs.swift */; };
+		513E56B72072A69D00ADE706 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513E56B62072A69D00ADE706 /* AnalyticsService.swift */; };
 		5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */; };
 		5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279D1FEEBDD800C788E3 /* AccountInfo.swift */; };
 		514827A11FF2E98B00C788E3 /* HashReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514827A01FF2E98B00C788E3 /* HashReceive.swift */; };
@@ -141,6 +142,7 @@
 		5133DE6F204321A100C66199 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		5135307B201A246E00B615D4 /* BackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		51394038202B64BB0073B90F /* ExchaingePairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchaingePairs.swift; sourceTree = "<group>"; };
+		513E56B62072A69D00ADE706 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTransaction.swift; sourceTree = "<group>"; };
 		5148279D1FEEBDD800C788E3 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
 		514827A01FF2E98B00C788E3 /* HashReceive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashReceive.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				5174E8F8200FA6CF00DE86A0 /* PriceService.swift */,
 				5122A6182017AACA00F7F43A /* UserService.swift */,
 				517CCCD02028EAE90095590D /* CurrencyService.swift */,
+				513E56B62072A69D00ADE706 /* AnalyticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */,
 				5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */,
 				5133DE70204321A100C66199 /* Double+Extensions.swift in Sources */,
+				513E56B72072A69D00ADE706 /* AnalyticsService.swift in Sources */,
 				5122A6192017AACA00F7F43A /* UserService.swift in Sources */,
 				5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */,
 				51EADEB32007F62000660E4A /* WorkGenerate.swift in Sources */,

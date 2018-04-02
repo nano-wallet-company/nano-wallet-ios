@@ -6,9 +6,7 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-import Crashlytics
-
-
+// TODO: refactor this now that the error has been caught
 struct LocalCurrencyPair {
 
     let currency: Currency

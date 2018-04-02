@@ -6,7 +6,6 @@
 //  Copyright © 2018 Nano. All rights reserved.
 //
 
-import Crashlytics
 import RealmSwift
 
 
@@ -18,7 +17,7 @@ final class UserService {
             let root = NSDictionary(contentsOfFile: path) as? [String: String],
             let keychainID = root["keychainID"]
         else {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToGetKeychainKeyID)
+            AnalyticsEvent.trackCrash(error: .unableToGetKeychainKeyID)
 
             fatalError("Could not load keychain id")
         }
@@ -72,7 +71,7 @@ final class UserService {
                 completion?()
             }
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.credentialStorageError)
+           AnalyticsEvent.trackCrash(error: .credentialStorageError)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LogOut"), object: nil)
         }
     }
@@ -84,7 +83,7 @@ final class UserService {
             return realm.objects(Credentials.self).first
 
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToFetchCredentials)
+            AnalyticsEvent.trackCrash(error: .unableToFetchCredentials)
 
             return nil
         }
@@ -100,7 +99,8 @@ final class UserService {
                 realm.refresh()
             }
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithUUID)
+            AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithUUID)
+            return
         }
     }
 
@@ -117,7 +117,26 @@ final class UserService {
                 realm.refresh()
             }
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToUpdateCredentialsWithLegalAgreement)
+           AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithLegalAgreement)
+
+            return
+        }
+    }
+
+    func updateUserAgreesToTracking() {
+        guard let credentials = fetchCredentials() else { return }
+
+        do {
+            let realm = try Realm()
+
+            try realm.write {
+                credentials.hasAgreedToTracking = true
+                realm.add(credentials, update: true)
+
+                realm.refresh()
+            }
+        } catch {
+            AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithAnalyticsAgreement)
 
             return
         }
@@ -129,7 +148,7 @@ final class UserService {
 
             return realm.objects(Credentials.self).first?.seed
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.unableToGetCurrentUserSeed)
+            AnalyticsEvent.trackCrash(error: .unableToGetCurrentUserSeed)
 
             return nil
         }
@@ -143,7 +162,7 @@ final class UserService {
                 realm.deleteAll()
             }
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.logOutError)
+           AnalyticsEvent.trackCrash(error: .logOutError)
         }
     }
 

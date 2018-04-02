@@ -10,7 +10,6 @@ import AVFoundation
 import UIKit
 
 import Cartography
-import Crashlytics
 
 
 class WelcomeViewController: UIViewController {
@@ -29,7 +28,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Answers.logCustomEvent(withName: "Welcome VC Viewed")
+        AnalyticsEvent.welcomeViewed.track()
 
         view.backgroundColor = .white
 
@@ -221,7 +220,7 @@ class WelcomeViewController: UIViewController {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 DispatchQueue.main.async {
-                    Answers.logCustomEvent(withName: "Seed Scan Camera View Viewed")
+                    AnalyticsEvent.seedScanCameraViewed.track()
 
                     let vc = SeedScanViewController()
                     vc.delegate = self
@@ -240,7 +239,7 @@ class WelcomeViewController: UIViewController {
     }
 
     @objc func celebrate() {
-        Answers.logCustomEvent(withName: "Easter Egg Viewed")
+        AnalyticsEvent.easterEggViewed.track()
 
         let alertController = UIAlertController(title: "Welcome!", message: "Thank you for using the Nano Wallet for iOS!", preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "🎉", style: .default, handler: nil))
@@ -249,7 +248,7 @@ class WelcomeViewController: UIViewController {
     }
 
     private func showAlertForBadSeed(message: String? = nil) {
-        Answers.logCustomEvent(withName: "Alert for bad seed viewed")
+        AnalyticsEvent.badSeedViewed.track()
 
         let ac = UIAlertController(title: "There was a problem with your Wallet Seed", message: message ?? "There was a problem importing your Wallet Seed. Please double check it and try again or contact Nano's support channel.", preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
@@ -284,7 +283,7 @@ extension WelcomeViewController: UITextViewDelegate {
         if text.count == 64 {
             // User pasted an address
             if (Address(text) != nil || text.contains("_")) {
-                Answers.logCustomEvent(withName: "Bad Wallet Seed Pasted", customAttributes: ["error_type": "Address pasted"])
+                AnalyticsEvent.badWalletSeedPasted.track(customAttributes: ["error_type": "Address pasted"])
 
                 showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
 
@@ -295,7 +294,7 @@ extension WelcomeViewController: UITextViewDelegate {
                 if pattern?.numberOfMatches(in: seed, options: [], range: text.entireRange) == 64 {
                     createCredentialsAndContinue(forSeed: seed)
                 } else {
-                    Answers.logCustomEvent(withName: "Bad Wallet Seed Pasted", customAttributes: ["error_type": "Didn't match regex"])
+                    AnalyticsEvent.badWalletSeedPasted.track(customAttributes: ["error_type": "Didn't match regex"])
 
                     showAlertForBadSeed(message: "There was a problem with the Wallet Seed you pasted.\n\nPlease make sure it's 64 characters, only using 0-9 and A-F.")
                 }

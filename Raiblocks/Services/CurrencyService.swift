@@ -8,7 +8,6 @@
 
 import Foundation
 
-import Crashlytics
 import RealmSwift
 
 
@@ -25,7 +24,8 @@ final class CurrencyService {
             }
 
         } catch {
-            Crashlytics.sharedInstance().recordError(NanoWalletError.currencyStorageError)
+
+            AnalyticsEvent.trackCrash(error: .currencyStorageError) 
 
             completion()
         }

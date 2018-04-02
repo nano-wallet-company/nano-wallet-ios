@@ -5,7 +5,6 @@
 import UIKit
 
 import Cartography
-import Crashlytics
 import ReactiveSwift
 
 
@@ -36,7 +35,7 @@ class HomeViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        Answers.logCustomEvent(withName: "Home VC Viewed")
+        AnalyticsEvent.homeViewed.track()
 
         // Updates price when you scroll through the Page View Controller
         viewModel.lastBTCTradePrice

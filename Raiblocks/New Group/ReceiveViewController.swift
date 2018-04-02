@@ -6,7 +6,6 @@ import UIKit
 import Photos
 
 import Cartography
-import Crashlytics
 import EFQRCode
 
 struct ReceiveViewModel {
@@ -24,7 +23,7 @@ class ReceiveViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        Answers.logCustomEvent(withName: "Receive VC Viewed")
+        AnalyticsEvent.receiveViewed.track()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -169,7 +168,7 @@ class ReceiveViewController: UIViewController {
     }
 
     @objc func copyAddress() {
-        Answers.logCustomEvent(withName: "Nano Address Copied")
+        AnalyticsEvent.nanoAddressCopied.track()
 
         UIPasteboard.general.string = viewModel.address.longAddress
 
@@ -180,7 +179,7 @@ class ReceiveViewController: UIViewController {
     }
 
     @objc func share(_ button: UIButton) {
-        Answers.logCustomEvent(withName: "Share Dialogue Viewed")
+        AnalyticsEvent.shareDialogueViewed.track()
 
         var activityItems: [Any] = []
 
