@@ -227,7 +227,6 @@ final class SendViewController: UIViewController {
             self.present(ac, animated: true, completion: nil)
         }
 
-
         // MARK: - SendTextField producers (handles text)
 
         // Refactor all of this to be more functional
@@ -440,12 +439,28 @@ final class SendViewController: UIViewController {
 
     @objc func sendNano() {
         Answers.logCustomEvent(withName: "Send Nano Began")
-        // TODO: make address show error
-        guard
-            let textView = addressTextView,
-            let address = Address(textView.attributedText.string),
-            let work = viewModel.work
-        else { return }
+        // TODO: make your own address show error
+
+        guard let textView = addressTextView, let address = Address(textView.attributedText.string) else {
+            Answers.logCustomEvent(withName: "Send VC Address Fetch Failed")
+
+            let ac = UIAlertController(title: "Address Problem", message: "There was a problem getting the address for your transaction. Please try again.", preferredStyle: .actionSheet)
+            ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+                self.delegate?.didFinishWithViewController()
+            })
+
+            self.present(ac, animated: true, completion: nil)
+
+            return
+        }
+
+        guard let work = viewModel.work else {
+            Answers.logCustomEvent(withName: "Send VC Send Nano Work Unwrap Failed")
+
+            self.viewModel.workErrorClosure?()
+
+            return
+        }
 
         viewModel.checkAndOpenSocket() // TODO: add UI to show online state
 
