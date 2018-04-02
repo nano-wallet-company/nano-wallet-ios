@@ -67,6 +67,15 @@ enum AnalyticsEvent: String {
     case eulaViewed = "Mobile EULA Viewed"
     case privacyPolicyViewed = "Mobile Privacy Policy Viewed"
 
+    // LocalCurrencyPair
+    case errorFormattingLocalCurrencyStringToDouble = "Error formatting Local Currency String to Double"
+    case errorInLocalCurrencyDecodeFunction = "Error in LocalCurrencyPair.decode function"
+    case unableToGetLocalCurrencyPairBTCPrice = "Local Currency Pair Error: unable to get Bitcoin price"
+
+    case errorFormattingNanoStringToDouble = "Error formatting Nano Price Pair String to Double"
+    case errorInNanoDecodeFunction = "Error in NanoPricePair.decode function"
+    case unableToGetNanoPrice = "Nano Price Pair Error: unable to get price"
+
     // VCs Viewed
     case addressScanCameraViewed = "Address Scan Camera View Viewed"
     case homeViewed = "Home VC Viewed"
