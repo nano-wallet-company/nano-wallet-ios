@@ -54,11 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
 
         if let credentials = UserService().fetchCredentials() {
-            if credentials.hasAgreedToTracking {
+            if credentials.hasAgreedToTracking || !credentials.hasAnsweredAnalyticsQuestion {
+                // The latter for if the user has credentials but hasn't answered yet, primarily for legal agreement event recording
                 AnalyticsService.start()
             }
         } else {
-            // Begin tracking for legal agreements
+            // Begin tracking for legal agreement event recording
             AnalyticsService.start()
         }
         

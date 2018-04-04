@@ -68,21 +68,31 @@ enum AnalyticsEvent: String {
     case seedScanCameraViewed = "Seed Scan Camera View Viewed"
     case sendViewed = "Send VC Viewed"
 
-    // NOTE: Legal has track differently
-    func track(customAttributes: [String: Any]? = nil) {
-        guard let _ = UserService().fetchCredentials()?.hasAgreedToTracking else { return }
+    // MARK: - Functions
 
-        Answers.logCustomEvent(withName: self.rawValue, customAttributes: customAttributes)
+    // NOTE: Legal has track differently, has to record values
+    func track(customAttributes: [String: Any]? = nil) {
+        guard let credentials = UserService().fetchCredentials() else { return } // does this fail at legal?
+
+        if credentials.hasAgreedToTracking || !credentials.hasAnsweredAnalyticsQuestion {
+            Answers.logCustomEvent(withName: self.rawValue, customAttributes: customAttributes)
+        }
     }
 
     static func trackCrash(error: NanoWalletError) {
-        guard let _ = UserService().fetchCredentials()?.hasAgreedToTracking else { return }
+        guard let credentials = UserService().fetchCredentials() else { return }
 
-        Crashlytics.sharedInstance().recordError(error)
+        if credentials.hasAgreedToTracking || !credentials.hasAnsweredAnalyticsQuestion {
+            Crashlytics.sharedInstance().recordError(error)
+        }
     }
 
     static func trackCustomException(_ text: String) {
-        Crashlytics.sharedInstance().recordCustomExceptionName(text, reason: nil, frameArray: [])
+        guard let credentials = UserService().fetchCredentials() else { return }
+
+        if credentials.hasAgreedToTracking || !credentials.hasAnsweredAnalyticsQuestion {
+            Crashlytics.sharedInstance().recordCustomExceptionName(text, reason: nil, frameArray: [])
+        }
     }
 
 }
