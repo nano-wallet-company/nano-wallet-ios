@@ -1,5 +1,5 @@
 //
-//  AnalyticsService.swift
+//  AnalyticsEvent.swift
 //  Nano
 //
 //  Created by Zack Shapiro on 4/2/18.
@@ -8,24 +8,6 @@
 
 import Crashlytics
 import Fabric
-
-
-struct AnalyticsService {
-
-    static func start() {
-        // Instantiate Crashlytics if APIKey and Secret are present
-        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: Any],
-            let fabric = root["Fabric"] as? [String: Any],
-            let _ = fabric["APIKey"] {
-            Fabric.with([Crashlytics.self, Answers.self])
-        } else {
-            // print("No API Key Present")
-        }
-    }
-
-}
-
 
 enum AnalyticsEvent: String {
     case badSeedViewed = "Alert for bad seed viewed"
@@ -84,9 +66,7 @@ enum AnalyticsEvent: String {
     case receiveViewed = "Receive VC Viewed"
     case settingsViewed = "Settings VC Viewed"
     case seedScanCameraViewed = "Seed Scan Camera View Viewed"
-    case seedConfirmationViewed = "Seed Confirmation VC Viewed"
     case sendViewed = "Send VC Viewed"
-    case welcomeViewed = "Welcome VC Viewed"
 
     // NOTE: Legal has track differently
     func track(customAttributes: [String: Any]? = nil) {
@@ -103,6 +83,26 @@ enum AnalyticsEvent: String {
 
     static func trackCustomException(_ text: String) {
         Crashlytics.sharedInstance().recordCustomExceptionName(text, reason: nil, frameArray: [])
+    }
+
+}
+
+final class AnalyticsService {
+
+    static func start() {
+        // Instantiate Crashlytics if APIKey and Secret are present
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+            let root = NSDictionary(contentsOfFile: path) as? [String: Any],
+            let fabric = root["Fabric"] as? [String: Any],
+            let _ = fabric["APIKey"] {
+            Fabric.with([Crashlytics.self, Answers.self])
+        } else {
+            // print("No API Key Present")
+        }
+    }
+
+    static func stop() {
+        Fabric.with([])
     }
 
 }

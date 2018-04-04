@@ -14,6 +14,10 @@ import ReactiveCocoa
 import ReactiveSwift
 import Result
 
+protocol LegalViewControllerDelegate: class {
+    func didFinishWithLegalVC()
+}
+
 
 final class LegalViewController: UIViewController {
 
@@ -29,6 +33,8 @@ final class LegalViewController: UIViewController {
     private weak var eulaCheckbox: M13Checkbox?
     private weak var privacyPolicyCheckbox: M13Checkbox?
     private weak var agreeButton: NanoButton?
+
+    var delegate: LegalViewControllerDelegate?
 
     private var dateString: String {
         dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
@@ -285,7 +291,9 @@ final class LegalViewController: UIViewController {
     @objc func agreeToLegal() {
         userService.updateLegal()
 
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            self.delegate?.didFinishWithLegalVC()
+        }
     }
 
 }

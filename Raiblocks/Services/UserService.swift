@@ -123,14 +123,15 @@ final class UserService {
         }
     }
 
-    func updateUserAgreesToTracking() {
+    func updateUserAgreesToTracking(_ val: Bool) {
         guard let credentials = fetchCredentials() else { return }
 
         do {
             let realm = try Realm()
 
             try realm.write {
-                credentials.hasAgreedToTracking = true
+                credentials.hasAnsweredAnalyticsQuestion = true
+                credentials.hasAgreedToTracking = val
                 realm.add(credentials, update: true)
 
                 realm.refresh()

@@ -8,6 +8,8 @@
 
 import UIKit
 
+import Crashlytics
+import Fabric
 import RealmSwift
 
 
@@ -51,7 +53,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
-        AnalyticsService.start()
+        if let credentials = UserService().fetchCredentials() {
+            if credentials.hasAgreedToTracking {
+                AnalyticsService.start()
+            }
+        } else {
+            // Begin tracking for legal agreements
+            AnalyticsService.start()
+        }
         
         return true
     }

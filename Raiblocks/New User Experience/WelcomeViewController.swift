@@ -28,8 +28,6 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        AnalyticsEvent.welcomeViewed.track()
-
         view.backgroundColor = .white
 
         let welcomeLabel = UILabel()

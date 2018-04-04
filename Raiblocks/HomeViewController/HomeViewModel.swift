@@ -40,6 +40,10 @@ final class HomeViewModel {
         return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
     }
 
+    var hasCompletedAnalyticsOptIn: Bool {
+        return userService.fetchCredentials()?.hasAnsweredAnalyticsQuestion ?? false
+    }
+
     private let _frontierBlockHash = MutableProperty<String?>(nil)
     var frontierBlockHash: ReactiveSwift.Property<String?>
 
@@ -405,6 +409,16 @@ final class HomeViewModel {
 
     @objc func appWasReopened(_ notification: Notification) {
         checkAndOpenSockets()
+    }
+
+    func startAnalyticsService() {
+        userService.updateUserAgreesToTracking(true)
+        AnalyticsService.start()
+    }
+
+    func stopAnalyticsService() {
+        userService.updateUserAgreesToTracking(false)
+        AnalyticsService.stop()
     }
 
 }
