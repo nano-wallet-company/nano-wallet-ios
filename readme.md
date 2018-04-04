@@ -14,11 +14,11 @@ _Note: Nano Wallet for iOS supports devices with iOS 11+_
 ### Contributing
 
 All Nano Wallet development happens on GitHub. Contributions make for good karma and
-we [welcome new](https://blog.cocoapods.org/starting-open-source/) contributors with joy. We take contributors seriously, and thus have a
+we welcome new contributors. We take contributors seriously, and thus have a
 contributor [code of conduct](CODE_OF_CONDUCT.md).
 
 * Fork the codebase
-* See [Issues](https://github.com/nanocurrency/nano-ios-wallet/issues) for open bugs or feature requests
+* See [Issues](https://github.com/nano-wallet-company/nano-ios-wallet/issues) for open bugs or feature requests
 * Make changes in your local branch
 * Submit a pull request for review, discussion and possible merge
 
@@ -26,9 +26,10 @@ contributor [code of conduct](CODE_OF_CONDUCT.md).
 
 | Link | Description |
 | :----- | :------ |
+[NanoWalletCompany.com](https://nanowalletco.com/) | Nano Wallet Company Homepage
 [Nano.org](https://nano.org/) | Nano Homepage
-[@NanoCurrency](https://twitter.com/nanocurrency) | Follow Nano on Twitter to stay up to date.
-[Releases](https://github.com/nanocurrency/nano-ios-wallet/releases) | Check out the releases and their changelogs.
+[@NanoWalletCo](https://twitter.com/nanowalletco) | Follow Nano on Twitter to stay up to date.
+[Releases](https://github.com/nano-wallet-company/nano-ios-wallet/releases) | Check out the releases and their changelogs.
 [Code of Conduct](CODE_OF_CONDUCT.md) | Find out the standards we hold ourselves to.
 
 
@@ -64,8 +65,8 @@ Troubleshooting:
 
 ### Have a question?
 
-If you need any help, please visit our [GitHub Issues](https://github.com/nanocurrency/raiblocks-ios-wallet/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you aren't able to find a solution.
+If you need any help, please visit our [GitHub Issues](https://github.com/nano-wallet-company/nano-ios-wallet/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you aren't able to find a solution.
 
 ### License
 
-Nano Wallet is released under the [BSD-2 License](https://github.com/nanocurrency/nano-ios-wallet/blob/master/LICENSE)
+Nano Wallet is released under the [BSD-2 License](https://github.com/nano-wallet-company/nano-ios-wallet/blob/master/LICENSE)

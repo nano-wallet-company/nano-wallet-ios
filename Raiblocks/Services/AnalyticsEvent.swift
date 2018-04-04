@@ -9,6 +9,7 @@
 import Crashlytics
 import Fabric
 
+
 enum AnalyticsEvent: String {
     case badSeedViewed = "Alert for bad seed viewed"
     case badWalletSeedPasted = "Bad Wallet Seed Pasted"
