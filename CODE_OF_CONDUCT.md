@@ -1,10 +1,10 @@
 # Nano Wallet Company Code of Conduct
 
-Nano Wallet Company strongly values contributors from anywhere, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. As a result, the Nano Wallet Company team has agreed to and enforces this code of conduct in order to provide a harassment-free experience for everyone who participates in the development of Nano Wallet Company products.
+Nano Wallet Company strongly values contributors from anywhere, regardless of gender, sexual orientation, disability, physical appearance, national origin, body size, race, or religion. As a result, we have agreed to and abide by this code of conduct in order to provide a harassment-free experience for everyone who participates in the development of our open source software.
 
 ### Summary
 
-Harassment in code and discussion or violation of physical boundaries is completely unacceptable anywhere in Nano Wallet Company codebases, issue trackers, Slack, Discord, mailing lists, meetups, and other events. Violators will be warned and then blocked or banned by the core team at or before the 3rd violation.
+Harassment in code or discussion or violation of physical boundaries is completely unacceptable anywhere in Nano Wallet Company codebases, issue trackers, Slack, Discord, mailing lists, meetups, and other events. Violators will be warned and then blocked or banned at or before the 3rd violation.
 
 ### In detail
 
@@ -12,9 +12,7 @@ Harassment includes offensive verbal comments related to gender, sexual orientat
 
 Individuals asked to stop any harassing behavior are expected to comply immediately.
 
-Maintainers, including the core team, are also subject to the anti-harassment policy.
-
-If anyone engages in harassing behavior, including maintainers, we may take appropriate action, up to and including warning the offender, deletion of comments, removal from the project’s codebase and communication systems, and escalation to Github support.
+If anyone engages in harassing behavior we may take appropriate action, up to and including warning the offender, deletion of comments, removal from the project’s codebase and communication systems, and escalation to Github support.
 
 If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact us at [info@nanowalletco.com](mailto:info@nanowalletco.com) immediately.
 
@@ -31,7 +29,7 @@ Thanks to the [CocoaPods Code of Conduct](https://github.com/CocoaPods/CocoaPods
 ### License
 
 <p class="license" xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
-  To the extent possible under law The Nano Wallet Company Team has waived all copyright and related or neighboring rights to the <span property="dct:title">Nano Wallet Company Code of Conduct</span>. This work is published from the <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="https://nanowalletco.com">United States.</span>
+  To the extent possible under law, The Nano Wallet Company Team has waived all copyright and related or neighboring rights to the <span property="dct:title">Nano Wallet Company Code of Conduct</span>. This work is published from the <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="https://nanowalletco.com">United States.</span>
   <br>
   <br>
   <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
