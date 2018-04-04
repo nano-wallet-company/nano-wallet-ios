@@ -8,7 +8,6 @@
 
 import Foundation
 
-import Crashlytics
 import RealmSwift
 import SwiftWebSocket
 
@@ -30,7 +29,7 @@ extension RaiCore {
 
         socket.event.message = { message in
             guard let str = message as? String, let data = str.asUTF8Data() else {
-                Answers.logCustomEvent(withName: "Create Work For Open Block Failed")
+                AnalyticsEvent.createWorkFailedForOpenBlock.track()
 
                 return completion(nil)
             }
@@ -43,7 +42,7 @@ extension RaiCore {
         }
 
         socket.open()
-        socket.send(endpoint: Endpoint.createWorkForOpenBlock(publicKey: publicKey))
+        socket.send(endpoint: .createWorkForOpenBlock(publicKey: publicKey))
     }
 
     func createWork(previousHash previous: String, completion: @escaping ((_ work: String?) -> Void)) {
@@ -51,7 +50,7 @@ extension RaiCore {
 
         socket.event.message = { message in
             guard let str = message as? String, let data = str.asUTF8Data() else {
-                Answers.logCustomEvent(withName: "Create Work Failed")
+                AnalyticsEvent.createWorkFailed.track()
 
                 return completion(nil)
             }
@@ -64,7 +63,7 @@ extension RaiCore {
         }
 
         socket.open()
-        socket.send(endpoint: Endpoint.createWork(previousHash: previous))
+        socket.send(endpoint: .createWork(previousHash: previous))
     }
 
 }

@@ -5,7 +5,6 @@
 import UIKit
 
 import Cartography
-import Crashlytics
 import ReactiveSwift
 
 
@@ -36,7 +35,7 @@ class HomeViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        Answers.logCustomEvent(withName: "Home VC Viewed")
+        AnalyticsEvent.homeViewed.track()
 
         // Updates price when you scroll through the Page View Controller
         viewModel.lastBTCTradePrice
@@ -208,7 +207,15 @@ class HomeViewController: UIViewController {
         if !viewModel.hasCompletedLegalAgreements {
             let vc = LegalViewController(useForLoggedInState: true)
 
+            if !viewModel.hasCompletedAnalyticsOptIn {
+                vc.delegate = self
+            }
+
             present(vc, animated: true)
+        }
+
+        if !viewModel.hasCompletedAnalyticsOptIn {
+            showAnalyticsAlert()
         }
     }
 
@@ -349,6 +356,18 @@ extension HomeViewController: UITableViewDelegate {
         self.present(WebViewController(url: url), animated: true, completion: nil)
     }
 
+    private func showAnalyticsAlert() {
+        let ac = UIAlertController(title: "Analytics Opt-In", message: "Nano Wallet would like to anonymously collect usage data and crash reports in order to help to understand how people are using the wallet, where errors might occur, and how to improve the wallet in the future.\n\nNo data about your funds, your Wallet Seed, or your private keys are ever collected. You can see exactly what data is collected by viewing our code on Github.", preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Opt In", style: .cancel) { _ in
+            self.viewModel.startAnalyticsService()
+        })
+        ac.addAction(UIAlertAction(title: "No Thanks", style: .default) { _ in
+            self.viewModel.stopAnalyticsService()
+        })
+
+        present(ac, animated: true)
+    }
+
 }
 
 
@@ -398,6 +417,15 @@ extension HomeViewController: TransactionTableViewCellDelegate {
         ac.addAction(UIAlertAction(title: "Okay", style: .default))
 
         present(ac, animated: true)
+    }
+
+}
+
+
+extension HomeViewController: LegalViewControllerDelegate {
+
+    func didFinishWithLegalVC() {
+        showAnalyticsAlert()
     }
 
 }

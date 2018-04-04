@@ -25,14 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appBackgroundingForSeedOrSend: Bool = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let currentSchemaVersion: UInt64 = 1
+        let currentSchemaVersion: UInt64 = 2
         let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
         Realm.Configuration.defaultConfiguration = config
 
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()
 
-            Answers.logCustomEvent(withName: "User Logged Out")
+            AnalyticsEvent.logOut.track()
 
             DispatchQueue.main.async {
                 self.navigationController?.setViewControllers([WelcomeViewController()], animated: false)
@@ -53,16 +53,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
-        // Instantiate Crashlytics if APIKey and Secret are present
-        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: Any],
-            let fabric = root["Fabric"] as? [String: Any],
-            let _ = fabric["APIKey"] {
-            Fabric.with([Crashlytics.self, Answers.self])
+        if let credentials = UserService().fetchCredentials() {
+            if credentials.hasAgreedToTracking || !credentials.hasAnsweredAnalyticsQuestion {
+                // The latter for if the user has credentials but hasn't answered yet, primarily for legal agreement event recording
+                AnalyticsService.start()
+            }
         } else {
-//            print("No API Key Present")
+            // Begin tracking for legal agreement event recording
+            AnalyticsService.start()
         }
-
+        
         return true
     }
 

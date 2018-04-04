@@ -7,7 +7,6 @@ import LocalAuthentication
 import MobileCoreServices
 
 import Cartography
-import Crashlytics
 
 
 final class SettingsButton: UIButton {
@@ -57,7 +56,7 @@ final class SettingsViewController: UIViewController {
         self.localCurrency = localCurrency
         super.init(nibName: nil, bundle: nil)
 
-        Answers.logCustomEvent(withName: "Settings VC Viewed")
+        AnalyticsEvent.settingsViewed.track()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -264,7 +263,7 @@ final class SettingsViewController: UIViewController {
                 DispatchQueue.main.async {
                     guard success else {
                         guard let error = error else {
-                            Answers.logCustomEvent(withName: "Seed Copy Failed", customAttributes: ["type": "generic"])
+                            AnalyticsEvent.seedCopyFailed.track(customAttributes: ["type": "generic"])
                             appDelegate.appBackgroundingForSeedOrSend = false
 
                             let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
@@ -281,7 +280,7 @@ final class SettingsViewController: UIViewController {
                         switch error {
                         case LAError.userCancel: return
                         default:
-                            Answers.logCustomEvent(withName: "Seed Copy Failed", customAttributes: ["type": error.localizedDescription])
+                            AnalyticsEvent.seedCopyFailed.track(customAttributes: ["type": error.localizedDescription])
 
                             let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
                             ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
@@ -293,7 +292,7 @@ final class SettingsViewController: UIViewController {
                         }
                     }
 
-                    Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "settings"])
+                    AnalyticsEvent.seedCopied.track(customAttributes: ["location": "settings"])
 
                     let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
                     ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
@@ -310,7 +309,7 @@ final class SettingsViewController: UIViewController {
                 }
             }
         } else {
-            Answers.logCustomEvent(withName: "Seed Copy Failed")
+            AnalyticsEvent.seedCopyFailed.track()
             appDelegate.appBackgroundingForSeedOrSend = false
 
             let ac = UIAlertController(title: "Touch ID not available", message: "Your device is not configured for Touch ID.", preferredStyle: .alert)
@@ -390,7 +389,7 @@ extension SettingsViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let currency = currencies[row]
 
-        Answers.logCustomEvent(withName: "Local Currency Selected", customAttributes: ["currency": currency.paramValue])
+        AnalyticsEvent.localCurrencySelected.track(customAttributes: ["currency": currency.paramValue])
 
         currencyService.store(currency: StorableCurrency(string: currency.rawValue)!) {
             delegate?.localCurrencyWasSelected(currency: currency)

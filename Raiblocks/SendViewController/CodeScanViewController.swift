@@ -9,7 +9,6 @@
 import UIKit
 
 import Cartography
-import Crashlytics
 import ReactiveSwift
 
 
@@ -64,7 +63,7 @@ final class CodeScanViewController: ScannerViewContoller {
                 } else if let parsedAddress = AddressParser.parse(string: string) {
                     self.delegate?.didReceiveAddress(address: parsedAddress.address, amount: parsedAddress.amount)
                 } else {
-                    Answers.logCustomEvent(withName: "Error Parsing QR Code", customAttributes: ["qr_code_string": string])
+                    AnalyticsEvent.errorParsingQRCode.track(customAttributes: ["qr_code_string": string])
                 }
             }
     }

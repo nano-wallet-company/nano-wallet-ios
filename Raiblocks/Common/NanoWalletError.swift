@@ -28,4 +28,5 @@ enum NanoWalletError: Error {
     case unableToFetchCredentials
     case unableToUpdateCredentialsWithUUID
     case unableToUpdateCredentialsWithLegalAgreement
+    case unableToUpdateCredentialsWithAnalyticsAgreement
 }

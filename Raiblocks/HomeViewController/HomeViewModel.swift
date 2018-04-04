@@ -6,7 +6,6 @@
 //  Copyright © 2017 Nano. All rights reserved.
 //
 
-import Crashlytics
 import ReactiveSwift
 import RealmSwift
 import Result
@@ -25,7 +24,7 @@ final class HomeViewModel {
             let seed = userService.currentUserSeed(),
             let credentials = Credentials(seedString: seed)
         else {
-            Answers.logCustomEvent(withName: "App crashed due to missing Credentials")
+            AnalyticsEvent.missingCredentials.track()
 
             fatalError("There should always be a seed")
         }
@@ -39,6 +38,10 @@ final class HomeViewModel {
 
     var hasCompletedLegalAgreements: Bool {
         return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
+    }
+
+    var hasCompletedAnalyticsOptIn: Bool {
+        return userService.fetchCredentials()?.hasAnsweredAnalyticsQuestion ?? false
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)
@@ -136,14 +139,14 @@ final class HomeViewModel {
         }
 
         socket.event.close = { code, reason, clean in
-            Answers.logCustomEvent(withName: "Socked Closed in HomeVM", customAttributes: ["code": code, "reason": reason])
+            AnalyticsEvent.socketClosedHome.track(customAttributes: ["code": code, "reason": reason])
 
             self._hasNetworkConnection.value = false
             // print("CONNECTION WAS CLOSED")
         }
 
         socket.event.error = { error in
-            Answers.logCustomEvent(withName: "Socket Error in HomeVM", customAttributes: ["error": error.localizedDescription])
+            AnalyticsEvent.socketErrorHome.track(customAttributes: ["error": error.localizedDescription])
             // print("error \(error)")
         }
 
@@ -406,6 +409,16 @@ final class HomeViewModel {
 
     @objc func appWasReopened(_ notification: Notification) {
         checkAndOpenSockets()
+    }
+
+    func startAnalyticsService() {
+        userService.updateUserAgreesToTracking(true)
+        AnalyticsService.start()
+    }
+
+    func stopAnalyticsService() {
+        userService.updateUserAgreesToTracking(false)
+        AnalyticsService.stop()
     }
 
 }

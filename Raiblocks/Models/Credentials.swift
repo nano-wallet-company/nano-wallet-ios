@@ -20,6 +20,9 @@ final class Credentials: Object {
     @objc dynamic var hasCompletedLegalAgreements: Bool = false
     @objc dynamic var socketUUID: String?
 
+    @objc dynamic var hasAnsweredAnalyticsQuestion: Bool = false
+    @objc dynamic var hasAgreedToTracking: Bool = false
+
     override class func primaryKey() -> String? {
         return "id"
     }

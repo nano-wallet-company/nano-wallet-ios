@@ -9,11 +9,14 @@
 import Foundation
 
 import Cartography
-import Crashlytics
 import M13Checkbox
 import ReactiveCocoa
 import ReactiveSwift
 import Result
+
+protocol LegalViewControllerDelegate: class {
+    func didFinishWithLegalVC()
+}
 
 
 final class LegalViewController: UIViewController {
@@ -30,6 +33,8 @@ final class LegalViewController: UIViewController {
     private weak var eulaCheckbox: M13Checkbox?
     private weak var privacyPolicyCheckbox: M13Checkbox?
     private weak var agreeButton: NanoButton?
+
+    var delegate: LegalViewControllerDelegate?
 
     private var dateString: String {
         dateFormatter.dateFormat = "MM/dd/yyyy-HH:mm:ssXXX"
@@ -53,6 +58,8 @@ final class LegalViewController: UIViewController {
     override func viewDidLoad() {
         view.backgroundColor = .white
         super.viewDidLoad()
+
+        AnalyticsEvent.legalViewed.track()
 
         let disagreeButton = NanoButton(withType: .grey)
         disagreeButton.addTarget(self, action: #selector(disagreeToLegal), for: .touchUpInside)
@@ -170,9 +177,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
-                Answers.logCustomEvent(withName: "Mobile Disclaimer Agreement Toggled", customAttributes: [
+                guard let checkbox = self.disclaimerCheckbox else { return }
+
+                AnalyticsEvent.disclaimerAgreementToggled.track(customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.disclaimerCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue, // 0 = unchecked, 1 = checked
                     "date": self.dateString
                 ])
         }
@@ -181,9 +190,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
-                Answers.logCustomEvent(withName: "Mobile EULA Agreement Toggled", customAttributes: [
+                guard let checkbox = self.eulaCheckbox else { return }
+
+                AnalyticsEvent.eulaAgreementToggled.track(customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.eulaCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue,
                     "date": self.dateString
                 ])
         }
@@ -192,9 +203,11 @@ final class LegalViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .startWithValues { _ in
-                Answers.logCustomEvent(withName: "Mobile Privacy Policy Agreement Toggled", customAttributes: [
+                guard let checkbox = self.privacyPolicyCheckbox else { return }
+
+                AnalyticsEvent.privacyPolicyAgreementToggled.track(customAttributes: [
                     "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": self.privacyPolicyCheckbox?.checkState == .checked,
+                    "accepted": checkbox.checkState.rawValue,
                     "date": self.dateString
                 ])
         }
@@ -235,7 +248,7 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func viewDisclaimer() {
-        Answers.logCustomEvent(withName: "Mobile Disclaimer Viewed", customAttributes: [
+        AnalyticsEvent.disclaimerViewed.track(customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "date": dateString
         ])
@@ -244,7 +257,7 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func viewEula() {
-        Answers.logCustomEvent(withName: "Mobile EULA Viewed", customAttributes: [
+        AnalyticsEvent.eulaViewed.track(customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "date": dateString
         ])
@@ -253,7 +266,7 @@ final class LegalViewController: UIViewController {
     }
 
     @objc func viewPrivacyPolicy() {
-        Answers.logCustomEvent(withName: "Mobile Privacy Policy Viewed", customAttributes: [
+        AnalyticsEvent.privacyPolicyViewed.track(customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "date": dateString
         ])
@@ -278,7 +291,9 @@ final class LegalViewController: UIViewController {
     @objc func agreeToLegal() {
         userService.updateLegal()
 
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) {
+            self.delegate?.didFinishWithLegalVC()
+        }
     }
 
 }

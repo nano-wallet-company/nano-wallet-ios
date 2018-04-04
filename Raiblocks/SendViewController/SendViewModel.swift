@@ -8,7 +8,6 @@
 
 import Foundation
 
-import Crashlytics
 import ReactiveSwift
 import SwiftWebSocket
 
@@ -48,7 +47,7 @@ final class SendViewModel {
                 if let createdWork = createdWork {
                     self.work = createdWork
                 } else {
-                    Answers.logCustomEvent(withName: "Error Generating Work for Sending")
+                    AnalyticsEvent.errorGeneratingWorkForSending.track()
 
                     DispatchQueue.main.async {
                         self.workErrorClosure?()

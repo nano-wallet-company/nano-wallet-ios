@@ -12,7 +12,6 @@ import LocalAuthentication
 import MobileCoreServices
 
 import Cartography
-import Crashlytics
 import ReactiveSwift
 import Result
 import SwiftWebSocket
@@ -55,7 +54,7 @@ final class SendViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        Answers.logCustomEvent(withName: "Send VC Viewed")
+        AnalyticsEvent.sendViewed.track()
 
         SignalProducer.combineLatest(sendAddressIsValid.producer, sendableAmountIsValid.producer)
             .producer
@@ -227,7 +226,6 @@ final class SendViewController: UIViewController {
             self.present(ac, animated: true, completion: nil)
         }
 
-
         // MARK: - SendTextField producers (handles text)
 
         // Refactor all of this to be more functional
@@ -303,7 +301,7 @@ final class SendViewController: UIViewController {
             }
 
             guard let updatedText = textField.text else {
-                Answers.logCustomEvent(withName: "Error unwrapping Local Currency text", customAttributes: ["text": textField.text ?? ""])
+                AnalyticsEvent.errorUnwrappingLocalCurrencyText.track(customAttributes: ["text": textField.text ?? ""])
                 textField.text = "There was a problem"
 
                 return
@@ -398,7 +396,7 @@ final class SendViewController: UIViewController {
         viewModel.nanoAmount.value = viewModel.sendableNanoBalance
 
         viewModel.maxAmountInUse = true
-        Answers.logCustomEvent(withName: "Send: Max Amount Used")
+        AnalyticsEvent.sendMaxAmountUsed.track()
 
         if activeTextField == nil {
             self.addressTextView?.resignFirstResponder()
@@ -420,7 +418,7 @@ final class SendViewController: UIViewController {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if granted {
                 DispatchQueue.main.async {
-                    Answers.logCustomEvent(withName: "Address Scan Camera View Viewed")
+                    AnalyticsEvent.addressScanCameraViewed.track()
 
                     let vc = CodeScanViewController()
                     vc.delegate = self
@@ -439,13 +437,29 @@ final class SendViewController: UIViewController {
     }
 
     @objc func sendNano() {
-        Answers.logCustomEvent(withName: "Send Nano Began")
-        // TODO: make address show error
-        guard
-            let textView = addressTextView,
-            let address = Address(textView.attributedText.string),
-            let work = viewModel.work
-        else { return }
+        AnalyticsEvent.sendBegan.track()
+        // TODO: make your own address show error
+
+        guard let textView = addressTextView, let address = Address(textView.attributedText.string) else {
+            AnalyticsEvent.sendAddressFetchFailed.track()
+
+            let ac = UIAlertController(title: "Address Problem", message: "There was a problem getting the address for your transaction. Please try again.", preferredStyle: .actionSheet)
+            ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+                self.delegate?.didFinishWithViewController()
+            })
+
+            self.present(ac, animated: true, completion: nil)
+
+            return
+        }
+
+        guard let work = viewModel.work else {
+            AnalyticsEvent.sendWorkUnwrapFailed.track()
+
+            self.viewModel.workErrorClosure?()
+
+            return
+        }
 
         viewModel.checkAndOpenSocket() // TODO: add UI to show online state
 
@@ -474,7 +488,7 @@ final class SendViewController: UIViewController {
         guard let amount = amountYoullSend.rawAsLongerUsableString else {
             self.showError(title: "Something went wrong.", message: "There was a problem sending Nano. Please try again.")
 
-            Crashlytics.sharedInstance().recordError(NanoWalletError.longUsableStringCastFailed)
+            AnalyticsEvent.trackCrash(error: .longUsableStringCastFailed)
 
             return
         }
@@ -492,12 +506,12 @@ final class SendViewController: UIViewController {
                 DispatchQueue.main.async {
                     guard success else {
                         guard let error = error else {
-                            Answers.logCustomEvent(withName: "Error with Send Authentication", customAttributes: ["description": "Generic error"])
+                            AnalyticsEvent.sendAuthError.track(customAttributes: ["description": "Generic error"])
 
                             return self.showError(title: "There was a problem", message: "Please try again.")
                         }
 
-                        Answers.logCustomEvent(withName: "Error with Send Authentication", customAttributes: ["description": error.localizedDescription])
+                        AnalyticsEvent.sendAuthError.track(customAttributes: ["description": error.localizedDescription])
 
                         switch error {
                         case LAError.userCancel: return
@@ -519,7 +533,7 @@ final class SendViewController: UIViewController {
                     self.viewModel.socket.send(endpoint: endpoint)
                     self.viewModel.maxAmountInUse = false
 
-                    Answers.logCustomEvent(withName: "Send Nano Finished")
+                    AnalyticsEvent.sendFinished.track()
 
                     appDelegate.appBackgroundingForSeedOrSend = false
                     self.delegate?.didFinishWithViewController()
@@ -552,8 +566,6 @@ final class SendViewController: UIViewController {
     }
 
     @objc func addXRBAddressPrefix() {
-        Answers.logCustomEvent(withName: "User used xrb_ prefix")
-
         guard let text = self.addressTextView?.text, !text.contains("_") else { return }
 
         self.addressTextView?.togglePlaceholder(show: false)

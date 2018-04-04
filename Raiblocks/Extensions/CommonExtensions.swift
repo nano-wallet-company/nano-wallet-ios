@@ -8,7 +8,6 @@
 
 import UIKit
 
-import Crashlytics
 import EFQRCode
 import ReactiveSwift
 import Result
@@ -99,7 +98,8 @@ extension WebSocket {
 
     func send(endpoint: Endpoint) {
         guard let text = endpoint.stringify() else {
-            Answers.logCustomEvent(withName: "Endpoint Unwrap Failed")
+            AnalyticsEvent.endpointUnwrapFailed.track()
+
             return
         }
 

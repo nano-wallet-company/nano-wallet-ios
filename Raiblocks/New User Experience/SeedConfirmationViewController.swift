@@ -11,7 +11,7 @@ import LocalAuthentication
 import MobileCoreServices
 
 import Cartography
-import Crashlytics
+import Fabric
 
 
 class SeedConfirmationViewController: UIViewController {
@@ -23,7 +23,7 @@ class SeedConfirmationViewController: UIViewController {
 
     init() {
         guard let credentials = Credentials(seed: RaiCore().createSeed()) else {
-            Crashlytics.sharedInstance().recordCustomExceptionName("Credential Creation Failed", reason: nil, frameArray: [])
+            AnalyticsEvent.trackCustomException("Credential Creation Failed")
 
             fatalError()
         }
@@ -49,12 +49,12 @@ class SeedConfirmationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Answers.logCustomEvent(withName: "Seed Confirmation VC Viewed")
-
         view.backgroundColor = .white
 
         if !credentials.hasCompletedLegalAgreements {
-            present(LegalViewController(useForLoggedInState: false), animated: true)
+            let vc = LegalViewController(useForLoggedInState: false)
+            vc.delegate = self
+            present(vc, animated: true)
         }
 
         let logo = UIImageView(image: UIImage(named: "largeNanoMarkBlue"))
@@ -154,7 +154,7 @@ class SeedConfirmationViewController: UIViewController {
     }
 
     @objc func copySeed() {
-        Answers.logCustomEvent(withName: "Seed Copied", customAttributes: ["location": "seed confirmation"])
+        AnalyticsEvent.seedCopied.track(customAttributes: ["location": "seed confirmation"])
 
         textView?.selectedTextRange = nil
 
@@ -171,7 +171,7 @@ class SeedConfirmationViewController: UIViewController {
     }
 
     @objc func continueButtonWasPressed() {
-        Answers.logCustomEvent(withName: "Seed Confirmation Continue Button Pressed")
+        AnalyticsEvent.seedConfirmatonContinueButtonPressed.track()
 
         let ac = UIAlertController(title: "Welcome to Nano Wallet!", message: "Please confirm you have properly stored your Wallet Seed somewhere safe.", preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "I have backed up my Wallet Seed", style: .default) { _ in
@@ -197,6 +197,25 @@ extension SeedConfirmationViewController: NSItemProviderWriting {
         }
 
         return nil
+    }
+
+}
+
+
+extension SeedConfirmationViewController: LegalViewControllerDelegate {
+
+    func didFinishWithLegalVC() {
+        let ac = UIAlertController(title: "Analytics Opt-In", message: "Nano Wallet would like to anonymously collect usage data and crash reports in order to help to understand how people are using the wallet, where errors might occur, and how to improve the wallet in the future.\n\nNo data about your funds, your Wallet Seed, or your private keys are ever collected. You can see exactly what data is collected by viewing our code on Github.", preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Opt-in", style: .cancel) { _ in
+            UserService().updateUserAgreesToTracking(true)
+        })
+        ac.addAction(UIAlertAction(title: "No Thanks", style: .default) { _ in
+            UserService().updateUserAgreesToTracking(false)
+
+            AnalyticsService.stop()
+        })
+
+        present(ac, animated: true)
     }
 
 }
