@@ -66,7 +66,7 @@ final class LegalViewController: UIViewController {
         disagreeButton.setAttributedTitle("Disagree")
         view.addSubview(disagreeButton)
         constrain(disagreeButton) {
-            $0.bottom == $0.superview!.bottom - CGFloat(34)
+            $0.bottom == $0.superview!.bottom - (isiPhoneSE() ? CGFloat(17) : CGFloat(34))
             $0.right == $0.superview!.centerX - CGFloat(10)
             $0.width == $0.superview!.width * CGFloat(0.43)
             $0.height == CGFloat(55)
@@ -102,7 +102,7 @@ final class LegalViewController: UIViewController {
         viewCopy.text = """
         Tap the links below and read them carefully.
 
-        By checking the boxes, you acknowledge that you have read and agree to the following terms.
+        Each agreement represents a binding legal agreement and you acknowledge that you have read and agree to the following terms.
         """
         view.addSubview(viewCopy)
         constrain(viewCopy, viewTitle, agreeButton) {
@@ -173,6 +173,41 @@ final class LegalViewController: UIViewController {
 
         // MARK: - Reactive
 
+        SignalProducer(disclaimerCheckbox.reactive.checkboxTapped)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                if self.disclaimerCheckbox?.checkState == .checked {
+                    self.disclaimerCheckbox?.toggleAgreement()
+                }
+
+                self.viewDisclaimer()
+        }
+
+        SignalProducer(eulaCheckbox.reactive.checkboxTapped)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                if self.eulaCheckbox?.checkState == .checked {
+                    self.eulaCheckbox?.toggleAgreement()
+                }
+
+                self.viewEula()
+        }
+
+        SignalProducer(privacyPolicyCheckbox.reactive.checkboxTapped)
+            .producer
+            .take(during: lifetime)
+            .startWithValues { _ in
+                if self.privacyPolicyCheckbox?.checkState == .checked {
+                    self.privacyPolicyCheckbox?.toggleAgreement()
+                }
+
+                self.viewPrivacyPolicy()
+        }
+
+        // MARK: - Reactive For Analytics
+
         SignalProducer(disclaimerCheckbox.reactive.valueChanged)
             .producer
             .take(during: lifetime)
@@ -211,6 +246,8 @@ final class LegalViewController: UIViewController {
                     "date": self.dateString
                 ])
         }
+
+        // MARK: - Master Button Enable/Disable Check
 
         SignalProducer.combineLatest(SignalProducer(disclaimerCheckbox.reactive.valueChanged), SignalProducer(eulaCheckbox.reactive.valueChanged), SignalProducer(privacyPolicyCheckbox.reactive.valueChanged))
             .producer
@@ -253,7 +290,9 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        present(WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!), animated: true)
+        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
+        vc.delegate = self
+        present(vc, animated: true)
     }
 
     @objc func viewEula() {
@@ -262,7 +301,9 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        present(WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!), animated: true)
+        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
+        vc.delegate = self
+        present(vc, animated: true)
     }
 
     @objc func viewPrivacyPolicy() {
@@ -271,7 +312,9 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!), animated: true)
+        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+        vc.delegate = self
+        present(vc, animated: true)
     }
 
     @objc func disagreeToLegal() {
@@ -298,11 +341,49 @@ final class LegalViewController: UIViewController {
 
 }
 
+extension M13Checkbox {
+
+    @objc func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .ended else { return }
+
+        sendActions(for: .touchUpInside)
+    }
+
+    func toggleAgreement() {
+        toggleCheckState(true)
+        sendActions(for: .valueChanged)
+    }
+
+}
+
+extension LegalViewController: WebViewControllerDelegate {
+
+    func didDismissWithAcceptance(agreement: Agreement) {
+        switch agreement {
+        case .disclaimer:
+            self.disclaimerCheckbox?.toggleAgreement()
+
+        case .eula:
+            self.eulaCheckbox?.toggleAgreement()
+
+        case .privacyPolicy:
+            self.privacyPolicyCheckbox?.toggleAgreement()
+        }
+
+        dismiss(animated: true, completion: nil)
+    }
+
+}
+
 
 extension Reactive where Base: UIControl {
 
-    public var valueChanged: Signal<Bool, NoError> {
-        return mapControlEvents(.valueChanged) { $0.isSelected }
+    public var checkboxTapped: Signal<Void, NoError> {
+        return mapControlEvents(.touchUpInside) { _ in }
+    }
+
+    public var valueChanged: Signal<Void, NoError> {
+        return mapControlEvents(.valueChanged) { _ in }
     }
 
 }

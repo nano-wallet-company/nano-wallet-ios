@@ -353,7 +353,7 @@ extension HomeViewController: UITableViewDelegate {
             let url = explorer.url(hash: hash)
         else { return }
 
-        self.present(WebViewController(url: url), animated: true, completion: nil)
+        self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)
     }
 
     private func showAnalyticsAlert() {

@@ -169,14 +169,6 @@ class WelcomeViewController: UIViewController {
         }
     }
 
-    @objc func viewTerms() {
-        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-terms-of-service")!), animated: true)
-    }
-
-    @objc func viewPrivacyPolicy() {
-        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!), animated: true)
-    }
-
     @objc func keyboardWillHide(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
 

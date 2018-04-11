@@ -12,13 +12,29 @@ import WebKit
 import Cartography
 
 
+protocol WebViewControllerDelegate: class {
+    func didDismissWithAcceptance(agreement: Agreement)
+}
+
+enum Agreement {
+    case disclaimer, eula, privacyPolicy
+}
+
+// TODO: Subclass
 class WebViewController: UIViewController {
 
     private let url: URL
+    private let useForLegal: Bool
+    private let legalAgreement: Agreement?
     private weak var progressBar: UIProgressView?
+    private weak var acceptButton: NanoButton?
 
-    init(url: URL) {
+    var delegate: WebViewControllerDelegate?
+
+    init(url: URL, useForLegalPurposes: Bool, agreement: Agreement? = nil) {
         self.url = url
+        self.useForLegal = useForLegalPurposes
+        self.legalAgreement = agreement
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -54,7 +70,8 @@ class WebViewController: UIViewController {
 
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-        let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeWebview))
+        let closeButtonTitle = useForLegal ? "Cancel" : "Done"
+        let closeButton = UIBarButtonItem(title: closeButtonTitle, style: .done, target: self, action: #selector(closeWebview))
         closeButton.tintColor = Styleguide.Colors.darkBlue.color
 
         toolbar.setItems([flex, closeButton], animated: true)
@@ -74,28 +91,70 @@ class WebViewController: UIViewController {
         let webView = WKWebView(frame: .zero)
         webView.navigationDelegate = self
         webView.load(URLRequest(url: url))
+        webView.scrollView.delegate = self
+        webView.scrollView.bounces = false
         self.view.addSubview(webView)
-        constrain(webView, toolbar) { view, toolbar in
-            view.top == toolbar.bottom
-            view.left == view.superview!.left
-            view.right == view.superview!.right
-            view.bottom == view.superview!.bottom
-        }
 
+        if useForLegal {
+            let acceptButton = NanoButton(withType: .lightBlueSend)
+            acceptButton.setAttributedTitle("I Accept")
+            acceptButton.addTarget(self, action: #selector(agreeToLegalAgreement), for: .touchUpInside)
+            acceptButton.isEnabled = false
+            view.addSubview(acceptButton)
+            constrain(acceptButton) {
+                $0.bottom == $0.superview!.bottom - CGFloat(34)
+                $0.centerX == $0.superview!.centerX
+                $0.width == $0.superview!.width * CGFloat(0.8)
+                $0.height == CGFloat(55)
+            }
+            self.acceptButton = acceptButton
+
+            constrain(webView, acceptButton, toolbar) { view, button, toolbar in
+                view.top == toolbar.bottom
+                view.left == view.superview!.left
+                view.right == view.superview!.right
+                view.bottom == button.top - CGFloat(34)
+            }
+        } else {
+            constrain(webView, toolbar) { view, toolbar in
+                view.top == toolbar.bottom
+                view.left == view.superview!.left
+                view.right == view.superview!.right
+                view.bottom == view.superview!.bottom
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-
     }
 
     @objc func closeWebview() {
         dismiss(animated: true, completion: nil)
     }
 
+    @objc func agreeToLegalAgreement() {
+        guard let agreement = legalAgreement else { return }
+
+        delegate?.didDismissWithAcceptance(agreement: agreement)
+    }
+
 }
 
+extension WebViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Guards against content size when loading
+        guard scrollView.contentSize.height > 0.0 else { return }
+
+        self.acceptButton?.isEnabled = (scrollView.contentOffset.y + 40 >= (scrollView.contentSize.height - scrollView.frame.size.height))
+    }
+
+}
+
+
 extension WebViewController: WKNavigationDelegate {
+
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         progressBar?.setProgress(0, animated: false)
     }
@@ -126,5 +185,5 @@ extension WebViewController: WKNavigationDelegate {
     private func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
         return decisionHandler(.allow)
     }
-}
 
+}
