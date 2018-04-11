@@ -3,7 +3,7 @@
 //  Nano
 //
 //  Created by Zack Shapiro on 12/14/17.
-//  Copyright © 2017 Nano. All rights reserved.
+//  Copyright © 2017 Nano Wallet Company. All rights reserved.
 //
 
 // TODO: Refactor the error catching now that the error has been caught

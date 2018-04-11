@@ -3,7 +3,7 @@
 //  Nano
 //
 //  Created by Zack Shapiro on 12/23/17.
-//  Copyright © 2017 Nano. All rights reserved.
+//  Copyright © 2017 Nano Wallet Company. All rights reserved.
 //
 
 /// This is used to get the Frontier hash before any request that requires it

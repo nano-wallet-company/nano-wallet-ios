@@ -3,7 +3,7 @@
 //  Nano
 //
 //  Created by Zack Shapiro on 12/12/17.
-//  Copyright © 2017 Nano. All rights reserved.
+//  Copyright © 2017 Nano Wallet Company. All rights reserved.
 //
 
 /// Subscribes to an address on the network 

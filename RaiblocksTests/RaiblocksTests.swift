@@ -3,7 +3,7 @@
 //  RaiblocksTests
 //
 //  Created by Zack Shapiro on 1/18/18.
-//  Copyright © 2018 Nano. All rights reserved.
+//  Copyright © 2018 Nano Wallet Company. All rights reserved.
 //
 
 import XCTest
