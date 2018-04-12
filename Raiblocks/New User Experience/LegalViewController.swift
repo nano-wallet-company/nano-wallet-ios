@@ -290,7 +290,8 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
+        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
+//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -301,7 +302,8 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
+        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
+//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -312,7 +314,8 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -361,13 +364,19 @@ extension LegalViewController: WebViewControllerDelegate {
     func didDismissWithAcceptance(agreement: Agreement) {
         switch agreement {
         case .disclaimer:
-            self.disclaimerCheckbox?.toggleAgreement()
+            if self.disclaimerCheckbox?.checkState == .unchecked {
+                self.disclaimerCheckbox?.toggleAgreement()
+            }
 
         case .eula:
-            self.eulaCheckbox?.toggleAgreement()
+            if self.eulaCheckbox?.checkState == .unchecked {
+                self.eulaCheckbox?.toggleAgreement()
+            }
 
         case .privacyPolicy:
-            self.privacyPolicyCheckbox?.toggleAgreement()
+            if self.privacyPolicyCheckbox?.checkState == .unchecked {
+                self.privacyPolicyCheckbox?.toggleAgreement()
+            }
         }
 
         dismiss(animated: true, completion: nil)
