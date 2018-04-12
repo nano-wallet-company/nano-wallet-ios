@@ -60,17 +60,17 @@ final class SendViewController: UIViewController {
             .producer
             .take(during: lifetime)
             .observe(on: UIScheduler())
-            .startWithValues {
-                let state = self.viewModel.socket.readyState == .open
-                self.sendButton?.isEnabled = ($0 && $1 && state)
+            .startWithValues { [weak self] in
+                let state = self?.viewModel.socket.readyState == .open
+                self?.sendButton?.isEnabled = ($0 && $1 && state)
             }
 
-        viewModel.socket.event.open = {
-            self.sendButton?.isEnabled = true
+        viewModel.socket.event.open = { [weak self] in
+            self?.sendButton?.isEnabled = true
         }
 
-        viewModel.socket.event.close = { _, _, _ in
-            self.sendButton?.isEnabled = false
+        viewModel.socket.event.close = { [weak self] _, _, _ in
+            self?.sendButton?.isEnabled = false
 
             viewModel.checkAndOpenSocket()
         }
@@ -217,30 +217,32 @@ final class SendViewController: UIViewController {
             $0.centerX == $0.superview!.centerX
         }
 
-        viewModel.workErrorClosure = {
+        viewModel.workErrorClosure = { [weak self] in
             let ac = UIAlertController(title: "Error Generating Work", message: "There was a problem creating work for your transaction.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
-                self.delegate?.didFinishWithViewController()
+                self?.delegate?.didFinishWithViewController()
             })
 
-            self.present(ac, animated: true, completion: nil)
+            self?.present(ac, animated: true, completion: nil)
         }
 
         // MARK: - SendTextField producers (handles text)
 
-        // Refactor all of this to be more functional
-        nanoProducer.producer.startWithValues { button in
+        // TODO: Refactor all of this to be more functional
+        nanoProducer.producer.startWithValues { [weak self] button in
+            guard let strongSelf = self else { return }
+
             guard
-                let textField = self.nanoTextField,
+                let textField = strongSelf.nanoTextField,
                 let text = textField.text
             else { return }
 
             switch button {
             case .backspace:
-                self.viewModel.maxAmountInUse = false
+                strongSelf.viewModel.maxAmountInUse = false
 
                 // TODO: add case: if second to last char is decimalSeparator, deleteBackwardsx2 (see also in other producer below)
-                if textField.text! == "0\(self.viewModel.decimalSeparator)" {
+                if textField.text! == "0\(strongSelf.viewModel.decimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
                 } else {
@@ -249,52 +251,54 @@ final class SendViewController: UIViewController {
             case .number:
                 if textField.text! == "", button.valueIsDecimalIndicator {
                     textField.text!.insert("0", at: String.Index(encodedOffset: 0))
-                    textField.text!.insert(Character(self.viewModel.decimalSeparator), at: String.Index(encodedOffset: 1))
+                    textField.text!.insert(Character(strongSelf.viewModel.decimalSeparator), at: String.Index(encodedOffset: 1))
                 } else {
                     textField.text!.insert(button.characterValue, at: String.Index(encodedOffset: text.count))
                 }
             }
 
-            let value = NSDecimalNumber(string: (textField.text == "" ? "0" : self.formatForMath(textField.text!)))
+            let value = NSDecimalNumber(string: (textField.text == "" ? "0" : strongSelf.formatForMath(textField.text!)))
 
             // If the value you typed is equal to your total balance
-            if value.asRawValue.compare(self.viewModel.sendableNanoBalance) == .orderedSame {
-                self.sendableAmountIsValid.value = true
+            if value.asRawValue.compare(strongSelf.viewModel.sendableNanoBalance) == .orderedSame {
+                strongSelf.sendableAmountIsValid.value = true
 
-                return self.viewModel.nanoAmount.value = value
+                return strongSelf.viewModel.nanoAmount.value = value
             }
-            self.viewModel.maxAmountInUse = false
+            strongSelf.viewModel.maxAmountInUse = false
 
             // If the value you typed is too large
-            if value.asRawValue.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
-                return self.fillOutWithMaxBalance()
+            if value.asRawValue.compare(strongSelf.viewModel.sendableNanoBalance) == .orderedDescending {
+                return strongSelf.fillOutWithMaxBalance()
             }
 
-            self.sendableAmountIsValid.value = textField.text != ""
+            strongSelf.sendableAmountIsValid.value = textField.text != ""
 
-            self.viewModel.nanoAmount.value = value
+            strongSelf.viewModel.nanoAmount.value = value
         }
 
-        localCurrencyProducer.producer.startWithValues { button in
+        localCurrencyProducer.producer.startWithValues { [weak self] button in
+            guard let strongSelf = self else { return }
+
             guard
-                let textField = self.localCurrencyTextField,
+                let textField = strongSelf.localCurrencyTextField,
                 let text = textField.text
             else { return }
 
             switch button {
             case .backspace:
-                self.viewModel.maxAmountInUse = false
+                strongSelf.viewModel.maxAmountInUse = false
 
-                if textField.text! == "0\(self.viewModel.decimalSeparator)" {
+                if textField.text! == "0\(strongSelf.viewModel.decimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
                 } else {
                     textField.deleteBackward()
                 }
             case .number:
-                if textField.text! == "\(self.viewModel.localCurrency.mark)", button.valueIsDecimalIndicator {
+                if textField.text! == "\(strongSelf.viewModel.localCurrency.mark)", button.valueIsDecimalIndicator {
                     textField.text!.insert("0", at: String.Index(encodedOffset: textField.text!.count))
-                    textField.text!.insert(Character(self.viewModel.decimalSeparator), at: String.Index(encodedOffset: textField.text!.count))
+                    textField.text!.insert(Character(strongSelf.viewModel.decimalSeparator), at: String.Index(encodedOffset: textField.text!.count))
                 } else {
                     textField.text!.insert(button.characterValue, at: String.Index(encodedOffset: text.count))
                 }
@@ -310,21 +314,21 @@ final class SendViewController: UIViewController {
             var value = updatedText
 
             // Remove currency mark
-            for _ in 0..<self.viewModel.localCurrency.mark.count {
+            for _ in 0..<strongSelf.viewModel.localCurrency.mark.count {
                 value.remove(at: value.startIndex)
             }
 
-            value = self.formatForMath(value)
+            value = strongSelf.formatForMath(value)
 
-            self.sendableAmountIsValid.value = textField.text != "\(self.viewModel.localCurrency.mark)"
+            strongSelf.sendableAmountIsValid.value = textField.text != "\(strongSelf.viewModel.localCurrency.mark)"
 
             let decimalValue = NSDecimalNumber(string: value == "" ? "0" : value)
 
             // Code for converstion to Nano amount
-            let lastTradePrice = NSDecimalNumber(value: self.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
+            let lastTradePrice = NSDecimalNumber(value: strongSelf.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
             guard lastTradePrice.compare(0) == .orderedDescending else {
-                self.nanoTextField?.text = "Error Getting Nano Price"
-                self.sendableAmountIsValid.value = false
+                strongSelf.nanoTextField?.text = "Error Getting Nano Price"
+                strongSelf.sendableAmountIsValid.value = false
 
                 // TODO: make this more apparent to the user with online/offline UI states
                 return
@@ -333,24 +337,24 @@ final class SendViewController: UIViewController {
             let dividedAmount = decimalValue.dividing(by: lastTradePrice)
             let raw = dividedAmount.asRawValue
 
-            if raw.compare(self.viewModel.sendableNanoBalance) == .orderedDescending {
-                self.fillOutWithMaxBalance()
+            if raw.compare(strongSelf.viewModel.sendableNanoBalance) == .orderedDescending {
+                strongSelf.fillOutWithMaxBalance()
             } else {
                 let numberHandler = NSDecimalNumberHandler(roundingMode: .plain, scale: 6, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
 
                 let roundedAmount = dividedAmount.rounding(accordingToBehavior: numberHandler)
-                self.viewModel.nanoAmount.value = roundedAmount
+                strongSelf.viewModel.nanoAmount.value = roundedAmount
             }
         }
 
         // MARK: - NSDecimalNumber Producer
 
-        viewModel.nanoAmount.producer.startWithValues { amount in
+        viewModel.nanoAmount.producer.startWithValues { [weak self] amount in
             // TODO: fix case where local currency amount is selected, you scan a code with an amount and the translated amount isn't present
-            if self.activeTextField == self.nanoTextField || self.activeTextField == nil {
-                self.localCurrencyTextField?.text = self.convertNanoToLocalCurrency(value: amount) ?? "0\(self.viewModel.decimalSeparator)0"
+            if self?.activeTextField == self?.nanoTextField || self?.activeTextField == nil {
+                self?.localCurrencyTextField?.text = self?.convertNanoToLocalCurrency(value: amount) ?? "0\(self?.viewModel.decimalSeparator)0"
             } else {
-                self.nanoTextField?.text = amount.stringValue
+                self?.nanoTextField?.text = amount.stringValue
             }
         }
     }

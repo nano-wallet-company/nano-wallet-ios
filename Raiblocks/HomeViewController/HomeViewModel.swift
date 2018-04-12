@@ -192,7 +192,7 @@ final class HomeViewModel {
             }
 
             if let count = self.genericDecoder(decodable: AccountBlockCount.self, from: data) {
-                return self.handle(accountBlockCount: count ) {
+                return self.handle(accountBlockCount: count) {
                     self.socket.sendMultiple(endpoints: [
                         .accountPending(address: self.address),
                         .accountHistory(address: self.address, count: self.lastBlockCount.value),
@@ -306,9 +306,9 @@ final class HomeViewModel {
         self.accountHistory = accountHistory
 
         // Find new transactions, if any, and insert into `transactions` appropriately
-        let newTransactions: [NanoTransaction] = accountHistory.transactions.flatMap { txn in
+        let newTransactions: [NanoTransaction] = accountHistory.transactions.compactMap { txn in
             guard let hash = txn.hash else { return nil }
-            let hashes = self.transactions.value.flatMap { $0.hash }
+            let hashes = self.transactions.value.compactMap { $0.hash }
 
             return hashes.contains(hash) ? nil : .finished(txn)
         }
@@ -324,7 +324,7 @@ final class HomeViewModel {
     /// Result of .accountPending
     private func handle(pendingBlocks: PendingBlocks) {
         var pending = pendingBlocks
-        self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove
+        self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove this function
 
         // Process first pending block, rest will follow in the producer above
         guard let source = self.pendingBlocks.first?.key else { return }

@@ -17,7 +17,7 @@ protocol SendKeyboardDelegate: class {
 
 final class SendKeyboard: UIView {
 
-    var delegate: SendKeyboardDelegate?
+    weak var delegate: SendKeyboardDelegate?
 
     init() {
         super.init(frame: .zero)

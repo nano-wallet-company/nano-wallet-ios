@@ -98,10 +98,8 @@ final class SendViewModel {
     }
 
     func checkAndOpenSocket() {
-        switch socket.readyState {
-        case .closed: socket.open()
-        case .open, .closing, .connecting: break
-        }
+        if socket.readyState == .closed { socket.open() }
+
     }
 
 }
