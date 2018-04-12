@@ -30,7 +30,6 @@ import UIKit.UIColor
     var shortString: String {
         let frontStartIndex = String.Index(encodedOffset: 0)
         let frontEndIndex = String.Index(encodedOffset: hasXrbAddressFormat ? 9 : 10)
-
         let backStartIndex = String.Index(encodedOffset: value.count - 5)
 
         let front = value[frontStartIndex..<frontEndIndex]

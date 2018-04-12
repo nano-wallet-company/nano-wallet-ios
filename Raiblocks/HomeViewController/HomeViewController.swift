@@ -83,7 +83,6 @@ class HomeViewController: UIViewController {
             .startWithValues { _ in
                 self.viewModel.fetchLatestPrices()
         }
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -96,6 +95,7 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = Styleguide.Colors.lightBlue.color
         super.viewWillAppear(animated)
 
+        viewModel.isCurrentlySending.value = false
         if viewModel.socket.readyState != .open {
             viewModel.socket.open()
         }
@@ -236,9 +236,12 @@ class HomeViewController: UIViewController {
 
     @objc func sendNano() {
         guard let previousFrontierHash = viewModel.previousFrontierHash else { return }
+        viewModel.isCurrentlySending.value = true
 
+        // Set the balance value so the mutable property can't update due to a slow refresh
+        let balance = self.viewModel.transactableAccountBalance.value
         let sendViewModel = SendViewModel(
-            sendableNanoBalance: self.viewModel.transactableAccountBalance.value,
+            sendableNanoBalance: balance,
             privateKeyData: self.viewModel.privateKey,
             previousFrontierHash: previousFrontierHash,
             socket: self.viewModel.socket,
@@ -398,7 +401,8 @@ extension HomeViewController: SettingsViewControllerDelegate {
 extension HomeViewController: SendViewControllerDelegate {
 
     func didFinishWithViewController() {
-        viewModel.refresh()
+        viewModel.isCurrentlySending.value = false
+        viewModel.refresh(andFetchLatestFrontier: true)
 
         self.tableView?.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
 

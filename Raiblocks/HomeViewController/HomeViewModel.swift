@@ -55,6 +55,7 @@ final class HomeViewModel {
     }
 
     let isCurrentlySyncing = MutableProperty<Bool>(false)
+    let isCurrentlySending = MutableProperty<Bool>(false)
 
     let _hasNetworkConnection = MutableProperty<Bool>(false)
     var hasNetworkConnection: ReactiveSwift.Property<Bool>
@@ -164,6 +165,7 @@ final class HomeViewModel {
             if let subscriptionBlock = self.genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
                 // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
                 guard self.currentlyReceivingHash.value == nil else { return }
+                guard !self.isCurrentlySending.value else { return }
 
                 self.currentlyReceivingHash.value = subscriptionBlock.source
                 return self.handle(subscriptionBlock: subscriptionBlock) {
@@ -185,6 +187,12 @@ final class HomeViewModel {
 
             if let accountBalance = self.genericDecoder(decodable: AccountBalance.self, from: data) {
                 return self.handle(accountBalance: accountBalance)
+            }
+
+            if let accountInfo = self.genericDecoder(decodable: AccountInfo.self, from: data) {
+                return self.handle(accountInfo: accountInfo) {
+                    self.socket.send(endpoint: .accountBlockCount(address: self.address))
+                }
             }
 
             if let pendingBlocks = self.genericDecoder(decodable: PendingBlocks.self, from: data) {
@@ -247,10 +255,14 @@ final class HomeViewModel {
         priceService.fetchLatestPrices()
     }
 
-    func refresh() {
+    func refresh(andFetchLatestFrontier fetchLatest: Bool = false) {
         priceService.fetchLatestPrices()
 
-        socket.send(endpoint: .accountBlockCount(address: address))
+        if fetchLatest {
+            socket.send(endpoint: .accountInfo(address: address))
+        } else {
+            socket.send(endpoint: .accountBlockCount(address: address))
+        }
         checkAndOpenSockets()
     }
 
@@ -273,6 +285,12 @@ final class HomeViewModel {
 
     private func handle(accountCheck: AccountCheck, completion: (() -> Void)) {
         self.addressIsOnNetwork.value = accountCheck.ready
+
+        completion()
+    }
+
+    private func handle(accountInfo: AccountInfo, completion: () -> Void) {
+        self._previousFrontierHash.value = accountInfo.frontier
 
         completion()
     }
