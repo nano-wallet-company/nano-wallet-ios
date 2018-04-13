@@ -156,13 +156,13 @@ final class HomeViewModel {
 //            print("")
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
-            if let accountCheck = self.genericDecoder(decodable: AccountCheck.self, from: data) {
+            if let accountCheck = genericDecoder(decodable: AccountCheck.self, from: data) {
                 return self.handle(accountCheck: accountCheck) {
                     self.socket.send(endpoint: .accountPending(address: self.address))
                 }
             }
 
-            if let subscriptionBlock = self.genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
+            if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
                 // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
                 guard self.currentlyReceivingHash.value == nil else { return }
                 guard !self.isCurrentlySending.value else { return }
@@ -175,31 +175,31 @@ final class HomeViewModel {
                 }
             }
 
-            if let accountSubscribe = self.genericDecoder(decodable: AccountSubscribe.self, from: data) {
+            if let accountSubscribe = genericDecoder(decodable: AccountSubscribe.self, from: data) {
                 return self.handle(accountSubscribe: accountSubscribe) {
                     self.socket.send(endpoint: Endpoint.accountHistory(address: self.address, count: self.lastBlockCount.value))
                 }
             }
 
-            if let accountHistory = self.genericDecoder(decodable: AccountHistory.self, from: data) {
+            if let accountHistory = genericDecoder(decodable: AccountHistory.self, from: data) {
                 return self.handle(accountHistory: accountHistory)
             }
 
-            if let accountBalance = self.genericDecoder(decodable: AccountBalance.self, from: data) {
+            if let accountBalance = genericDecoder(decodable: AccountBalance.self, from: data) {
                 return self.handle(accountBalance: accountBalance)
             }
 
-            if let accountInfo = self.genericDecoder(decodable: AccountInfo.self, from: data) {
+            if let accountInfo = genericDecoder(decodable: AccountInfo.self, from: data) {
                 return self.handle(accountInfo: accountInfo) {
                     self.socket.send(endpoint: .accountBlockCount(address: self.address))
                 }
             }
 
-            if let pendingBlocks = self.genericDecoder(decodable: PendingBlocks.self, from: data) {
+            if let pendingBlocks = genericDecoder(decodable: PendingBlocks.self, from: data) {
                 return self.handle(pendingBlocks: pendingBlocks)
             }
 
-            if let count = self.genericDecoder(decodable: AccountBlockCount.self, from: data) {
+            if let count = genericDecoder(decodable: AccountBlockCount.self, from: data) {
                 return self.handle(accountBlockCount: count) {
                     self.socket.sendMultiple(endpoints: [
                         .accountPending(address: self.address),
@@ -209,14 +209,14 @@ final class HomeViewModel {
                 }
             }
 
-            if let newFrontierHash = self.genericDecoder(decodable: HashReceive.self, from: data) {
+            if let newFrontierHash = genericDecoder(decodable: HashReceive.self, from: data) {
 //                print("new frontier received:", newFrontierHash.hash)
                 self._previousFrontierHash.value = newFrontierHash.hash
 
                 return
             }
 
-            if let errorMessage = self.genericDecoder(decodable: ErrorMessage.self, from: data) {
+            if let errorMessage = genericDecoder(decodable: ErrorMessage.self, from: data) {
                 switch errorMessage.error {
                 case .oldBlock: self.socket.send(endpoint: .accountBlockCount(address: self.address))
                 case .fork, .accountNotFound: break
@@ -275,10 +275,6 @@ final class HomeViewModel {
 
     func update(localCurrency currency: Currency) {
         priceService.update(localCurrency: currency)
-    }
-
-    private func genericDecoder<T: Decodable>(decodable: T.Type, from data: Data) -> T? {
-        return try? JSONDecoder().decode(decodable, from: data)
     }
 
     // MARK: - Socket Handler Functions

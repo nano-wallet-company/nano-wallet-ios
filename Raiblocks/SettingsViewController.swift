@@ -238,15 +238,15 @@ final class SettingsViewController: UIViewController {
     }
 
     @objc func viewDisclaimer() {
-        self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-disclaimer")!, useForLegalPurposes: false), animated: true)
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!, useForLegalPurposes: false), animated: true)
     }
 
     @objc func viewEula() {
-        self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-end-user-license-agreement")!, useForLegalPurposes: false), animated: true)
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!, useForLegalPurposes: false), animated: true)
     }
 
     @objc func viewPrivacyPolicy() {
-        self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
+        self.present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
     }
 
     func authenticateUser() {

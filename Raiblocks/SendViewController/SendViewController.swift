@@ -76,6 +76,10 @@ final class SendViewController: UIViewController {
         }
     }
 
+    deinit {
+        viewModel.sendSocket.close()
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -216,6 +220,10 @@ final class SendViewController: UIViewController {
             $0.width == $0.superview!.width * CGFloat(0.8)
             $0.centerX == $0.superview!.centerX
         }
+
+        // MARK: - Get balance and frontier for sending
+
+        viewModel.sendSocket.send(endpoint: .accountInfo(address: viewModel.address))
 
         viewModel.workErrorClosure = { [weak self] in
             let ac = UIAlertController(title: "Error Generating Work", message: "There was a problem creating work for your transaction.", preferredStyle: .alert)
@@ -480,7 +488,7 @@ final class SendViewController: UIViewController {
         let endpoint = Endpoint.createSendBlock(
             destination: address,
             balanceHex: viewModel.hexify(balance: remainingBalance),
-            previous: viewModel.previousFrontierHash,
+            previous: viewModel.previousFrontierHash!,
             work: work,
             privateKey: viewModel.privateKeyData
         )
