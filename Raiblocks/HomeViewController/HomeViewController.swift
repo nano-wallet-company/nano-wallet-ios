@@ -235,20 +235,9 @@ class HomeViewController: UIViewController {
     }
 
     @objc func sendNano() {
-        guard let previousFrontierHash = viewModel.previousFrontierHash else { return }
         viewModel.isCurrentlySending.value = true
 
-        // Set the balance value so the mutable property can't update due to a slow refresh
-        let balance = self.viewModel.transactableAccountBalance.value
-        let sendViewModel = SendViewModel(
-            sendableNanoBalance: balance,
-            privateKeyData: self.viewModel.privateKey,
-            previousFrontierHash: previousFrontierHash,
-            socket: self.viewModel.socket,
-            localCurrency: self.viewModel.localCurrency.value
-        )
-
-        let vc = SendViewController(viewModel: sendViewModel)
+        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket))
         vc.delegate = self
 
         self.navigationController?.pushViewController(vc, animated: true)

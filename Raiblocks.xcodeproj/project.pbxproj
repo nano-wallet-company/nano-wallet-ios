@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
+		510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510C391F2084F3DC004DDC6B /* GenericFunctions.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
 		5117F61A1FD89BD300CEAE78 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F6191FD89BD300CEAE78 /* String+Extensions.swift */; };
 		51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */; };
@@ -128,6 +129,7 @@
 /* Begin PBXFileReference section */
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
 		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
+		510C391F2084F3DC004DDC6B /* GenericFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFunctions.swift; sourceTree = "<group>"; };
 		5117F4CF1FD8490800CEAE78 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		5117F6191FD89BD300CEAE78 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		51203A361FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDecimalNumber+Extensions.swift"; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				51A5205A1FE3314F003F6EC7 /* NanoButton.swift */,
 				5122A6142017931E00F7F43A /* NanoWalletError.swift */,
 				5135307B201A246E00B615D4 /* BackgroundViewController.swift */,
+				510C391F2084F3DC004DDC6B /* GenericFunctions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */,
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
 				51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */,
