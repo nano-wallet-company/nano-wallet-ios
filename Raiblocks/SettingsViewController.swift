@@ -227,6 +227,9 @@ final class SettingsViewController: UIViewController {
             versionLabel.text = "v \(version) (\(build))"
         }
 
+        let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dismissVC))
+        gestureRecognizer.direction = .down
+        view.addGestureRecognizer(gestureRecognizer)
     }
 
     override func didReceiveMemoryWarning() {
