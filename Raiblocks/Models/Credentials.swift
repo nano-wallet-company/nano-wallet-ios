@@ -23,6 +23,8 @@ final class Credentials: Object {
     @objc dynamic var hasAnsweredAnalyticsQuestion: Bool = false
     @objc dynamic var hasAgreedToTracking: Bool = false
 
+    @objc dynamic private var _balance: String = "0"
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -64,6 +66,14 @@ final class Credentials: Object {
         let publicKey = core.createPublicKey(privateKey)
 
         return Address(core.createAddress(fromPublicKey: publicKey))!
+    }
+
+    func setBalance(_ val: NSDecimalNumber) {
+        self._balance = val.stringValue
+    }
+
+    var balance: NSDecimalNumber {
+        return NSDecimalNumber(string: _balance)
     }
 
 }

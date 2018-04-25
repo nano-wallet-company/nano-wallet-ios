@@ -18,7 +18,7 @@ we welcome new contributors. We take contributors seriously, and thus have a
 contributor [code of conduct](CODE_OF_CONDUCT.md).
 
 * Fork the codebase
-* See [Issues](https://github.com/nano-wallet-company/nano-ios-wallet/issues) for open bugs or feature requests
+* See [Issues](https://github.com/nano-wallet-company/nano-wallet-ios/issues) for open bugs or feature requests
 * Make changes in your local branch
 * Submit a pull request for review, discussion and possible merge
 
@@ -29,7 +29,7 @@ contributor [code of conduct](CODE_OF_CONDUCT.md).
 [NanoWalletCompany.com](https://nanowalletco.com/) | Nano Wallet Company Homepage
 [Nano.org](https://nano.org/) | Nano Homepage
 [@NanoWalletCo](https://twitter.com/nanowalletco) | Follow Nano on Twitter to stay up to date.
-[Releases](https://github.com/nano-wallet-company/nano-ios-wallet/releases) | Check out the releases and their changelogs.
+[Releases](https://github.com/nano-wallet-company/nano-wallet-ios/releases) | Check out the releases and their changelogs.
 [Code of Conduct](CODE_OF_CONDUCT.md) | Find out the standards we hold ourselves to.
 
 
@@ -41,21 +41,15 @@ It currently supports `arm64` devices which means it does not support devices th
 
 0) Note: This setup relies on Cocoapods as a dependency and won't work without it.
 
-1) Drag in the updated .dylib file and the interface.h files from Downloads into Xcode (not into the folder in Finder). Make sure `Copy items if needed` is checked.
+1) In terminal, starting in the wallet's base directory, copy the `.dylib` file into the `RaiCoreBase` directory. Example: `cp ../../Downloads/librai_lib.dylib RaiCoreBase/RaiCoreBase.dylib`
 
-2) In terminal, in the project root directory, run `install_name_tool -id @rpath/RaiCoreBase.framework/RaiCoreBase ./RaiCoreBase/RaiCoreBase.dylib`
+2) 2) In terminal, in the project root directory, `run install_name_tool -id @rpath/RaiCoreBase.framework/RaiCoreBase ./RaiCoreBase/RaiCoreBase.dylib`
 
-3) Next in the Xcode folder structure, remove the `.dylib` file extension from the .dylib file so the icon becomes a little Terminal and the file name reads RaiCoreBase
+3) Remove the file extension: `mv RaiCoreBase/RaiCoreBase.dylib RaiCoreBase/RaiCoreBase`
 
-4) Go to Build Phases for the Framework and create a Copy Files job (if one doesn't exist, Destination: resources. Copy only when installing: no, Code sign on copy: yes). The item being copied is the little terminal icon with file name `RaiCoreBase`.
+4) Make sure that `Architectures` says "arm64." ![](https://dzwonsemrish7.cloudfront.net/items/1X1G2p3R2M0d28320x0C/Screen%20Shot%202018-05-02%20at%206.59.46%20PM.png?v=2f49e9b4)
 
-5) Go to Build Phases for the main project target and create a Copy Files job (if one doesn't exist) where the item referenced is RaiCoreBase.framework (copy only when installing: no, code sign on copy: yes. Destintation: Frameworks
-
-6) In `RaiCoreBase`, make sure that the interface.h file is public to the Framework; Make sure `RaiCoreBase` is public (and required) to the Framework and the main project target
-
-7) Make sure that the `.framework` is included in the main target's Embedded Binaries
-
-8) Make sure that your `RaiCoreBase.h` file has `#import <RaiCoreBase/interface.h>` at the top
+(That's it! You should be good to go.)
 
 Troubleshooting:
 
@@ -63,9 +57,20 @@ Troubleshooting:
 
 * Also make sure you're importing `RaiCoreBase` into the wrapper library's `.h` file, that should give you access to all functions in the the `.m` file
 
+* Go to Build Phases for the Framework and create a Copy Files job (if one doesn't exist, Destination: resources. Copy only when installing: no, Code sign on copy: yes). The item being copied has the file name `RaiCoreBase`.
+
+* Go to Build Phases for the main project target and create a Copy Files job (if one doesn't exist) where the item referenced is RaiCoreBase.framework (copy only when installing: no, code sign on copy: yes. Destination: Frameworks
+
+* In `RaiCoreBase`, make sure that the interface.h file is public to the Framework; Make sure `RaiCoreBase` is public (and required) to the Framework and the main project target
+
+* Make sure that the `.framework` is included in the main target's Embedded Binaries
+
+* Make sure that your `RaiCoreBase.h` file has `#import <RaiCoreBase/interface.h>` at the top
+
+
 ### Have a question?
 
-If you need any help, please visit our [GitHub Issues](https://github.com/nano-wallet-company/nano-ios-wallet/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you aren't able to find a solution.
+If you need any help, please visit our [GitHub Issues](https://github.com/nano-wallet-company/nano-wallet-ios/issues) or the [Nano #support channel](https://chat.nano.org). Feel free to file an issue if you aren't able to find a solution.
 
 ### License
 

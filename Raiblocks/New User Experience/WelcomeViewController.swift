@@ -106,7 +106,7 @@ class WelcomeViewController: UIViewController {
         versionLabel.textColor = Styleguide.Colors.lightBlue.color.withAlphaComponent(0.75)
         versionLabel.text =
         """
-        NANO
+        Nano Wallet Company, LLC.
         v \(version) (\(build))
         """
         // set font 14 pt, regular

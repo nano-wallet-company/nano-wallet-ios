@@ -89,6 +89,16 @@ final class UserService {
         }
     }
 
+    func balance() -> NSDecimalNumber {
+        do {
+            let realm = try Realm()
+
+            return realm.objects(Credentials.self).first?.balance ?? 0
+        } catch {
+            return 0
+        }
+    }
+
     /// Used for updating with socketUUID and hasCompletedLegalAgreements
     func update(credentials: Credentials) {
         do {
@@ -117,7 +127,7 @@ final class UserService {
                 realm.refresh()
             }
         } catch {
-           AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithLegalAgreement)
+            AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithLegalAgreement)
 
             return
         }

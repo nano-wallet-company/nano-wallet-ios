@@ -40,6 +40,8 @@ final class SendViewModel {
         return credentials.address
     }
 
+    var representative: Address?
+
     private var credentials: Credentials {
         return UserService().fetchCredentials()!
     }
@@ -119,6 +121,7 @@ final class SendViewModel {
     private func handle(accountInfo: AccountInfo) {
         self.previousFrontierHash = accountInfo.frontier
         self.sendableNanoBalance = accountInfo.transactableBalance
+        self.representative = accountInfo.representativeAddress
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {

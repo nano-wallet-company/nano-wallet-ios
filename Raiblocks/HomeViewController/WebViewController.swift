@@ -99,7 +99,7 @@ class WebViewController: UIViewController {
             let acceptButton = NanoButton(withType: .lightBlueSend)
             acceptButton.setAttributedTitle("I Accept")
             acceptButton.addTarget(self, action: #selector(agreeToLegalAgreement), for: .touchUpInside)
-            acceptButton.isEnabled = false
+            acceptButton.isEnabled = true // false
             view.addSubview(acceptButton)
             constrain(acceptButton) {
                 $0.bottom == $0.superview!.bottom - CGFloat(34)

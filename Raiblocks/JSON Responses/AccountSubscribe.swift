@@ -44,6 +44,10 @@ struct AccountSubscribe: Decodable {
         return transactableBalance?.adding(pendingBalance)
     }
 
+    var representative: Address {
+        return Address(representativeBlock)!
+    }
+
     var totalBalanceAsString: String {
         return totalBalance?.rawAsUsableString ?? ""
     }

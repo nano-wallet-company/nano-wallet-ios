@@ -35,7 +35,7 @@ struct SubscriptionTransaction: Decodable {
         return Address(block.destination)
     }
 
-    var usableAmount: NSDecimalNumber {
+    var transactionAmount: NSDecimalNumber {
         return NSDecimalNumber(string: amount)
     }
 

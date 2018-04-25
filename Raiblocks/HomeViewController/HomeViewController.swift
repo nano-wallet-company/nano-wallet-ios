@@ -102,9 +102,7 @@ class HomeViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        defer {
-            viewModel.fetchLatestPrices()
-        }
+        defer { viewModel.fetchLatestPrices() }
 
         super.viewDidLoad()
 
@@ -204,19 +202,21 @@ class HomeViewController: UIViewController {
         }
         self.tableView = tableView
 
-        if !viewModel.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: true)
+        print("HAS COMPLETED LEGAL AGREEMENTS:", viewModel.credentials.hasCompletedLegalAgreements)
 
-            if !viewModel.hasCompletedAnalyticsOptIn {
-                vc.delegate = self
-            }
+//        if !viewModel.hasCompletedLegalAgreements {
+//            let vc = LegalViewController(useForLoggedInState: true)
+//
+//            if !viewModel.hasCompletedAnalyticsOptIn {
+//                vc.delegate = self
+//            }
+//
+//            present(vc, animated: true)
+//        }
 
-            present(vc, animated: true)
-        }
-
-        if !viewModel.hasCompletedAnalyticsOptIn {
-            showAnalyticsAlert()
-        }
+//        if !viewModel.hasCompletedAnalyticsOptIn {
+//            showAnalyticsAlert()
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -262,6 +262,8 @@ class HomeViewController: UIViewController {
     }
 
     @objc func showSettings() {
+//        self.viewModel.socket.close()
+
         let vc = SettingsViewController(credentials: viewModel.credentials, localCurrency: viewModel.localCurrency.value)
         vc.delegate = self
         let nc = UINavigationController(rootViewController: vc)
