@@ -50,6 +50,7 @@ final class HomeViewModel {
     var initialLoadComplete: Bool = false
     let transactions = MutableProperty<[NanoTransaction]>([])
 
+    // TODO: remove this
     var pendingTransactions: [NanoTransaction] {
         return transactions.value.filter { $0.isPending }
     }
@@ -69,7 +70,7 @@ final class HomeViewModel {
     }
 
     var representative: Address? {
-        return accountSubscribe?.representative
+        return accountSubscribe?.representativeAddress
     }
 
     private var accountInfo: AccountInfo?
