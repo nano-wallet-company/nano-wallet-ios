@@ -79,7 +79,7 @@ enum Endpoint {
             dict["count"] = count
 
         case let .createStateBlock(type, previous, remainingBalance, work, fromAccount, representative, privateKey):
-            var block: [String: String] = [:]
+            var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .state)
 
             switch type {
             case let .open(hash):
@@ -105,17 +105,12 @@ enum Endpoint {
             block["work"] = work
 
             // generate signature with new lib
-//            let signedBlock = Endpoint.generateSignature(forDictionary: /, andPrivateKey: <#T##Data#>)
-            // dict["block"] = signedBlock
+            let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey)
+            dict["block"] = signedBlock
 
             guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
 
             return String(bytes: serializedJSON, encoding: .utf8)
-
-
-
-
-
 
         case let .createOpenBlock(source, work, representative, address, privateKey):
             var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .open)
@@ -171,7 +166,7 @@ enum Endpoint {
 
     private static func createEmptyBlock(forTransactionType type: TransactionType) -> [String: String] {
         return ["type": type.rawValue, "signature": "0"]
-    }
+     }
 
     private static func generateSignature(forDictionary dict: [String: String], andPrivateKey key: Data) -> String? {
         guard

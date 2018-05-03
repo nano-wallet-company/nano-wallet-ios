@@ -158,8 +158,8 @@ final class HomeViewModel {
         }
 
         self.socket.event.message = { message in
-            print(message) // Uncomment for development
-            print("")
+//            print(message) // Uncomment for development
+//            print("")
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
             if let accountCheck = genericDecoder(decodable: AccountCheck.self, from: data) {
@@ -358,23 +358,23 @@ final class HomeViewModel {
         processReceive(source: source, amount: amount, previous: previousFrontierHash)
     }
 
-    private func createOpenBlock(forSource source: String, completion: @escaping (() -> Void)) {
-        RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
-            guard let work = work else { return completion() }
-
-            let pendingBlock = Endpoint.createOpenBlock(
-                source: source,
-                work: work,
-                representative: self.randomRepresentative(),
-                address: self.address,
-                privateKey: self.privateKey
-            )
-
-            self.socket.send(endpoint: pendingBlock)
-
-            completion()
-        }
-    }
+//    private func createOpenBlock(forSource source: String, completion: @escaping (() -> Void)) {
+//        RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
+//            guard let work = work else { return completion() }
+//
+//            let pendingBlock = Endpoint.createOpenBlock(
+//                source: source,
+//                work: work,
+//                representative: self.randomRepresentative(),
+//                address: self.address,
+//                privateKey: self.privateKey
+//            )
+//
+//            self.socket.send(endpoint: pendingBlock)
+//
+//            completion()
+//        }
+//    }
 
     private func createStateBlockForOpen(forSource source: String, amount: NSDecimalNumber, completion: @escaping (() -> Void)) {
         RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
@@ -396,9 +396,9 @@ final class HomeViewModel {
         }
     }
 
-    private func createReceiveBlock(previousFrontierHash previous: String, source: String, work: String) {
-        socket.send(endpoint: .createReceiveBlock(previous: previous, source: source, work: work, privateKey: credentials.privateKey))
-    }
+//    private func createReceiveBlock(previousFrontierHash previous: String, source: String, work: String) {
+//        socket.send(endpoint: .createReceiveBlock(previous: previous, source: source, work: work, privateKey: credentials.privateKey))
+//    }
 
     private func createStateBlockForReceive(previousFrontierHash previous: String, source: String, amount: NSDecimalNumber, work: String) {
         let stateBlock = Endpoint.createStateBlock(

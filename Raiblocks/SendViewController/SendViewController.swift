@@ -465,7 +465,7 @@ final class SendViewController: UIViewController {
             return
         }
 
-        guard let work = viewModel.work, let representative = viewModel.representative else {
+        guard let work = viewModel.work else {
             AnalyticsEvent.sendWorkUnwrapFailed.track()
 
             self.viewModel.workErrorClosure?()
@@ -485,17 +485,17 @@ final class SendViewController: UIViewController {
             remainingBalance = viewModel.sendableNanoBalance.subtracting(subtractor)
         }
 
-        let stateBlock = Endpoint.createStateBlock(
+        let endpoint = Endpoint.createStateBlock(
             type: .send(destinationAddress: address),
             previous: viewModel.previousFrontierHash!,
             remainingBalance: remainingBalance.stringValue,
             work: work,
             fromAccount: viewModel.address,
-            representative: representative,
+            representative: viewModel.representative,
             privateKey: viewModel.privateKeyData
         )
 
-        authenticateAndSend(endpoint: stateBlock, amountYoullSend: subtractor)
+        authenticateAndSend(endpoint: endpoint, amountYoullSend: subtractor)
     }
 
     private func authenticateAndSend(endpoint: Endpoint, amountYoullSend: NSDecimalNumber) {

@@ -40,14 +40,15 @@ final class SendViewModel {
         return credentials.address
     }
 
-    var representative: Address?
+    let representative: Address
 
     private var credentials: Credentials {
         return UserService().fetchCredentials()!
     }
 
-    init(homeSocket socket: WebSocket) {
+    init(homeSocket socket: WebSocket, representative: Address) {
         self.socket = socket
+        self.representative = representative
 
         self.localCurrency = priceService.localCurrency.value
         self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
@@ -121,7 +122,6 @@ final class SendViewModel {
     private func handle(accountInfo: AccountInfo) {
         self.previousFrontierHash = accountInfo.frontier
         self.sendableNanoBalance = accountInfo.transactableBalance
-        self.representative = accountInfo.representativeAddress
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {
