@@ -39,6 +39,16 @@ class SeedConfirmationViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool { return true }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !credentials.hasCompletedLegalAgreements {
+            let vc = LegalViewController(useForLoggedInState: false)
+            vc.delegate = self
+            present(vc, animated: false)
+        }
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         if let credentials = UserService().fetchCredentials(), credentials.hasCompletedLegalAgreements {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -50,12 +60,6 @@ class SeedConfirmationViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
-        if !credentials.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: false)
-            vc.delegate = self
-            present(vc, animated: true)
-        }
 
         let logo = UIImageView(image: UIImage(named: "largeNanoMarkBlue"))
         view.addSubview(logo)
