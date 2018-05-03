@@ -235,9 +235,11 @@ class HomeViewController: UIViewController {
     }
 
     @objc func sendNano() {
+        guard let representative = viewModel.representative else { return }
+
         viewModel.isCurrentlySending.value = true
 
-        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket))
+        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, representative: representative))
         vc.delegate = self
 
         self.navigationController?.pushViewController(vc, animated: true)
@@ -262,8 +264,6 @@ class HomeViewController: UIViewController {
     }
 
     @objc func showSettings() {
-//        self.viewModel.socket.close()
-
         let vc = SettingsViewController(credentials: viewModel.credentials, localCurrency: viewModel.localCurrency.value)
         vc.delegate = self
         let nc = UINavigationController(rootViewController: vc)
