@@ -13,9 +13,10 @@ struct AccountSubscribe: Decodable {
     private let balance: String
     private let _pendingBalance: String
 
-    let representativeBlock: String
     let frontierBlockHash: String
     let uuid: String?
+
+    private let representative: String?
 
     enum CodingKeys: String, CodingKey {
         case _blockCount = "block_count"
@@ -24,10 +25,17 @@ struct AccountSubscribe: Decodable {
         case representativeBlock = "representative_block"
         case frontierBlockHash = "frontier"
         case uuid
+        case representative
     }
 
     var blockCount: Int {
         return Int(_blockCount) ?? 0
+    }
+
+    var representativeAddress: Address? {
+        guard let rep = representative, let address = Address(rep) else { return nil }
+
+        return address
     }
 
     var transactableBalance: NSDecimalNumber? {
@@ -44,10 +52,6 @@ struct AccountSubscribe: Decodable {
         return transactableBalance?.adding(pendingBalance)
     }
 
-    var representative: Address {
-        return Address(representativeBlock)!
-    }
-
     var totalBalanceAsString: String {
         return totalBalance?.rawAsUsableString ?? ""
     }
@@ -58,8 +62,8 @@ struct AccountSubscribe: Decodable {
         self._blockCount = try container.decode(String.self, forKey: ._blockCount)
         self.balance = try container.decode(String.self, forKey: .balance)
         self._pendingBalance = try container.decode(String.self, forKey: ._pendingBalance)
-        self.representativeBlock = try container.decode(String.self, forKey: .representativeBlock)
         self.frontierBlockHash = try container.decode(String.self, forKey: .frontierBlockHash)
+        self.representative = try container.decode(String.self, forKey: .representative)
 
         if container.contains(.uuid) {
             self.uuid = try container.decode(String.self, forKey: .uuid)
