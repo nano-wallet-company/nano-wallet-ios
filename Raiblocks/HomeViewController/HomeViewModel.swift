@@ -275,7 +275,7 @@ final class HomeViewModel {
 
     func checkAndOpenSockets() {
         switch socket.readyState {
-        case .closed: break // socket.open()
+        case .closed: socket.open()
         case .open, .closing, .connecting: break
         }
     }
