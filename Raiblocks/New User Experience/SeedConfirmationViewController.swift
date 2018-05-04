@@ -210,7 +210,7 @@ extension SeedConfirmationViewController: LegalViewControllerDelegate {
 
     func didFinishWithLegalVC() {
         let ac = UIAlertController(title: "Analytics Opt-In", message: "Nano Wallet would like to anonymously collect usage data and crash reports in order to help to understand how people are using the wallet, where errors might occur, and how to improve the wallet in the future.\n\nNo data about your funds, your Wallet Seed, or your private keys are ever collected. You can see exactly what data is collected by viewing our code on Github.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Opt-in", style: .cancel) { _ in
+        ac.addAction(UIAlertAction(title: "Opt-in", style: .default) { _ in
             UserService().updateUserAgreesToTracking(true)
         })
         ac.addAction(UIAlertAction(title: "No Thanks", style: .default) { _ in
