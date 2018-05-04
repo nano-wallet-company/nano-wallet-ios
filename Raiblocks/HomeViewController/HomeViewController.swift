@@ -239,7 +239,7 @@ class HomeViewController: UIViewController {
     }
 
     @objc func sendNano() {
-        guard let representative = viewModel.representative else { return }
+        guard let representative = viewModel.temporaryRepresentative ?? viewModel.representative else { return }
 
         viewModel.isCurrentlySending.value = true
 

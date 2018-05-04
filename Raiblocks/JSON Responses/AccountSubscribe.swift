@@ -9,7 +9,7 @@
 /// Subscribes to an address on the network 
 struct AccountSubscribe: Decodable {
 
-    private let _blockCount: String // RPC note: this value should return an Int
+    private let _blockCount: String
     private let balance: String
     private let _pendingBalance: String
 

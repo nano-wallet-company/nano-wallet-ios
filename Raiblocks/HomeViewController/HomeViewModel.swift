@@ -69,6 +69,13 @@ final class HomeViewModel {
         return credentials.address
     }
 
+    // Will refactor, this property is used in the case where the user opens a new account and we need to set the rep
+    // I didn't want to call .accountSubscribe since we're already subscribed
+    // This value will be nil any other time the user opens the app, the app will just use the computed property `representative` below
+    // since it will be able to get a rep value from .accountSubscribe
+    // The "temporary" name connotes its value in the app, not its value on the network
+    var temporaryRepresentative: Address? = nil
+
     var representative: Address? {
         return accountSubscribe?.representativeAddress
     }
@@ -111,7 +118,7 @@ final class HomeViewModel {
             } else if let _ = accountSubscribe?.frontierBlockHash {
                 return accountSubscribe?.frontierBlockHash
             } else {
-                return nil // if this is nil for some reason, we should go out and get the frontierBlockHash
+                return nil
             }
         }
     }
@@ -139,6 +146,7 @@ final class HomeViewModel {
         socket.event.open = {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
+
             self.socket.sendMultiple(endpoints: [
                 .accountSubscribe(uuid: self.userService.fetchCredentials()?.socketUUID, address: self.address),
                 .accountCheck(address: self.address),
@@ -216,7 +224,6 @@ final class HomeViewModel {
             }
 
             if let newFrontierHash = genericDecoder(decodable: HashReceive.self, from: data) {
-//                print("new frontier received:", newFrontierHash.hash)
                 self._previousFrontierHash.value = newFrontierHash.hash
 
                 return
@@ -363,15 +370,18 @@ final class HomeViewModel {
         RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
             guard let work = work else { return completion() }
 
+            let representative = Address(self.randomRepresentative())!
             let stateBlock = Endpoint.createStateBlock(
                 type: .open(sendBlockHash: source),
                 previous: "",
                 remainingBalance: amount.stringValue,
                 work: work,
                 fromAccount: self.address,
-                representative: Address(self.randomRepresentative())!,
+                representative: representative,
                 privateKey: self.credentials.privateKey
             )
+
+            self.temporaryRepresentative = representative
 
             self.socket.send(endpoint: stateBlock)
 
