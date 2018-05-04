@@ -269,6 +269,7 @@ final class HomeViewModel {
         } else {
             socket.send(endpoint: .accountBlockCount(address: address))
         }
+
         checkAndOpenSockets()
     }
 

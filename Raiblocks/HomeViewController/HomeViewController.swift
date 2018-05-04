@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
 
     private weak var pricePageViewController: PricePageViewController?
     private weak var pageControl: UIPageControl?
+    private weak var refreshControl: UIRefreshControl?
     private weak var tableView: UITableView?
     private weak var sendButton: NanoButton?
 
@@ -120,6 +121,8 @@ class HomeViewController: UIViewController {
         // Hides 'Back' text from Back button on Send VC or any VC we push to
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(UIWebView.goBack))
 
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshWithButton))
+
         let topSection = UIView()
         topSection.backgroundColor = Styleguide.Colors.darkBlue.color
         view.addSubview(topSection)
@@ -187,6 +190,7 @@ class HomeViewController: UIViewController {
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.refreshControl = refreshControl
 
         let tableView = UITableView()
         tableView.refreshControl = refreshControl
@@ -252,7 +256,47 @@ class HomeViewController: UIViewController {
         present(nc, animated: true, completion: nil)
     }
 
+    @objc func refreshWithButton() {
+        guard let sendButton = sendButton else { return }
+
+        if viewModel.hasNetworkConnection.value {
+            // Just in case the send button is disabled
+            if viewModel.transactableAccountBalance.value.compare(NSDecimalNumber(value: 0)) == .orderedDescending && !sendButton.isEnabled {
+                sendButton.isEnabled = true
+            }
+
+            viewModel.refresh()
+        } else {
+            showAlertWhenOffline()
+        }
+    }
+
+    private func showAlertWhenOffline(endRefreshing: Bool = false) {
+        let ac = UIAlertController(title: "You are offline", message: """
+            Nano Wallet is having trouble connecting to the network right now.
+
+            Please try again.
+        """, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "View Account on Nanode", style: .default) { _ in
+            guard let url = URL(string: "https://www.nanode.co/account/" + self.address.longAddress) else { return }
+
+            self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)
+
+        })
+        ac.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+            if endRefreshing {
+                self.refreshControl?.endRefreshing()
+            }
+        })
+
+        present(ac, animated: true)
+    }
+
     @objc func refresh(_ sender: UIRefreshControl) {
+        guard viewModel.hasNetworkConnection.value else {
+            return showAlertWhenOffline(endRefreshing: true)
+        }
+
         guard let sendButton = sendButton, !viewModel.isCurrentlySyncing.value else { return sender.endRefreshing() }
 
         // Just in case the send button is disabled
