@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appBackgroundingForSeedOrSend: Bool = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let currentSchemaVersion: UInt64 = 3
+        let currentSchemaVersion: UInt64 = 2
         let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
         Realm.Configuration.defaultConfiguration = config
 

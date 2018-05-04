@@ -20,16 +20,7 @@ final class HomeViewModel {
     private let priceService = PriceService()
 
     var credentials: Credentials {
-        guard
-            let seed = userService.currentUserSeed(),
-            let credentials = Credentials(seedString: seed)
-        else {
-            AnalyticsEvent.missingCredentials.track()
-
-            fatalError("There should always be a seed")
-        }
-
-        return credentials
+        return userService.fetchCredentials()!
     }
 
     var privateKey: Data {
@@ -37,11 +28,11 @@ final class HomeViewModel {
     }
 
     var hasCompletedLegalAgreements: Bool {
-        return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
+        return userService.fetchCredentials()!.hasCompletedLegalAgreements
     }
 
     var hasCompletedAnalyticsOptIn: Bool {
-        return userService.fetchCredentials()?.hasAnsweredAnalyticsQuestion ?? false
+        return userService.fetchCredentials()!.hasAnsweredAnalyticsQuestion
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)
@@ -328,9 +319,6 @@ final class HomeViewModel {
 
         self._accountBalance.value = accountBalance.totalBalance ?? 0
         self._transactableAccountBalance.value = accountBalance.transactableBalance ?? 0
-
-        self.credentials.setBalance(accountBalance.transactableBalance ?? 0)
-        self.userService.update(credentials: self.credentials)
     }
 
     private func handle(accountHistory: AccountHistory) {
