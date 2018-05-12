@@ -34,7 +34,7 @@ final class CodeScanViewController: ScannerViewContoller {
         }
         self.scannerCameraView = scannerCameraView
 
-        scannerCameraView.label?.text = "Scan a Nano or RaiBlocks address QR code"
+        scannerCameraView.label?.text = "Scan a Nano address QR code"
 
         scanAddress()
     }

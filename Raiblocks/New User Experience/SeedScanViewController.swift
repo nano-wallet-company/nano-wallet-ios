@@ -35,7 +35,7 @@ class SeedScanViewController: UIViewController {
         }
         self.scannerCameraView = scannerCameraView
 
-        scannerCameraView.label?.text = "Scan a Nano or RaiBlocks Wallet Seed QR code to import an existing wallet."
+        scannerCameraView.label?.text = "Scan a Nano Wallet Seed QR code to import an existing wallet."
 
         scanSeed()
     }

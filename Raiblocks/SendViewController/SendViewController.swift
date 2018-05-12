@@ -572,8 +572,9 @@ final class SendViewController: UIViewController {
         let accessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
         accessoryView.barStyle = .default
         let xrbItem = UIBarButtonItem(title: "xrb_", style: .plain, target: self, action: #selector(addXRBAddressPrefix))
+        let nanoItem = UIBarButtonItem(title: "nano_", style: .plain, target: self, action: #selector(addNanoAddressPrefix))
         [xrbItem].forEach { $0.tintColor = .black }
-        accessoryView.items = [xrbItem]
+        accessoryView.items = [xrbItem, nanoItem]
         accessoryView.sizeToFit()
 
         return accessoryView
@@ -584,6 +585,13 @@ final class SendViewController: UIViewController {
 
         self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = handleRegularTextEntry(forAttributedText: "xrb_")
+    }
+
+    @objc func addNanoAddressPrefix() {
+        guard let text = self.addressTextView?.text, !text.contains("_") else { return }
+
+        self.addressTextView?.togglePlaceholder(show: false)
+        self.addressTextView?.attributedText = handleRegularTextEntry(forAttributedText: "nano_")
     }
 
 }
