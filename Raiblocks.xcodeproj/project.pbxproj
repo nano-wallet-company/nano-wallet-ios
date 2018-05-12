@@ -56,7 +56,6 @@
 		519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D371FD23521006B7B6E /* SettingsViewController.swift */; };
 		519B4D801FD74955006B7B6E /* RaiCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 519B4D7F1FD74955006B7B6E /* RaiCore.m */; };
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
-		51A16DC2208FCCB6004CE21B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A16DC1208FCCB6004CE21B /* User.swift */; };
 		51A5204F1FE2D6AC003F6EC7 /* PricePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */; };
 		51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */; };
 		51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */; };
@@ -181,7 +180,6 @@
 		519B4D7E1FD7493E006B7B6E /* RaiCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCore.h; sourceTree = "<group>"; };
 		519B4D7F1FD74955006B7B6E /* RaiCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RaiCore.m; sourceTree = "<group>"; };
 		519C1A181FEAE28E005EBA02 /* AccountCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheck.swift; sourceTree = "<group>"; };
-		51A16DC1208FCCB6004CE21B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePageViewController.swift; sourceTree = "<group>"; };
 		51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceViewController.swift; sourceTree = "<group>"; };
 		51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalCurrencyPair+NanoPricePair.swift"; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 			children = (
 				517FA64C1FE1D1DB00FE04B6 /* Address.swift */,
 				51394038202B64BB0073B90F /* ExchaingePairs.swift */,
-				51A16DC1208FCCB6004CE21B /* User.swift */,
 				5117F4CF1FD8490800CEAE78 /* Credentials.swift */,
 			);
 			path = Models;
@@ -743,7 +740,6 @@
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
 				51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */,
-				51A16DC2208FCCB6004CE21B /* User.swift in Sources */,
 				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
 				517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */,
