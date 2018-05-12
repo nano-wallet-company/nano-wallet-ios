@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
 
     private weak var pricePageViewController: PricePageViewController?
     private weak var pageControl: UIPageControl?
+    private weak var refreshControl: UIRefreshControl?
     private weak var tableView: UITableView?
     private weak var sendButton: NanoButton?
 
@@ -102,9 +103,7 @@ class HomeViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        defer {
-            viewModel.fetchLatestPrices()
-        }
+        defer { viewModel.fetchLatestPrices() }
 
         super.viewDidLoad()
 
@@ -121,6 +120,8 @@ class HomeViewController: UIViewController {
 
         // Hides 'Back' text from Back button on Send VC or any VC we push to
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(UIWebView.goBack))
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshWithButton))
 
         let topSection = UIView()
         topSection.backgroundColor = Styleguide.Colors.darkBlue.color
@@ -189,6 +190,7 @@ class HomeViewController: UIViewController {
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        self.refreshControl = refreshControl
 
         let tableView = UITableView()
         tableView.refreshControl = refreshControl
@@ -235,9 +237,11 @@ class HomeViewController: UIViewController {
     }
 
     @objc func sendNano() {
+        guard let representative = viewModel.temporaryRepresentative ?? viewModel.representative else { return }
+
         viewModel.isCurrentlySending.value = true
 
-        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket))
+        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, representative: representative))
         vc.delegate = self
 
         self.navigationController?.pushViewController(vc, animated: true)
@@ -250,7 +254,41 @@ class HomeViewController: UIViewController {
         present(nc, animated: true, completion: nil)
     }
 
+    private func showAlertWhenOffline(endRefreshing: Bool = false) {
+        let ac = UIAlertController(title: "You are offline", message: """
+            Nano Wallet is having trouble connecting to the network right now.
+
+            Please try again.
+        """, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "View Account on Nanode", style: .default) { _ in
+            guard let url = URL(string: "https://www.nanode.co/account/" + self.address.longAddress) else { return }
+
+            self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)
+
+        })
+        ac.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+            if endRefreshing {
+                self.refreshControl?.endRefreshing()
+            }
+        })
+
+        present(ac, animated: true)
+    }
+
+    @objc func refreshWithButton() {
+        guard viewModel.hasNetworkConnection.value else { return showAlertWhenOffline() }
+        guard let sendButton = sendButton, !viewModel.isCurrentlySending.value else { return }
+
+        // Just in case the send button is disabled
+        if viewModel.transactableAccountBalance.value.compare(NSDecimalNumber(value: 0)) == .orderedDescending && !sendButton.isEnabled {
+            sendButton.isEnabled = true
+        }
+
+        viewModel.refresh()
+    }
+
     @objc func refresh(_ sender: UIRefreshControl) {
+        guard viewModel.hasNetworkConnection.value else { return showAlertWhenOffline(endRefreshing: true) }
         guard let sendButton = sendButton, !viewModel.isCurrentlySyncing.value else { return sender.endRefreshing() }
 
         // Just in case the send button is disabled
@@ -349,11 +387,17 @@ extension HomeViewController: UITableViewDelegate {
     }
 
     private func showAnalyticsAlert() {
-        let ac = UIAlertController(title: "Analytics Opt-In", message: "Nano Wallet would like to anonymously collect usage data and crash reports in order to help to understand how people are using the wallet, where errors might occur, and how to improve the wallet in the future.\n\nNo data about your funds, your Wallet Seed, or your private keys are ever collected. You can see exactly what data is collected by viewing our code on Github.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Opt In", style: .cancel) { _ in
+        let ac = UIAlertController(title: "Analytics Opt-In", message: """
+        Nano Wallet Company LLC ('we' or 'us') would like to collect your device ID, as well as usage metrics and error and crash reports relating to your use of this Nano Wallet mobile application (the 'Wallet'), in order to help us understand how users are using the Wallet and where errors might occur in the Wallet, and to use this data to help us maintain, develop and improve the Wallet and our products and services.
+
+        No data about your name, contact information, funds, Nano tokens, Wallet Seed or private keys are ever collected through the Wallet. You can see exactly what types of data we collect through the Wallet by viewing our Privacy Policy.
+
+        Do you consent to our collection and use of this data for these purposes? (Your consent is not a prerequisite for using the Wallet and, if you consent, you will have the right to withdraw your consent at any time as described in the Privacy Policy.)
+        """, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "I Consent", style: .default) { _ in
             self.viewModel.startAnalyticsService()
         })
-        ac.addAction(UIAlertAction(title: "No Thanks", style: .default) { _ in
+        ac.addAction(UIAlertAction(title: "I Do Not Consent", style: .default) { _ in
             self.viewModel.stopAnalyticsService()
         })
 

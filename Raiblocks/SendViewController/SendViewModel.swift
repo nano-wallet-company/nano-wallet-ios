@@ -40,12 +40,15 @@ final class SendViewModel {
         return credentials.address
     }
 
+    let representative: Address
+
     private var credentials: Credentials {
         return UserService().fetchCredentials()!
     }
 
-    init(homeSocket socket: WebSocket) {
+    init(homeSocket socket: WebSocket, representative: Address) {
         self.socket = socket
+        self.representative = representative
 
         self.localCurrency = priceService.localCurrency.value
         self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","

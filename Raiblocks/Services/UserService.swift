@@ -89,12 +89,15 @@ final class UserService {
         }
     }
 
-    /// Used for updating with socketUUID and hasCompletedLegalAgreements
-    func update(credentials: Credentials) {
+    /// Used for updating with socketUUID
+    func update(credentials: Credentials, uuid: String? = nil) {
         do {
             let realm = try Realm()
 
             try realm.write {
+                if let uuid = uuid {
+                    credentials.socketUUID = uuid
+                }
                 realm.add(credentials, update: true)
                 realm.refresh()
             }
@@ -117,7 +120,7 @@ final class UserService {
                 realm.refresh()
             }
         } catch {
-           AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithLegalAgreement)
+            AnalyticsEvent.trackCrash(error: .unableToUpdateCredentialsWithLegalAgreement)
 
             return
         }
@@ -132,8 +135,8 @@ final class UserService {
             try realm.write {
                 credentials.hasAnsweredAnalyticsQuestion = true
                 credentials.hasAgreedToTracking = val
-                realm.add(credentials, update: true)
 
+                realm.add(credentials, update: true)
                 realm.refresh()
             }
         } catch {

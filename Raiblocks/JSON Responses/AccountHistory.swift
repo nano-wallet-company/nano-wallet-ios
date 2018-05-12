@@ -3,7 +3,7 @@
 //
 
 enum TransactionType: String, Codable {
-    case open, send, receive
+    case open, send, receive, state
 }
 
 enum NanoTransaction: Equatable {
@@ -97,12 +97,21 @@ struct PendingHistoryItem: Decodable {
 
     let type: TransactionType? = nil
     private let amount: String
-    private let source: String
-    let isPending: Bool = true
+
+    private let source: String?
+    private let link_as_account: String?
+
+    let isPending: Bool = true // can remove, unused
     var hash: String?
 
     var fromAddress: Address? {
-        return Address(source)
+        if let source = source {
+            return Address(source)
+        } else if let source = link_as_account {
+            return Address(source)
+        } else {
+            return nil
+        }
     }
 
     var transactionAmount: NSDecimalNumber {

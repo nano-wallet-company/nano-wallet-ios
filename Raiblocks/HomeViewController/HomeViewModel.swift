@@ -20,10 +20,7 @@ final class HomeViewModel {
     private let priceService = PriceService()
 
     var credentials: Credentials {
-        guard
-            let seed = userService.currentUserSeed(),
-            let credentials = Credentials(seedString: seed)
-        else {
+        guard let credentials = userService.fetchCredentials() else {
             AnalyticsEvent.missingCredentials.track()
 
             fatalError("There should always be a seed")
@@ -37,11 +34,15 @@ final class HomeViewModel {
     }
 
     var hasCompletedLegalAgreements: Bool {
-        return userService.fetchCredentials()?.hasCompletedLegalAgreements ?? false
+        return credentials.hasCompletedLegalAgreements
     }
 
     var hasCompletedAnalyticsOptIn: Bool {
-        return userService.fetchCredentials()?.hasAnsweredAnalyticsQuestion ?? false
+        return credentials.hasAnsweredAnalyticsQuestion
+    }
+
+    var address: Address {
+        return credentials.address
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)
@@ -50,6 +51,7 @@ final class HomeViewModel {
     var initialLoadComplete: Bool = false
     let transactions = MutableProperty<[NanoTransaction]>([])
 
+    // TODO: remove this
     var pendingTransactions: [NanoTransaction] {
         return transactions.value.filter { $0.isPending }
     }
@@ -64,10 +66,18 @@ final class HomeViewModel {
 
     let addressIsOnNetwork = MutableProperty<Bool>(false)
 
-    var address: Address {
-        return credentials.address
+    // Will refactor, this property is used in the case where the user opens a new account and we need to set the rep
+    // I didn't want to call .accountSubscribe since we're already subscribed
+    // This value will be nil any other time the user opens the app, the app will just use the computed property `representative` below
+    // since it will be able to get a rep value from .accountSubscribe
+    // The "temporary" name connotes its value in the app, not its value on the network
+    var temporaryRepresentative: Address? = nil
+
+    var representative: Address? {
+        return accountSubscribe?.representativeAddress
     }
 
+    private var accountInfo: AccountInfo?
     private var accountHistory: AccountHistory?
 
     private var accountSubscribe: AccountSubscribe?
@@ -105,7 +115,7 @@ final class HomeViewModel {
             } else if let _ = accountSubscribe?.frontierBlockHash {
                 return accountSubscribe?.frontierBlockHash
             } else {
-                return nil // if this is nil for some reason, we should go out and get the frontierBlockHash
+                return nil
             }
         }
     }
@@ -133,6 +143,7 @@ final class HomeViewModel {
         socket.event.open = {
 //            print("socket opened")
             self._hasNetworkConnection.value = true
+
             self.socket.sendMultiple(endpoints: [
                 .accountSubscribe(uuid: self.userService.fetchCredentials()?.socketUUID, address: self.address),
                 .accountCheck(address: self.address),
@@ -210,7 +221,6 @@ final class HomeViewModel {
             }
 
             if let newFrontierHash = genericDecoder(decodable: HashReceive.self, from: data) {
-//                print("new frontier received:", newFrontierHash.hash)
                 self._previousFrontierHash.value = newFrontierHash.hash
 
                 return
@@ -233,14 +243,14 @@ final class HomeViewModel {
         // Mark: - Producer for _previousFrontierHash
 
         _previousFrontierHash.producer.startWithValues { hash in
-                guard let source = self.pendingBlocks.keys.first else {
+                guard let source = self.pendingBlocks.keys.first, let amount = self.pendingBlocks[source]?.transactionAmount else {
                     self.isCurrentlySyncing.value = false
                     self.currentlyReceivingHash.value = nil
 
                     return
                 }
 
-                self.processReceive(source: source, previous: hash)
+            self.processReceive(source: source, amount: amount, previous: hash)
         }
     }
 
@@ -263,6 +273,7 @@ final class HomeViewModel {
         } else {
             socket.send(endpoint: .accountBlockCount(address: address))
         }
+
         checkAndOpenSockets()
     }
 
@@ -296,9 +307,7 @@ final class HomeViewModel {
         self.accountSubscribe = accountSubscribe
 
         if userService.fetchCredentials()?.socketUUID == nil {
-            let creds = credentials
-            creds.socketUUID = accountSubscribe.uuid
-            userService.update(credentials: creds)
+            userService.update(credentials: credentials, uuid: accountSubscribe.uuid)
         }
 
         self.lastBlockCount.value = accountSubscribe.blockCount
@@ -341,31 +350,49 @@ final class HomeViewModel {
         self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove this function
 
         // Process first pending block, rest will follow in the producer above
-        guard let source = self.pendingBlocks.first?.key else { return }
+        guard
+            let source = self.pendingBlocks.first?.key,
+            let amount = self.pendingBlocks[source]?.transactionAmount
+        else { return }
 
-        processReceive(source: source, previous: previousFrontierHash)
+        processReceive(source: source, amount: amount, previous: previousFrontierHash)
     }
 
-    private func createOpenBlock(forSource source: String, completion: @escaping (() -> Void)) {
+    private func createStateBlockForOpen(forSource source: String, amount: NSDecimalNumber, completion: @escaping (() -> Void)) {
         RaiCore().createWorkForOpenBlock(withPublicKey: credentials.publicKey) { work in
             guard let work = work else { return completion() }
 
-            let pendingBlock = Endpoint.createOpenBlock(
-                source: source,
+            let representative = Address(self.randomRepresentative())!
+            let stateBlock = Endpoint.createStateBlock(
+                type: .open(sendBlockHash: source),
+                previous: "",
+                remainingBalance: amount.stringValue,
                 work: work,
-                representative: self.randomRepresentative(),
-                address: self.address,
-                privateKey: self.privateKey
+                fromAccount: self.address,
+                representative: representative,
+                privateKey: self.credentials.privateKey
             )
 
-            self.socket.send(endpoint: pendingBlock)
+            self.temporaryRepresentative = representative
+
+            self.socket.send(endpoint: stateBlock)
 
             completion()
         }
     }
 
-    private func createReceiveBlock(previousFrontierHash previous: String, source: String, work: String) {
-        socket.send(endpoint: .createReceiveBlock(previous: previous, source: source, work: work, privateKey: credentials.privateKey))
+    private func createStateBlockForReceive(previousFrontierHash previous: String, source: String, amount: NSDecimalNumber, work: String) {
+        let stateBlock = Endpoint.createStateBlock(
+            type: .receive(sendBlockHash: source),
+            previous: previous,
+            remainingBalance: self.transactableAccountBalance.value.adding(amount).stringValue,
+            work: work,
+            fromAccount: self.address,
+            representative: self.representative!,
+            privateKey: credentials.privateKey
+        )
+
+        socket.send(endpoint: stateBlock)
     }
 
     private func handle(accountBlockCount: AccountBlockCount, completion: () -> Void) {
@@ -378,11 +405,11 @@ final class HomeViewModel {
     private func handle(subscriptionBlock: SubscriptionTransaction, completion: @escaping () -> Void) {
         guard let myAddress = subscriptionBlock.toAddress, subscriptionBlock.transactionType == .send, myAddress == address else { return }
 
-        processReceive(source: subscriptionBlock.source, previous: previousFrontierHash) { completion() }
+        processReceive(source: subscriptionBlock.source, amount: subscriptionBlock.transactionAmount, previous: previousFrontierHash) { completion() }
     }
 
     /// A general function that either processes the block as an open block or a receive block
-    private func processReceive(source: String, previous: String?, completion: (() -> Void)? = nil) {
+    private func processReceive(source: String, amount: NSDecimalNumber, previous: String?, completion: (() -> Void)? = nil) {
         self.currentlyReceivingHash.value = source
 
         if let previous = previous {
@@ -391,7 +418,7 @@ final class HomeViewModel {
 
                 self.pendingBlocks[source] = nil
 
-                self.createReceiveBlock(previousFrontierHash: previous, source: source, work: work)
+                self.createStateBlockForReceive(previousFrontierHash: previous, source: source, amount: amount, work: work)
 
                 if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = self.lastBlockCount.value + 1
@@ -402,7 +429,7 @@ final class HomeViewModel {
         } else {
             guard lastBlockCount.value == 0 else { return }
 
-            self.createOpenBlock(forSource: source) {
+            self.createStateBlockForOpen(forSource: source, amount: amount) {
                 self.pendingBlocks[source] = nil
 
                 if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }

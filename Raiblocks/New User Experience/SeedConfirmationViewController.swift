@@ -39,6 +39,16 @@ class SeedConfirmationViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool { return true }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !credentials.hasCompletedLegalAgreements {
+            let vc = LegalViewController(useForLoggedInState: false)
+            vc.delegate = self
+            present(vc, animated: false)
+        }
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         if let credentials = UserService().fetchCredentials(), credentials.hasCompletedLegalAgreements {
             self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -50,12 +60,6 @@ class SeedConfirmationViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
-        if !credentials.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: false)
-            vc.delegate = self
-            present(vc, animated: true)
-        }
 
         let logo = UIImageView(image: UIImage(named: "largeNanoMarkBlue"))
         view.addSubview(logo)
@@ -205,11 +209,17 @@ extension SeedConfirmationViewController: NSItemProviderWriting {
 extension SeedConfirmationViewController: LegalViewControllerDelegate {
 
     func didFinishWithLegalVC() {
-        let ac = UIAlertController(title: "Analytics Opt-In", message: "Nano Wallet would like to anonymously collect usage data and crash reports in order to help to understand how people are using the wallet, where errors might occur, and how to improve the wallet in the future.\n\nNo data about your funds, your Wallet Seed, or your private keys are ever collected. You can see exactly what data is collected by viewing our code on Github.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Opt-in", style: .cancel) { _ in
+        let ac = UIAlertController(title: "Analytics Opt-In", message: """
+        Nano Wallet Company LLC ('we' or 'us') would like to collect your device ID, as well as usage metrics and error and crash reports relating to your use of this Nano Wallet mobile application (the 'Wallet'), in order to help us understand how users are using the Wallet and where errors might occur in the Wallet, and to use this data to help us maintain, develop and improve the Wallet and our products and services.
+
+            No data about your name, contact information, funds, Nano tokens, Wallet Seed or private keys are ever collected through the Wallet. You can see exactly what types of data we collect through the Wallet by viewing our Privacy Policy.
+
+            Do you consent to our collection and use of this data for these purposes? (Your consent is not a prerequisite for using the Wallet and, if you consent, you will have the right to withdraw your consent at any time as described in the Privacy Policy.)
+        """, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "I Consent", style: .default) { _ in
             UserService().updateUserAgreesToTracking(true)
         })
-        ac.addAction(UIAlertAction(title: "No Thanks", style: .default) { _ in
+        ac.addAction(UIAlertAction(title: "I Do Not Consent", style: .default) { _ in
             UserService().updateUserAgreesToTracking(false)
 
             AnalyticsService.stop()

@@ -91,22 +91,34 @@ final class LegalViewController: UIViewController {
         viewTitle.underline()
         view.addSubview(viewTitle)
         constrain(viewTitle, disagreeButton) {
-            $0.top == $0.superview!.top + CGFloat(44)
+            if isiPhoneSE() {
+                $0.top == $0.superview!.top + CGFloat(11)
+            } else {
+                $0.top == $0.superview!.top + CGFloat(44)
+            }
             $0.left == $1.left
         }
 
         let viewCopy = UILabel()
         viewCopy.numberOfLines = 0
-        viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
+        if isiPhoneSE() {
+            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 13)
+        } else if isiPhoneRegular() {
+            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
+        } else {
+            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 16)
+        }
         viewCopy.lineBreakMode = .byWordWrapping
         viewCopy.text = """
-        Tap the links below and read them carefully.
-
-        Each agreement represents a binding legal agreement and you acknowledge that you have read and agree to the following terms.
+        Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the “Terms and Conditions”). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping “Agree,” you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device.
         """
         view.addSubview(viewCopy)
         constrain(viewCopy, viewTitle, agreeButton) {
-            $0.top == $1.bottom + CGFloat(20)
+            if isiPhoneSE() {
+                $0.top == $1.bottom + CGFloat(10)
+            } else {
+                $0.top == $1.bottom + CGFloat(20)
+            }
             $0.left == $1.left
             $0.right == $2.right
         }
@@ -114,7 +126,7 @@ final class LegalViewController: UIViewController {
         let disclaimerCheckbox = createCheckbox()
         view.addSubview(disclaimerCheckbox)
         constrain(disclaimerCheckbox, viewCopy) {
-            $0.top == $1.bottom + (isiPhoneSE() ? CGFloat(20) : CGFloat(40))
+            $0.top == $1.bottom + CGFloat(20)
             $0.left == $1.left
             $0.width == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
             $0.height == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))

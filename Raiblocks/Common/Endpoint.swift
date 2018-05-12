@@ -6,6 +6,13 @@
 //  Copyright © 2017 Nano Wallet Company. All rights reserved.
 //
 
+enum BlockType {
+    case open(sendBlockHash: String)
+    case receive(sendBlockHash: String)
+    case send(destinationAddress: Address)
+    case change // not currently used
+}
+
 enum Endpoint {
     case accountBlockCount(address: Address)
     case accountBalance(address: Address)
@@ -16,9 +23,7 @@ enum Endpoint {
     case accountsPending(address: Address, count: Int)
     case accountSubscribe(uuid: String?, address: Address)
 
-    case createOpenBlock(source: String, work: String, representative: String, address: Address, privateKey: Data)
-    case createReceiveBlock(previous: String, source: String, work: String, privateKey: Data)
-    case createSendBlock(destination: Address, balanceHex: String, previous: String, work: String, privateKey: Data)
+    case createStateBlock(type: BlockType, previous: String, remainingBalance: String, work: String, fromAccount: Address, representative: Address, privateKey: Data)
 
     case createWorkForOpenBlock(publicKey: String)
     case createWork(previousHash: String)
@@ -34,7 +39,7 @@ enum Endpoint {
         case .accountsPending: return "accounts_pending" // Accounts Pending is for all accounts
         case .accountSubscribe: return "account_subscribe"
         case .createWork, .createWorkForOpenBlock: return "work_generate"
-        case .createOpenBlock, .createReceiveBlock, .createSendBlock: return "process"
+        case .createStateBlock: return "process"
         }
     }
 
@@ -69,41 +74,34 @@ enum Endpoint {
             dict["accounts"] = [address.longAddress]
             dict["count"] = count
 
-        case let .createOpenBlock(source, work, representative, address, privateKey):
-            var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .open)
-            block["source"] = source
-            block["representative"] = representative
-            block["account"] = address.longAddress
+        case let .createStateBlock(type, previous, remainingBalance, work, fromAccount, representative, privateKey):
+            var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .state)
+
+            switch type {
+            case let .open(hash):
+                block["link"] = hash
+                block["previous"] = "0"
+
+            case let .receive(hash):
+                block["link"] = hash
+                block["previous"] = previous
+
+            case let .send(destinationAddress):
+                block["link"] = destinationAddress.longAddress
+                block["previous"] = previous
+
+            case .change:
+                block["link"] = "0000000000000000000000000000000000000000000000000000000000000000"
+                block["previous"] = previous
+            }
+
+            block["representative"] = representative.longAddress
+            block["account"] = fromAccount.longAddress
+            block["balance"] = remainingBalance
             block["work"] = work
 
-            guard let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey) else { return nil }
-            dict["block"] = signedBlock
-
-            guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
-
-            return String(bytes: serializedJSON, encoding: .utf8)
-
-        case let .createReceiveBlock(previous, source, work, privateKey):
-            var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .receive)
-            block["previous"] = previous
-            block["source"] = source
-            block["work"] = work
-
-            guard let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey) else { return nil }
-            dict["block"] = signedBlock
-
-            guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
-
-            return String(bytes: serializedJSON, encoding: .utf8)
-
-        case let .createSendBlock(destination, balanceHex, previous, work, privateKey):
-            var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .send)
-            block["destination"] = destination.longAddress
-            block["balance"] = balanceHex // this is a hexified string
-            block["previous"] = previous
-            block["work"] = work
-
-            guard let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey) else { return nil }
+            // generate signature with new lib
+            let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey)
             dict["block"] = signedBlock
 
             guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
@@ -123,7 +121,7 @@ enum Endpoint {
 
     private static func createEmptyBlock(forTransactionType type: TransactionType) -> [String: String] {
         return ["type": type.rawValue, "signature": "0"]
-    }
+     }
 
     private static func generateSignature(forDictionary dict: [String: String], andPrivateKey key: Data) -> String? {
         guard
