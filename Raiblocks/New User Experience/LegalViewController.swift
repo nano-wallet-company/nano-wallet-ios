@@ -126,7 +126,7 @@ final class LegalViewController: UIViewController {
         let disclaimerCheckbox = createCheckbox()
         view.addSubview(disclaimerCheckbox)
         constrain(disclaimerCheckbox, viewCopy) {
-            $0.top == $1.bottom + ((isiPhoneSE() || isiPhoneRegular()) ? CGFloat(20) : CGFloat(40))
+            $0.top == $1.bottom + CGFloat(20)
             $0.left == $1.left
             $0.width == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
             $0.height == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))

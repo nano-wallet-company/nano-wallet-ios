@@ -20,19 +20,29 @@ final class HomeViewModel {
     private let priceService = PriceService()
 
     var credentials: Credentials {
-        return userService.fetchCredentials()!
+        guard let credentials = userService.fetchCredentials() else {
+            AnalyticsEvent.missingCredentials.track()
+
+            fatalError("There should always be a seed")
+        }
+
+        return credentials
     }
 
     var privateKey: Data {
-        return userService.fetchCredentials()!.privateKey
+        return credentials.privateKey
     }
 
     var hasCompletedLegalAgreements: Bool {
-        return userService.fetchCredentials()!.hasCompletedLegalAgreements
+        return credentials.hasCompletedLegalAgreements
     }
 
     var hasCompletedAnalyticsOptIn: Bool {
-        return userService.fetchCredentials()!.hasAnsweredAnalyticsQuestion
+        return credentials.hasAnsweredAnalyticsQuestion
+    }
+
+    var address: Address {
+        return credentials.address
     }
 
     private let _frontierBlockHash = MutableProperty<String?>(nil)
@@ -55,10 +65,6 @@ final class HomeViewModel {
     let currentlyReceivingHash = MutableProperty<String?>(nil)
 
     let addressIsOnNetwork = MutableProperty<Bool>(false)
-
-    var address: Address {
-        return credentials.address
-    }
 
     // Will refactor, this property is used in the case where the user opens a new account and we need to set the rep
     // I didn't want to call .accountSubscribe since we're already subscribed
@@ -301,9 +307,7 @@ final class HomeViewModel {
         self.accountSubscribe = accountSubscribe
 
         if userService.fetchCredentials()?.socketUUID == nil {
-            let creds = credentials
-            creds.socketUUID = accountSubscribe.uuid
-            userService.update(credentials: creds)
+            userService.update(credentials: credentials, uuid: accountSubscribe.uuid)
         }
 
         self.lastBlockCount.value = accountSubscribe.blockCount
