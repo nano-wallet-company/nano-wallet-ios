@@ -254,21 +254,6 @@ class HomeViewController: UIViewController {
         present(nc, animated: true, completion: nil)
     }
 
-    @objc func refreshWithButton() {
-        guard let sendButton = sendButton else { return }
-
-        if viewModel.hasNetworkConnection.value {
-            // Just in case the send button is disabled
-            if viewModel.transactableAccountBalance.value.compare(NSDecimalNumber(value: 0)) == .orderedDescending && !sendButton.isEnabled {
-                sendButton.isEnabled = true
-            }
-
-            viewModel.refresh()
-        } else {
-            showAlertWhenOffline()
-        }
-    }
-
     private func showAlertWhenOffline(endRefreshing: Bool = false) {
         let ac = UIAlertController(title: "You are offline", message: """
             Nano Wallet is having trouble connecting to the network right now.
@@ -290,11 +275,20 @@ class HomeViewController: UIViewController {
         present(ac, animated: true)
     }
 
-    @objc func refresh(_ sender: UIRefreshControl) {
-        guard viewModel.hasNetworkConnection.value else {
-            return showAlertWhenOffline(endRefreshing: true)
+    @objc func refreshWithButton() {
+        guard viewModel.hasNetworkConnection.value else { return showAlertWhenOffline() }
+        guard let sendButton = sendButton, !viewModel.isCurrentlySending.value else { return }
+
+        // Just in case the send button is disabled
+        if viewModel.transactableAccountBalance.value.compare(NSDecimalNumber(value: 0)) == .orderedDescending && !sendButton.isEnabled {
+            sendButton.isEnabled = true
         }
 
+        viewModel.refresh()
+    }
+
+    @objc func refresh(_ sender: UIRefreshControl) {
+        guard viewModel.hasNetworkConnection.value else { return showAlertWhenOffline(endRefreshing: true) }
         guard let sendButton = sendButton, !viewModel.isCurrentlySyncing.value else { return sender.endRefreshing() }
 
         // Just in case the send button is disabled
