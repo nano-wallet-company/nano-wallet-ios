@@ -14,8 +14,24 @@ struct SubscriptionTransaction: Decodable {
     private let hash: String // `source` for receiveBlock transaction
 
     struct SendBlock: Decodable {
+
         let type: TransactionType
-        let destination: String // verify it's my address
+        let destination: String
+
+        enum CodingKeys: String, CodingKey {
+            case type
+            case destination = "link_as_account"
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+
+            let _type = try! container.decode(String.self, forKey: .type)
+            self.type = TransactionType(rawValue: _type)!
+
+            self.destination = try container.decode(String.self, forKey: .destination)
+        }
+
     }
 
     var transactionType: TransactionType {

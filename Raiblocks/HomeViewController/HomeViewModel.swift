@@ -403,7 +403,7 @@ final class HomeViewModel {
 
     /// These are blocks sent over the wire when your app is open for you to receive
     private func handle(subscriptionBlock: SubscriptionTransaction, completion: @escaping () -> Void) {
-        guard let myAddress = subscriptionBlock.toAddress, subscriptionBlock.transactionType == .send, myAddress == address else { return }
+        guard let myAddress = subscriptionBlock.toAddress, (subscriptionBlock.transactionType == .state || subscriptionBlock.transactionType == .send), myAddress == address else { return }
 
         processReceive(source: subscriptionBlock.source, amount: subscriptionBlock.transactionAmount, previous: previousFrontierHash) { completion() }
     }

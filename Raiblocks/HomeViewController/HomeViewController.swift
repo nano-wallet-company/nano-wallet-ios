@@ -341,17 +341,6 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
 
-    private enum Explorer {
-        case nano, nanode
-
-        func url(hash: String) -> URL? {
-            switch self {
-            case .nano: return URL(string: "https://nano.org/en/explore/block/" + hash)
-            case .nanode: return URL(string: "https://www.nanode.co/block/" + hash)
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66
     }
@@ -364,8 +353,7 @@ extension HomeViewController: UITableViewDelegate {
 
     private func showExplorerAlert(forIndexPath indexPath: IndexPath) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "View on Nano Explorer", style: .default) { _ in self.view(explorer: .nano, forIndexPath: indexPath) })
-        ac.addAction(UIAlertAction(title: "View on Nanode Explorer", style: .default) { _ in self.view(explorer: .nanode, forIndexPath: indexPath) })
+        ac.addAction(UIAlertAction(title: "View Transaction on Explorer", style: .default) { _ in self.view(atIndexPath: indexPath) })
 
         ac.addAction(UIAlertAction(title: "Copy Address", style: .default) { _ in
             if let address = self.viewModel.transactions.value[indexPath.row].fromAddress {
@@ -377,10 +365,10 @@ extension HomeViewController: UITableViewDelegate {
         present(ac, animated: true, completion: nil)
     }
 
-    private func view(explorer: Explorer, forIndexPath indexPath: IndexPath) {
+    private func view(atIndexPath indexPath: IndexPath) {
         guard
             let hash = self.viewModel.transactions.value[indexPath.row].hash,
-            let url = explorer.url(hash: hash)
+            let url = URL(string: "https://www.nanode.co/block/" + hash)
         else { return }
 
         self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)

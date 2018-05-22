@@ -104,12 +104,12 @@ class WelcomeViewController: UIViewController {
         versionLabel.numberOfLines = 2
         versionLabel.textAlignment = .center
         versionLabel.textColor = Styleguide.Colors.lightBlue.color.withAlphaComponent(0.75)
+        versionLabel.font = Styleguide.Fonts.nunitoRegular.font(ofSize: 14)
         versionLabel.text =
         """
         Nano Wallet Company, LLC.
         v \(version) (\(build))
         """
-        // set font 14 pt, regular
         view.addSubview(versionLabel)
         constrain(versionLabel) {
             $0.centerX == $0.superview!.centerX
