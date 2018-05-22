@@ -300,7 +300,7 @@ class HomeViewController: UIViewController {
     }
 
     @objc func showSettings() {
-        let vc = SettingsViewController(credentials: viewModel.credentials, localCurrency: viewModel.localCurrency.value)
+        let vc = SettingsViewController(localCurrency: viewModel.localCurrency.value)
         vc.delegate = self
         let nc = UINavigationController(rootViewController: vc)
 

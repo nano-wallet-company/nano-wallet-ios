@@ -38,7 +38,7 @@ protocol SettingsViewControllerDelegate: class {
 
 final class SettingsViewController: UIViewController {
 
-    private let credentials: Credentials
+    private let userService = UserService()
     private let currencyService = CurrencyService()
 
     private let currencies: [Currency] = Currency.allCurrencies
@@ -51,8 +51,7 @@ final class SettingsViewController: UIViewController {
 
     weak var delegate: SettingsViewControllerDelegate?
 
-    init(credentials: Credentials, localCurrency: Currency) {
-        self.credentials = credentials
+    init(localCurrency: Currency) {
         self.localCurrency = localCurrency
         super.init(nibName: nil, bundle: nil)
 
@@ -357,7 +356,7 @@ extension SettingsViewController: NSItemProviderWriting {
     }
 
     func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
-        completionHandler(credentials.seed.data(using: .utf8), nil)
+        completionHandler(userService.fetchCredentials()!.seed.data(using: .utf8), nil)
 
         return nil
     }
