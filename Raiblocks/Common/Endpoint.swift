@@ -107,17 +107,13 @@ enum Endpoint {
             let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey)
             dict["block"] = signedBlock
 
-            guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
-
-            return String(bytes: serializedJSON, encoding: .utf8)
+            return dict.asSerializedString
 
         case let .createWork(hash), let .createWorkForOpenBlock(hash), let .getBlock(hash):
             dict["hash"] = hash
         }
 
-        guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
-
-        return String(bytes: serializedJSON, encoding: .utf8)
+        return dict.asSerializedString
     }
 
     // MARK: - Private Functions
@@ -128,8 +124,7 @@ enum Endpoint {
 
     private static func generateSignature(forDictionary dict: [String: String], andPrivateKey key: Data) -> String? {
         guard
-            let data = try? JSONSerialization.data(withJSONObject: dict),
-            let string = String(data: data, encoding: .utf8),
+            let string = dict.asSerializedString,
             let signedBlock = RaiCore().signTransaction(string, withPrivateKey: key).asUTF8Data()
         else {
             AnalyticsEvent.trackCrash(error: .unableToGenerateSignature)
@@ -139,8 +134,7 @@ enum Endpoint {
 
         guard
             let signedDict = try? JSONSerialization.jsonObject(with: signedBlock) as! [String: String],
-            let sig = try? JSONSerialization.data(withJSONObject: signedDict),
-            let block = String(data: sig, encoding: .utf8)
+            let block = signedDict.asSerializedString
         else {
             AnalyticsEvent.trackCrash(error: .blockWrappingFailed)
 
