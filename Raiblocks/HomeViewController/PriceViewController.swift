@@ -34,7 +34,7 @@ class PriceViewController: UIViewController {
 
         switch self.type {
         case .nano:
-            viewModel.accountBalance
+            viewModel.transactableAccountBalance
                 .producer
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
@@ -50,7 +50,7 @@ class PriceViewController: UIViewController {
         case .btc:
             let mark = Currency.btc.mark
 
-            Property.combineLatest(viewModel.accountBalance, viewModel.lastBTCTradePrice)
+            Property.combineLatest(viewModel.transactableAccountBalance, viewModel.lastBTCTradePrice)
                 .producer
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
@@ -76,7 +76,7 @@ class PriceViewController: UIViewController {
             viewModel.localCurrency
                 .producer
                 .flatMap(.latest) { _ in
-                    return SignalProducer.combineLatest(viewModel.accountBalance.producer, viewModel.lastBTCTradePrice.producer, viewModel.lastBTCLocalCurrencyPrice.producer)
+                    return SignalProducer.combineLatest(viewModel.transactableAccountBalance.producer, viewModel.lastBTCTradePrice.producer, viewModel.lastBTCLocalCurrencyPrice.producer)
                 }
                 .take(during: lifetime)
                 .observe(on: UIScheduler())

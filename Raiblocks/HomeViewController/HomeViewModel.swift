@@ -82,9 +82,6 @@ final class HomeViewModel {
 
     private var accountSubscribe: AccountSubscribe?
 
-    private let _accountBalance = MutableProperty<NSDecimalNumber>(0)
-    var accountBalance: ReactiveSwift.Property<NSDecimalNumber>
-
     private let _transactableAccountBalance = MutableProperty<NSDecimalNumber>(0)
     var transactableAccountBalance: ReactiveSwift.Property<NSDecimalNumber>
 
@@ -130,7 +127,6 @@ final class HomeViewModel {
         else { fatalError("Could not load socket server URL") }
 
         self.frontierBlockHash = ReactiveSwift.Property<String?>(_frontierBlockHash)
-        self.accountBalance = ReactiveSwift.Property<NSDecimalNumber>(_accountBalance)
         self.transactableAccountBalance = ReactiveSwift.Property<NSDecimalNumber>(_transactableAccountBalance)
         self.hasNetworkConnection = ReactiveSwift.Property<Bool>(_hasNetworkConnection)
 
@@ -344,8 +340,9 @@ final class HomeViewModel {
 
         self.lastBlockCount.value = accountSubscribe.blockCount
 
-        self._accountBalance.value = accountSubscribe.totalBalance ?? 0
-        self._transactableAccountBalance.value = accountSubscribe.transactableBalance ?? 0
+        if let balance = accountSubscribe.transactableBalance {
+            self._transactableAccountBalance.value = balance
+        }
 
         completion()
     }
@@ -353,8 +350,9 @@ final class HomeViewModel {
     private func handle(accountBalance: AccountBalance) {
         if !addressIsOnNetwork.value { addressIsOnNetwork.value = true }
 
-        self._accountBalance.value = accountBalance.totalBalance ?? 0
-        self._transactableAccountBalance.value = accountBalance.transactableBalance ?? 0
+        if let balance = accountBalance.transactableBalance {
+            self._transactableAccountBalance.value = balance
+        }
     }
 
     private func handle(accountHistory: AccountHistory) {
