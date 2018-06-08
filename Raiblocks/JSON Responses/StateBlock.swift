@@ -23,14 +23,24 @@ struct StateBlockContainer: Decodable {
 
 }
 
-protocol NanoBlockType {}
+protocol NanoBlockType {
+    var type: TransactionType { get }
+    var account: String { get }
+    var signature: String { get }
+    var work: String { get }
+
+    var accountAddress: Address { get }
+    var transactableBalance: NSDecimalNumber { get }
+
+    var asStringifiedDictionary: String? { get }
+}
 
 struct StateBlock: Decodable, NanoBlockType {
 
     let type: TransactionType
-    private let account: String
+    internal let account: String
     let previous: String
-    private let balance: String
+    internal let balance: String
     private let representative: String
     let link: String
     private let link_as_account: String
@@ -54,11 +64,26 @@ struct StateBlock: Decodable, NanoBlockType {
         return NSDecimalNumber(string: balance)
     }
 
+    var asStringifiedDictionary: String? {
+        let dict: [String: String] = [
+            "account": account,
+            "previous": previous,
+            "representative": representative,
+            "balance": balance,
+            "link": link,
+            "type": "state"
+        ]
+
+        guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
+
+        return String(bytes: serializedJSON, encoding: .utf8)
+    }
+
 }
 
 struct LegacyBlock: Decodable, NanoBlockType {
 
-    private let account: String
+    internal let account: String
     private let destination: String?
     let representative: String?
     let source: String? // receives and opens had `source`s
@@ -87,6 +112,22 @@ struct LegacyBlock: Decodable, NanoBlockType {
 
     var transactableBalance: NSDecimalNumber {
         return NSDecimalNumber(string: amount)
+    }
+
+    var asStringifiedDictionary: String? {
+        let dict: [String: String?] = [
+            "type": type.rawValue,
+            "account": account,
+            "balance": amount,
+            "previous": previous,
+            "destination": destination,
+            "representative": representative,
+            "source": source
+        ]
+
+        guard let serializedJSON = try? JSONSerialization.data(withJSONObject: dict) else { return nil }
+
+        return String(bytes: serializedJSON, encoding: .utf8)
     }
 
 }
