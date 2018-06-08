@@ -300,11 +300,12 @@ class HomeViewController: UIViewController {
     }
 
     @objc func showSettings() {
-        let vc = SettingsViewController(localCurrency: viewModel.localCurrency.value)
-        vc.delegate = self
-        let nc = UINavigationController(rootViewController: vc)
-
-        present(nc, animated: true, completion: nil)
+        viewModel.getHeadBlock()
+//        let vc = SettingsViewController(localCurrency: viewModel.localCurrency.value)
+//        vc.delegate = self
+//        let nc = UINavigationController(rootViewController: vc)
+//
+//        present(nc, animated: true, completion: nil)
     }
 
     @objc func didChangePageControlValue(_ sender: UIPageControl) {
