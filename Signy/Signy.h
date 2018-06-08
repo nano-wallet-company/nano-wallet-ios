@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Signy/signy_interface.h>
+#import <Signy/interface.h>
 
 //! Project version number for Signy.
 FOUNDATION_EXPORT double SignyVersionNumber;

@@ -8,8 +8,8 @@
 
 @import Foundation;
 
-//@import RaiCoreBase;
 @import Signy;
+
 
 @interface RaiCore: NSObject
 
