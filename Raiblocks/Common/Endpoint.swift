@@ -94,7 +94,7 @@ enum Endpoint {
                 block["previous"] = previous
 
             case .change:
-                block["link"] = "0000000000000000000000000000000000000000000000000000000000000000"
+                block["link"] = "0"
                 block["previous"] = previous
             }
 
