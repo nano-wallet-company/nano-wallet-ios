@@ -11,9 +11,16 @@ struct AccountInfo: Decodable {
 
     let frontier: String
     private let balance: String
+    private let _representative: String?
 
     var transactableBalance: NSDecimalNumber {
         return NSDecimalNumber(string: balance)
+    }
+
+    var representative: Address? {
+        guard let rep = _representative else { return nil }
+
+        return Address(rep)
     }
 
 }
