@@ -43,6 +43,8 @@ It currently supports `arm64` devices which means it does not support devices th
 
 1) In terminal, starting in the wallet's base directory, copy the `.dylib` file into the `RaiCoreBase` directory. Example: `cp ../../Downloads/librai_lib.dylib RaiCoreBase/RaiCoreBase.dylib`
 
+new: `cp ../../Downloads/librai_lib.a Signy/librai_lib.a`
+
 2) In terminal, in the project root directory, run `install_name_tool -id @rpath/RaiCoreBase.framework/RaiCoreBase ./RaiCoreBase/RaiCoreBase.dylib`
 
 3) Remove the file extension: `mv RaiCoreBase/RaiCoreBase.dylib RaiCoreBase/RaiCoreBase`
