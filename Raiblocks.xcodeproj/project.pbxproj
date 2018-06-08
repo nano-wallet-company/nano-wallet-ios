@@ -33,7 +33,6 @@
 		514A3FC120CAD51300FFC4D8 /* interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 514A3FC020CAD51300FFC4D8 /* interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5150178120CAFE0100D01C0D /* librai_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5150177F20CAFDF400D01C0D /* librai_lib.a */; };
 		5150178220CAFE0D00D01C0D /* librai_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5150177F20CAFDF400D01C0D /* librai_lib.a */; };
-		5150178420CB0A7100D01C0D /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5150178320CB0A7100D01C0D /* Dictionary+Extensions.swift */; };
 		515B4A4F1FD22AA20059F514 /* ReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */; };
 		515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */; };
 		515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */; };
@@ -164,7 +163,6 @@
 		514A3FB520C9F1C500FFC4D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		514A3FC020CAD51300FFC4D8 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		5150177F20CAFDF400D01C0D /* librai_lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librai_lib.a; path = ../../../Downloads/librai_lib.a; sourceTree = "<group>"; };
-		5150178320CB0A7100D01C0D /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReceiveViewController.swift; path = "Raiblocks/New Group/ReceiveViewController.swift"; sourceTree = SOURCE_ROOT; };
 		515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
 		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
@@ -359,7 +357,6 @@
 				515E72A31FEC6B08001272D4 /* SendTextField.swift */,
 				5133DE6F204321A100C66199 /* Double+Extensions.swift */,
 				51A8907620646C1900BBA280 /* UILabel+Extensions.swift */,
-				5150178320CB0A7100D01C0D /* Dictionary+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -869,7 +866,6 @@
 				51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */,
 				519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */,
 				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
-				5150178420CB0A7100D01C0D /* Dictionary+Extensions.swift in Sources */,
 				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
 				51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */,
 			);
