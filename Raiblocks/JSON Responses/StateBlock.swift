@@ -45,6 +45,7 @@ struct StateBlock: Decodable, NanoBlockType {
         return Address(link_as_account)
     }
 
+    /// It's safer to require the client to call .longAddress on this to get the string rather than exposing the string version of `representative` above
     var representativeAddress: Address {
         return Address(representative)!
     }
@@ -59,13 +60,13 @@ struct LegacyBlock: Decodable, NanoBlockType {
 
     private let account: String
     private let destination: String?
-    private let representative: String?
-    private let source: String? // receives and opens had `source`s
-    private let amount: String
+    let representative: String?
+    let source: String? // receives and opens had `source`s
+    let amount: String
     let type: TransactionType
     let previous: String?
     let work: String
-    private let signature: String
+    let signature: String
     // let date: Date // come back later
 
     var accountAddress: Address {
