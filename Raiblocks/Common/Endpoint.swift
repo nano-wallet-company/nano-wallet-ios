@@ -28,6 +28,8 @@ enum Endpoint {
     case createWorkForOpenBlock(publicKey: String)
     case createWork(previousHash: String)
 
+    case getBlock(frontierHash: String)
+
     private var name: String {
         switch self {
         case .accountBlockCount: return "account_block_count"
@@ -40,6 +42,7 @@ enum Endpoint {
         case .accountSubscribe: return "account_subscribe"
         case .createWork, .createWorkForOpenBlock: return "work_generate"
         case .createStateBlock: return "process"
+        case .getBlock: return "block"
         }
     }
 
@@ -108,7 +111,7 @@ enum Endpoint {
 
             return String(bytes: serializedJSON, encoding: .utf8)
 
-        case let .createWork(hash), let .createWorkForOpenBlock(hash):
+        case let .createWork(hash), let .createWorkForOpenBlock(hash), let .getBlock(hash):
             dict["hash"] = hash
         }
 
