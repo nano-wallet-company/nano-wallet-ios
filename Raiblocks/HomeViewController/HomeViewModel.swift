@@ -261,6 +261,38 @@ final class HomeViewModel {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
     }
 
+    /// Only use this function for Send transactions
+    /// its really only important for displaying an accurate amount in the case of a mitm
+    func verifySignature(stateBlock block: StateBlock) -> Bool {
+        var blockTypes: [BlockType] = [.open(sendBlockHash: block.link), .receive(sendBlockHash: block.link)]
+
+        if let toAddress = block.toAddress {
+            blockTypes.append(.send(destinationAddress: toAddress))
+        }
+
+        for blockType in blockTypes {
+            let ep = Endpoint.createStateBlock(
+                type: blockType,
+                previous: block.previous,
+                remainingBalance: block.transactableBalance.stringValue,
+                work: block.work,
+                fromAccount: block.accountAddress,
+                representative: block.representativeAddress,
+                privateKey: privateKey
+            )
+
+            if ep.stringify()!.contains(block.signature) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func getHeadBlock() {
+        socket.send(endpoint: Endpoint.getBlock(frontierHash: previousFrontierHash!))
+    }
+
     func fetchLatestPrices() {
         priceService.fetchLatestPrices()
     }
