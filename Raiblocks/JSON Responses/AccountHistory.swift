@@ -3,7 +3,7 @@
 //
 
 enum TransactionType: String, Codable {
-    case open, send, receive, state
+    case open, send, receive, change, state
 }
 
 enum NanoTransaction: Equatable {
