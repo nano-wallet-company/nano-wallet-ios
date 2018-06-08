@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var appBackgroundingForSeedOrSend: Bool = false
 
+    // TODO: Before deploy, make sure this is set to nil/false
+    let devConfig: (device: Device?, skipLegal: Bool) = (nil, true)
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let currentSchemaVersion: UInt64 = 2
         let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
@@ -47,8 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // For on-device testing when you don't have all the devices, just make sure you're using a configuration smaller than your actual device size (options: .se, .regular, .plus, .x)
-        let device: Device? = nil
-        window = UIWindow(frame: device?.frame ?? UIScreen.main.bounds)
+        window = UIWindow(frame: devConfig.device?.frame ?? UIScreen.main.bounds)
         window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

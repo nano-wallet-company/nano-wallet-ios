@@ -42,10 +42,13 @@ class SeedConfirmationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !credentials.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: false)
-            vc.delegate = self
-            present(vc, animated: false)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if !appDelegate.devConfig.skipLegal {
+            if !credentials.hasCompletedLegalAgreements {
+                let vc = LegalViewController(useForLoggedInState: false)
+                vc.delegate = self
+                present(vc, animated: false)
+            }
         }
     }
 

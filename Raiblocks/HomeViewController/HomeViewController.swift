@@ -206,18 +206,21 @@ class HomeViewController: UIViewController {
         }
         self.tableView = tableView
 
-        if !viewModel.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: true)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if !appDelegate.devConfig.skipLegal {
+            if !viewModel.hasCompletedLegalAgreements {
+                let vc = LegalViewController(useForLoggedInState: true)
 
-            if !viewModel.hasCompletedAnalyticsOptIn {
-                vc.delegate = self
+                if !viewModel.hasCompletedAnalyticsOptIn {
+                    vc.delegate = self
+                }
+
+                present(vc, animated: true)
             }
 
-            present(vc, animated: true)
-        }
-
-        if !viewModel.hasCompletedAnalyticsOptIn {
-            showAnalyticsAlert()
+            if !viewModel.hasCompletedAnalyticsOptIn {
+                showAnalyticsAlert()
+            }
         }
     }
 
