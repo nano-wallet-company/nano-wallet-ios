@@ -51,18 +51,11 @@ final class HomeViewModel {
     var initialLoadComplete: Bool = false
     let transactions = MutableProperty<[NanoTransaction]>([])
 
-    // TODO: remove this
-    var pendingTransactions: [NanoTransaction] {
-        return transactions.value.filter { $0.isPending }
-    }
-
     let isCurrentlySyncing = MutableProperty<Bool>(false)
     let isCurrentlySending = MutableProperty<Bool>(false)
 
     let _hasNetworkConnection = MutableProperty<Bool>(false)
     var hasNetworkConnection: ReactiveSwift.Property<Bool>
-
-    let currentlyReceivingHash = MutableProperty<String?>(nil)
 
     let addressIsOnNetwork = MutableProperty<Bool>(false)
 
@@ -171,10 +164,8 @@ final class HomeViewModel {
 
             if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
                 // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
-                guard self.currentlyReceivingHash.value == nil else { return }
                 guard !self.isCurrentlySending.value else { return }
 
-                self.currentlyReceivingHash.value = subscriptionBlock.source
                 return self.handle(subscriptionBlock: subscriptionBlock) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         self.socket.send(endpoint: .accountBlockCount(address: self.address))
@@ -440,8 +431,6 @@ final class HomeViewModel {
 
     /// A general function that either processes the block as an open block or a receive block
     private func processReceive(source: String, amount: NSDecimalNumber, previous: String?, completion: (() -> Void)? = nil) {
-        self.currentlyReceivingHash.value = source
-
         if let previous = previous {
             RaiCore().createWork(previousHash: previous) { work in
                 guard let work = work else { return }
@@ -452,7 +441,6 @@ final class HomeViewModel {
 
                 if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = self.lastBlockCount.value + 1
-                self.currentlyReceivingHash.value = nil
 
                 completion?()
             }
@@ -464,7 +452,6 @@ final class HomeViewModel {
 
                 if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = 1
-                self.currentlyReceivingHash.value = nil
 
                 completion?()
             }
