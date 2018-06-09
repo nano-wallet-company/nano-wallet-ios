@@ -104,9 +104,6 @@ final class HomeViewModel {
             } else if let _ = accountSubscribe?.frontierBlockHash {
                 return accountSubscribe?.frontierBlockHash
             } else {
-                // This should never hit but we should get new frontier if this is nil
-                socket.send(endpoint: .accountInfo(address: address))
-
                 return nil
             }
         }
@@ -133,7 +130,11 @@ final class HomeViewModel {
 
                     let amount = headBlock.transactableBalance.adding(pendingBlock.transactionAmount)
 
-                    processReceive(source: source, amount: amount, previous: self.previousFrontierHash ?? "")
+                if self.previousFrontierHash == nil && lastBlockCount.value == 0 {
+                    processReceive(source: source, amount: amount, previous: nil)
+                } else {
+                    processReceive(source: source, amount: amount, previous: self.previousFrontierHash!)
+                }
             }
         }
     }
