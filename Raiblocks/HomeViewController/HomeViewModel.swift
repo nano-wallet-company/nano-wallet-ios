@@ -65,7 +65,6 @@ final class HomeViewModel {
     // since it will be able to get a rep value from .accountSubscribe
     // The "temporary" name connotes its value in the app, not its value on the network
     var temporaryRepresentative: Address? = nil
-
     var representative: Address? {
         return accountSubscribe?.representativeAddress
     }
@@ -105,12 +104,41 @@ final class HomeViewModel {
             } else if let _ = accountSubscribe?.frontierBlockHash {
                 return accountSubscribe?.frontierBlockHash
             } else {
+                // This should never hit but we should get new frontier if this is nil
+                socket.send(endpoint: .accountInfo(address: address))
+
                 return nil
             }
         }
     }
 
     private let _previousFrontierHash = MutableProperty<String?>(nil)
+
+    private var headBlock: NanoBlockType? = nil {
+        didSet {
+            guard
+                let headBlock = headBlock,
+                let source = self.pendingBlocks.first?.key, // Continue if there is a block to process
+                let pendingBlock = self.pendingBlocks.first?.value else {
+                    self.isCurrentlySyncing.value = false
+
+                    return
+            }
+
+            // Build the hash from the block contents to verify it's a legitimate block
+            if let string = headBlock.asStringifiedDictionary,
+                let hash = RaiCore().hashBlock(string),
+                hash == source {
+                    self._transactableAccountBalance.value = headBlock.transactableBalance
+
+                    let amount = headBlock.transactableBalance.adding(pendingBlock.transactionAmount)
+
+                    processReceive(source: source, amount: amount, previous: self.previousFrontierHash ?? "")
+            }
+        }
+    }
+
+    // MARK: - init
 
     init() {
         guard
@@ -157,25 +185,29 @@ final class HomeViewModel {
             guard let str = message as? String, let data = str.asUTF8Data() else { return }
 
             if let accountCheck = genericDecoder(decodable: AccountCheck.self, from: data) {
-                return self.handle(accountCheck: accountCheck) {
-                    self.socket.send(endpoint: .accountPending(address: self.address))
-                }
+                self.addressIsOnNetwork.value = accountCheck.ready
+
+                self.socket.send(endpoint: .accountPending(address: self.address))
             }
 
-            if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
-                // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
-                guard !self.isCurrentlySending.value else { return }
+            // something about this is failing, check
+//            if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
+//                // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
+//                guard !isCurrentlySyncing.value, !self.isCurrentlySending.value else { return }
 
-                return self.handle(subscriptionBlock: subscriptionBlock) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.socket.send(endpoint: .accountBlockCount(address: self.address))
-                    }
-                }
-            }
+             // self.isCurrentlySyncing.value = true
+//
+
+//                return self.handle(subscriptionBlock: subscriptionBlock) {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                        self.socket.send(endpoint: .accountBlockCount(address: self.address))
+//                    }
+//                }
+//            }
 
             if let accountSubscribe = genericDecoder(decodable: AccountSubscribe.self, from: data) {
                 return self.handle(accountSubscribe: accountSubscribe) {
-                    self.socket.send(endpoint: Endpoint.accountHistory(address: self.address, count: self.lastBlockCount.value))
+                    self.socket.send(endpoint: .accountHistory(address: self.address, count: self.lastBlockCount.value))
                 }
             }
 
@@ -188,23 +220,37 @@ final class HomeViewModel {
             }
 
             if let accountInfo = genericDecoder(decodable: AccountInfo.self, from: data) {
-                return self.handle(accountInfo: accountInfo) {
-                    self.socket.send(endpoint: .accountBlockCount(address: self.address))
-                }
+                self._previousFrontierHash.value = accountInfo.frontier
+
+                self.socket.send(endpoint: .accountBlockCount(address: self.address))
             }
 
             if let pendingBlocks = genericDecoder(decodable: PendingBlocks.self, from: data) {
-                return self.handle(pendingBlocks: pendingBlocks)
+                var pending = pendingBlocks
+                self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove this function and just use properties
+
+                if self.pendingBlocks.count > 0 {
+                    self.isCurrentlySyncing.value = true
+
+                    self.getHeadBlock()
+                }
             }
 
-            if let count = genericDecoder(decodable: AccountBlockCount.self, from: data) {
-                return self.handle(accountBlockCount: count) {
-                    self.socket.sendMultiple(endpoints: [
-                        .accountPending(address: self.address),
-                        .accountHistory(address: self.address, count: self.lastBlockCount.value),
-                        .accountBalance(address: self.address)
-                    ])
-                }
+            if let accountBlockCount = genericDecoder(decodable: AccountBlockCount.self, from: data) {
+                self.lastBlockCount.value = accountBlockCount.count
+
+                self.socket.sendMultiple(endpoints: [
+                    .accountPending(address: self.address),
+                    .accountHistory(address: self.address, count: self.lastBlockCount.value),
+                    .accountBalance(address: self.address)
+                ])
+            }
+
+            if let headBlock = genericDecoder(decodable: StateBlockContainer.self, from: data) {
+                self.headBlock = headBlock.block
+                // NOTE: balance here for legacy is a string but hex encoded balance
+
+                return
             }
 
             if let newFrontierHash = genericDecoder(decodable: HashReceive.self, from: data) {
@@ -230,16 +276,17 @@ final class HomeViewModel {
         // Mark: - Producer for _previousFrontierHash
 
         _previousFrontierHash.producer.startWithValues { hash in
-                guard let source = self.pendingBlocks.keys.first, let amount = self.pendingBlocks[source]?.transactionAmount else {
-                    self.isCurrentlySyncing.value = false
-                    self.currentlyReceivingHash.value = nil
+            guard self.pendingBlocks.count != 0 else {
+                self.isCurrentlySyncing.value = false
 
-                    return
-                }
+                return
+            }
 
-            self.processReceive(source: source, amount: amount, previous: hash)
+            self.getHeadBlock()
         }
     }
+
+    // MARK: - Functions
 
     deinit {
         socket.close()
@@ -276,8 +323,14 @@ final class HomeViewModel {
         return false
     }
 
-    func getHeadBlock() {
-        socket.send(endpoint: Endpoint.getBlock(frontierHash: previousFrontierHash!))
+    private func getHeadBlock() {
+        guard let hash = previousFrontierHash else {
+            self.socket.send(endpoint: .accountInfo(address: self.address))
+
+            return
+        }
+
+        socket.send(endpoint: .getBlock(frontierHash: hash))
     }
 
     func fetchLatestPrices() {
@@ -296,30 +349,11 @@ final class HomeViewModel {
         checkAndOpenSockets()
     }
 
-    func checkAndOpenSockets() {
-        switch socket.readyState {
-        case .closed: socket.open()
-        case .open, .closing, .connecting: break
-        }
-    }
-
     func update(localCurrency currency: Currency) {
         priceService.update(localCurrency: currency)
     }
 
-    // MARK: - Socket Handler Functions
-
-    private func handle(accountCheck: AccountCheck, completion: (() -> Void)) {
-        self.addressIsOnNetwork.value = accountCheck.ready
-
-        completion()
-    }
-
-    private func handle(accountInfo: AccountInfo, completion: () -> Void) {
-        self._previousFrontierHash.value = accountInfo.frontier
-
-        completion()
-    }
+    // MARK: - Larger Socket Handler Functions
 
     private func handle(accountSubscribe: AccountSubscribe, completion: (() -> Void)) {
         // Subscribe and update the Nano account balance text
@@ -331,6 +365,7 @@ final class HomeViewModel {
 
         self.lastBlockCount.value = accountSubscribe.blockCount
 
+        // NOTE: Just for viewing, actual balance is verified and updated before transactions are processed in the setter of HeadBlock above
         if let balance = accountSubscribe.transactableBalance {
             self._transactableAccountBalance.value = balance
         }
@@ -341,6 +376,7 @@ final class HomeViewModel {
     private func handle(accountBalance: AccountBalance) {
         if !addressIsOnNetwork.value { addressIsOnNetwork.value = true }
 
+        // NOTE: Just for viewing, actual balance is verified and updated before transactions are processed in the setter of HeadBlock above
         if let balance = accountBalance.transactableBalance {
             self._transactableAccountBalance.value = balance
         }
@@ -363,20 +399,6 @@ final class HomeViewModel {
             transactions.value.append(contentsOf: newTransactions)
             initialLoadComplete = true
         }
-    }
-
-    /// Result of .accountPending
-    private func handle(pendingBlocks: PendingBlocks) {
-        var pending = pendingBlocks
-        self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove this function
-
-        // Process first pending block, rest will follow in the producer above
-        guard
-            let source = self.pendingBlocks.first?.key,
-            let amount = self.pendingBlocks[source]?.transactionAmount
-        else { return }
-
-        processReceive(source: source, amount: amount, previous: previousFrontierHash)
     }
 
     private func createStateBlockForOpen(forSource source: String, amount: NSDecimalNumber, completion: @escaping (() -> Void)) {
@@ -409,17 +431,11 @@ final class HomeViewModel {
             remainingBalance: self.transactableAccountBalance.value.adding(amount).stringValue,
             work: work,
             fromAccount: self.address,
-            representative: self.representative!,
+            representative: self.representative ?? self.temporaryRepresentative!,
             privateKey: credentials.privateKey
         )
 
         socket.send(endpoint: stateBlock)
-    }
-
-    private func handle(accountBlockCount: AccountBlockCount, completion: () -> Void) {
-        self.lastBlockCount.value = accountBlockCount.count
-
-        completion()
     }
 
     /// These are blocks sent over the wire when your app is open for you to receive
@@ -458,6 +474,8 @@ final class HomeViewModel {
         }
     }
 
+    // MARK: - Representatives
+
     private func randomRepresentative() -> String {
         let count = UInt32(preconfiguredRepresentatives.count)
         let int = Int(arc4random_uniform(count - 1))
@@ -465,9 +483,17 @@ final class HomeViewModel {
         return preconfiguredRepresentatives[int]
     }
 
+    // MARK: - Socket Connection Notification Handlers
+
     @objc func appWasReopened(_ notification: Notification) {
         checkAndOpenSockets()
     }
+
+    func checkAndOpenSockets() {
+        if socket.readyState == .closed { socket.open() }
+    }
+
+    // MARK: - Analytics
 
     func startAnalyticsService() {
         userService.updateUserAgreesToTracking(true)
