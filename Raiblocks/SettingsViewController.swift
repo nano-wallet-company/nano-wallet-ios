@@ -116,12 +116,31 @@ final class SettingsViewController: UIViewController {
             $0.bottom == $1.bottom
         }
 
+        let viewOnExplorerButton = SettingsButton()
+        viewOnExplorerButton.setTitle("View Account on Explorer", for: .normal)
+        viewOnExplorerButton.addTarget(self, action: #selector(viewOnExplorer(_:)), for: .touchUpInside)
+        view.addSubview(viewOnExplorerButton)
+        constrain(viewOnExplorerButton, divider2) {
+            $0.width == $1.width
+            $0.height == CGFloat(66)
+            $0.top == $1.bottom
+        }
+
+        let divider4 = UIView()
+        divider4.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        view.addSubview(divider4)
+        constrain(divider4, viewOnExplorerButton) {
+            $0.height == CGFloat(1)
+            $0.width == $1.width
+            $0.bottom == $1.bottom
+        }
+
         let readThe = UILabel()
         readThe.text = "Read the"
         readThe.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         readThe.textColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(readThe)
-        constrain(readThe, divider2) {
+        constrain(readThe, divider4) {
             $0.centerX == $1.centerX - CGFloat(56)
             $0.top == $1.bottom + CGFloat(8)
         }
@@ -249,6 +268,12 @@ final class SettingsViewController: UIViewController {
 
     @objc func viewPrivacyPolicy() {
         self.present(WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
+    }
+
+    @objc func viewOnExplorer(_ sender: UIButton) {
+        guard let address = userService.fetchCredentials()?.address else { return }
+
+        self.present(WebViewController(url: URL(string: "https://nanode.co/search/\(address.longAddress)")!, useForLegalPurposes: false), animated: true)
     }
 
     func authenticateUser() {
