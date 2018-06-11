@@ -118,4 +118,11 @@ struct PendingHistoryItem: Decodable {
         return NSDecimalNumber(string: amount)
     }
 
+    init(withHash hash: String, andAmount amount: String) {
+        self.hash = hash
+        self.amount = amount
+        self.source = nil
+        self.link_as_account = nil
+    }
+
 }
