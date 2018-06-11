@@ -115,6 +115,25 @@ final class SendViewModel {
         return hex
     }
 
+    func unhexify(hex: String) -> String {
+        let radix: NSDecimalNumber = 16
+        var total: NSDecimalNumber = 0
+
+        for (index, char) in hex.reversed().enumerated() {
+            switch char {
+            case "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+                total = total.adding(radix.raising(toPower: index).multiplying(by: NSDecimalNumber(string: char.description)))
+
+            case "A": total = total.adding(radix.raising(toPower: index).multiplying(by: 10))
+            case "B": total = total.adding(radix.raising(toPower: index).multiplying(by: 11))
+            case "C": total = total.adding(radix.raising(toPower: index).multiplying(by: 12))
+            case "D": total = total.adding(radix.raising(toPower: index).multiplying(by: 13))
+            case "E": total = total.adding(radix.raising(toPower: index).multiplying(by: 14))
+            case "F": total = total.adding(radix.raising(toPower: index).multiplying(by: 15))
+            default: fatalError("unhexing problem")
+            }
+        }
+
     func checkAndOpenSocket() {
         if socket.readyState == .closed { socket.open() }
     }
