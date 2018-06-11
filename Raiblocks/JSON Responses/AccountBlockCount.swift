@@ -14,10 +14,10 @@ enum AccountBlockCountError: Error {
 /// comes back with AccountSubscribe
 struct AccountBlockCount: Decodable {
 
-    private let block_count: Int
+    private let block_count: String
 
     var count: Int {
-        return block_count
+        return Int(block_count) ?? 0
     }
 
 }
