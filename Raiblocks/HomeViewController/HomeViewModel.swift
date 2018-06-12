@@ -29,10 +29,6 @@ final class HomeViewModel {
         return credentials
     }
 
-    var privateKey: Data {
-        return credentials.privateKey
-    }
-
     var hasCompletedLegalAgreements: Bool {
         return credentials.hasCompletedLegalAgreements
     }
@@ -69,7 +65,30 @@ final class HomeViewModel {
         return accountSubscribe?.representativeAddress
     }
 
-    private var accountInfo: AccountInfo?
+    /// This is used for migrating an account from legacy blocks to universal blocks, this should only be used once, to process a head block that is a legacy block and produce the first state block
+    private var updateWithLegacyBlock: Bool = false
+    /// accountInfo is never stored long-term, only temporarily used to process a single block and migrate the head block to univeral blocks
+    private var accountInfo: AccountInfo? {
+        didSet {
+            guard let accountInfo = accountInfo else { return }
+
+            if updateWithLegacyBlock {
+                guard
+                    let source = pendingBlocks.first?.key,
+                    let pendingBlock = pendingBlocks.first?.value,
+                    previousFrontierHash == accountInfo.frontier
+                else { return }
+
+                self._transactableAccountBalance.value = accountInfo.transactableBalance
+                let balance = accountInfo.transactableBalance.adding(pendingBlock.transactionAmount)
+                guard balance.compare(accountInfo.transactableBalance) == .orderedDescending else { return }
+
+                processReceive(source: source, amount: balance, previous: accountInfo.frontier, representative: representative)
+                self.accountInfo = nil
+                self.updateWithLegacyBlock = false
+            }
+        }
+    }
     private var accountHistory: AccountHistory?
 
     private var accountSubscribe: AccountSubscribe?
@@ -111,10 +130,11 @@ final class HomeViewModel {
 
     private let _previousFrontierHash = MutableProperty<String?>(nil)
 
-    private var headBlock: NanoBlockType? = nil {
+    private var headBlock: StateBlock? = nil {
         didSet {
             guard
                 let headBlock = headBlock,
+                let previous = previousFrontierHash,
                 let source = self.pendingBlocks.first?.key, // Continue if there is a block to process
                 let pendingBlock = self.pendingBlocks.first?.value else {
                     self.isCurrentlySyncing.value = false
@@ -125,16 +145,20 @@ final class HomeViewModel {
             // Build the hash from the block contents to verify it's a legitimate block
             if let string = headBlock.asStringifiedDictionary,
                 let hash = RaiCore().hashBlock(string),
-                hash == source {
-                    self._transactableAccountBalance.value = headBlock.transactableBalance
+                hash == previous {
+                self._transactableAccountBalance.value = headBlock.transactableBalance
 
-                    let amount = headBlock.transactableBalance.adding(pendingBlock.transactionAmount)
+                let amount = headBlock.transactableBalance.adding(pendingBlock.transactionAmount)
 
-                if self.previousFrontierHash == nil && lastBlockCount.value == 0 {
-                    processReceive(source: source, amount: amount, previous: nil)
-                } else {
-                    processReceive(source: source, amount: amount, previous: self.previousFrontierHash!)
+                guard _transactableAccountBalance.value.compare(amount) == .orderedAscending else {
+                    AnalyticsEvent.receiveMathError.track()
+
+                    return
                 }
+
+                processReceive(source: source, amount: amount, previous: previous, representative: headBlock.representativeAddress)
+            } else {
+                AnalyticsEvent.unableToValidateHeadBlock.track()
             }
         }
     }
@@ -191,20 +215,14 @@ final class HomeViewModel {
                 self.socket.send(endpoint: .accountPending(address: self.address))
             }
 
-            // something about this is failing, check
-//            if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
-//                // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
-//                guard !isCurrentlySyncing.value, !self.isCurrentlySending.value else { return }
+            if let subscriptionBlock = genericDecoder(decodable: SubscriptionTransaction.self, from: data) {
+                // To prevent coming back to the app and receiving multiple subscription txns you may have gotten when you were away. Will improve later.
+                guard !self.isCurrentlySyncing.value, !self.isCurrentlySending.value else { return }
 
-             // self.isCurrentlySyncing.value = true
-//
+                self.isCurrentlySyncing.value = true
 
-//                return self.handle(subscriptionBlock: subscriptionBlock) {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//                        self.socket.send(endpoint: .accountBlockCount(address: self.address))
-//                    }
-//                }
-//            }
+                return self.handle(subscriptionBlock: subscriptionBlock)
+            }
 
             if let accountSubscribe = genericDecoder(decodable: AccountSubscribe.self, from: data) {
                 return self.handle(accountSubscribe: accountSubscribe) {
@@ -223,17 +241,34 @@ final class HomeViewModel {
             if let accountInfo = genericDecoder(decodable: AccountInfo.self, from: data) {
                 self._previousFrontierHash.value = accountInfo.frontier
 
+                if self.updateWithLegacyBlock {
+                    // App has a block count here already, line below isn't pertinant
+                    self.accountInfo = accountInfo
+                }
+
                 self.socket.send(endpoint: .accountBlockCount(address: self.address))
             }
 
             if let pendingBlocks = genericDecoder(decodable: PendingBlocks.self, from: data) {
                 var pending = pendingBlocks
-                self.pendingBlocks = pending.setPendingItemHashes() // TODO: can probably remove this function and just use properties
+                self.pendingBlocks = pending.setPendingItemHashes()
 
                 if self.pendingBlocks.count > 0 {
-                    self.isCurrentlySyncing.value = true
+                    self.isCurrentlySyncing.value = true // note: pull to refresh and refresh button are slightly different, fix
 
-                    self.getHeadBlock()
+                    if self.lastBlockCount.value == 0 {
+                        guard let source = self.pendingBlocks.first?.key, // Continue if there is a block to process
+                            let pendingBlock = self.pendingBlocks.first?.value else {
+                                self.isCurrentlySyncing.value = false
+                                return
+                        }
+
+                        self.processReceive(source: source, amount: pendingBlock.transactionAmount, previous: nil, representative: nil)
+
+                        return
+                    } else {
+                        self.getHeadBlock()
+                    }
                 }
             }
 
@@ -248,7 +283,12 @@ final class HomeViewModel {
             }
 
             if let headBlock = genericDecoder(decodable: StateBlockContainer.self, from: data) {
-                self.headBlock = headBlock.block
+                if let _ = headBlock.block as? LegacyBlock {
+                    self.updateWithLegacyBlock = true
+                    self.socket.send(endpoint: .accountInfo(address: self.address))
+                } else {
+                    self.headBlock = (headBlock.block as! StateBlock)
+                }
                 // NOTE: balance here for legacy is a string but hex encoded balance
 
                 return
@@ -279,6 +319,7 @@ final class HomeViewModel {
         _previousFrontierHash.producer.startWithValues { hash in
             guard self.pendingBlocks.count != 0 else {
                 self.isCurrentlySyncing.value = false
+                self.socket.send(endpoint: .accountBlockCount(address: self.address))
 
                 return
             }
@@ -296,42 +337,17 @@ final class HomeViewModel {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "ReestablishConnection"), object: nil)
     }
 
-    /// Only use this function for Send transactions
-    /// its really only important for displaying an accurate amount in the case of a mitm
-    func verifySignature(stateBlock block: StateBlock) -> Bool {
-        var blockTypes: [BlockType] = [.open(sendBlockHash: block.link), .receive(sendBlockHash: block.link)]
-
-        if let toAddress = block.toAddress {
-            blockTypes.append(.send(destinationAddress: toAddress))
-        }
-
-        for blockType in blockTypes {
-            let ep = Endpoint.createStateBlock(
-                type: blockType,
-                previous: block.previous,
-                remainingBalance: block.transactableBalance.stringValue,
-                work: block.work,
-                fromAccount: block.accountAddress,
-                representative: block.representativeAddress,
-                privateKey: privateKey
-            )
-
-            if ep.stringify()!.contains(block.signature) {
-                return true
-            }
-        }
-
-        return false
-    }
-
-    private func getHeadBlock() {
+    func getHeadBlock() {
         guard let hash = previousFrontierHash else {
-            self.socket.send(endpoint: .accountInfo(address: self.address))
+            if self.lastBlockCount.value > 0 {
+                self.socket.send(endpoint: .accountInfo(address: self.address))
+            }
+            self.isCurrentlySyncing.value = false
 
             return
         }
 
-        socket.send(endpoint: .getBlock(frontierHash: hash))
+        socket.send(endpoint: .getBlock(withHash: hash))
     }
 
     func fetchLatestPrices() {
@@ -413,8 +429,7 @@ final class HomeViewModel {
                 remainingBalance: amount.stringValue,
                 work: work,
                 fromAccount: self.address,
-                representative: representative,
-                privateKey: self.credentials.privateKey
+                representative: representative
             )
 
             self.temporaryRepresentative = representative
@@ -425,41 +440,55 @@ final class HomeViewModel {
         }
     }
 
-    private func createStateBlockForReceive(previousFrontierHash previous: String, source: String, amount: NSDecimalNumber, work: String) {
+    private func createStateBlockForReceive(previousFrontierHash previous: String, source: String, amount: NSDecimalNumber, work: String, representative: Address) {
         let stateBlock = Endpoint.createStateBlock(
             type: .receive(sendBlockHash: source),
             previous: previous,
-            remainingBalance: self.transactableAccountBalance.value.adding(amount).stringValue,
+            remainingBalance: amount.stringValue,
             work: work,
-            fromAccount: self.address,
-            representative: self.representative ?? self.temporaryRepresentative!,
-            privateKey: credentials.privateKey
+            fromAccount: address,
+            representative: representative
         )
 
         socket.send(endpoint: stateBlock)
     }
 
     /// These are blocks sent over the wire when your app is open for you to receive
-    private func handle(subscriptionBlock: SubscriptionTransaction, completion: @escaping () -> Void) {
-        guard let myAddress = subscriptionBlock.toAddress, (subscriptionBlock.transactionType == .state || subscriptionBlock.transactionType == .send), myAddress == address else { return }
+    private func handle(subscriptionBlock: SubscriptionTransaction) {
+        guard
+            let myAddress = subscriptionBlock.toAddress,
+            myAddress == address,
+            (subscriptionBlock.transactionType == .state || subscriptionBlock.transactionType == .send)
+        else {
+            isCurrentlySyncing.value = false
+            return
+        }
 
-        processReceive(source: subscriptionBlock.source, amount: subscriptionBlock.transactionAmount, previous: previousFrontierHash) { completion() }
+        isCurrentlySyncing.value = true
+
+        if lastBlockCount.value == 0 {
+            processReceive(source: subscriptionBlock.source, amount: subscriptionBlock.transactionAmount, previous: nil, representative: nil)
+        } else {
+            pendingBlocks[subscriptionBlock.source] = PendingHistoryItem(withHash: subscriptionBlock.source, andAmount: subscriptionBlock.transactionAmount.stringValue)
+
+            getHeadBlock()
+        }
+
     }
 
     /// A general function that either processes the block as an open block or a receive block
-    private func processReceive(source: String, amount: NSDecimalNumber, previous: String?, completion: (() -> Void)? = nil) {
-        if let previous = previous {
+    private func processReceive(source: String, amount: NSDecimalNumber, previous: String?, representative: Address?) {
+        if let previous = previous, let representative = representative {
             RaiCore().createWork(previousHash: previous) { work in
                 guard let work = work else { return }
 
                 self.pendingBlocks[source] = nil
 
-                self.createStateBlockForReceive(previousFrontierHash: previous, source: source, amount: amount, work: work)
+                // make sure transactionAmount is positive
+                self.createStateBlockForReceive(previousFrontierHash: previous, source: source, amount: amount, work: work, representative: representative)
 
-                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = self.lastBlockCount.value + 1
-
-                completion?()
+                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
             }
         } else {
             guard lastBlockCount.value == 0 else { return }
@@ -467,10 +496,8 @@ final class HomeViewModel {
             self.createStateBlockForOpen(forSource: source, amount: amount) {
                 self.pendingBlocks[source] = nil
 
-                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
                 self.lastBlockCount.value = 1
-
-                completion?()
+                if self.pendingBlocks.count == 0 { self.isCurrentlySyncing.value = false }
             }
         }
     }
