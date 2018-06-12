@@ -23,12 +23,12 @@ enum Endpoint {
     case accountsPending(address: Address, count: Int)
     case accountSubscribe(uuid: String?, address: Address)
 
-    case createStateBlock(type: BlockType, previous: String, remainingBalance: String, work: String, fromAccount: Address, representative: Address, privateKey: Data)
+    case createStateBlock(type: BlockType, previous: String, remainingBalance: String, work: String, fromAccount: Address, representative: Address)
 
     case createWorkForOpenBlock(publicKey: String)
     case createWork(previousHash: String)
 
-    case getBlock(frontierHash: String)
+    case getBlock(withHash: String)
 
     private var name: String {
         switch self {
@@ -77,7 +77,7 @@ enum Endpoint {
             dict["accounts"] = [address.longAddress]
             dict["count"] = count
 
-        case let .createStateBlock(type, previous, remainingBalance, work, fromAccount, representative, privateKey):
+        case let .createStateBlock(type, previous, remainingBalance, work, fromAccount, representative):
             var block: [String: String] = Endpoint.createEmptyBlock(forTransactionType: .state)
 
             switch type {
@@ -104,6 +104,7 @@ enum Endpoint {
             block["work"] = work
 
             // generate signature with new lib
+            guard let privateKey = UserService().fetchCredentials()?.privateKey else { return nil }
             let signedBlock = Endpoint.generateSignature(forDictionary: block, andPrivateKey: privateKey)
             dict["block"] = signedBlock
 
