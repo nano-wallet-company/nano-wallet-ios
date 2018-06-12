@@ -27,6 +27,12 @@
 		5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */; };
 		5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148279D1FEEBDD800C788E3 /* AccountInfo.swift */; };
 		514827A11FF2E98B00C788E3 /* HashReceive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514827A01FF2E98B00C788E3 /* HashReceive.swift */; };
+		514A3FB620C9F1C500FFC4D8 /* Signy.h in Headers */ = {isa = PBXBuildFile; fileRef = 514A3FB420C9F1C500FFC4D8 /* Signy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		514A3FB920C9F1C500FFC4D8 /* Signy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 514A3FB220C9F1C500FFC4D8 /* Signy.framework */; };
+		514A3FBA20C9F1C500FFC4D8 /* Signy.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 514A3FB220C9F1C500FFC4D8 /* Signy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		514A3FC120CAD51300FFC4D8 /* interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 514A3FC020CAD51300FFC4D8 /* interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5150178120CAFE0100D01C0D /* librai_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5150177F20CAFDF400D01C0D /* librai_lib.a */; };
+		5150178220CAFE0D00D01C0D /* librai_lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5150177F20CAFDF400D01C0D /* librai_lib.a */; };
 		515B4A4F1FD22AA20059F514 /* ReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */; };
 		515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */; };
 		515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */; };
@@ -71,13 +77,9 @@
 		51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51C684941FEB05C000943815 /* HomeViewModel.swift */; };
 		51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */; };
 		51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CD15401FF86B99004102A2 /* SendKeyboard.swift */; };
+		51DF450A20C871CC00033406 /* StateBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DF450920C871CC00033406 /* StateBlock.swift */; };
 		51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */; };
 		51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E945D31FF6EC60006B7081 /* ShareCard.swift */; };
-		51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 51EADEA120067C6B00660E4A /* RaiCoreBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		51EADEA720067C6B00660E4A /* RaiCoreBase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		51EADEAD20067CCA00660E4A /* interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 51A520801FE8462D003F6EC7 /* interface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		51EADEAF2006A0E800660E4A /* RaiCoreBase in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A5207D1FE8426B003F6EC7 /* RaiCoreBase */; };
-		51EADEB12006A2C500660E4A /* RaiCoreBase in CopyFiles */ = {isa = PBXBuildFile; fileRef = 51A5207D1FE8426B003F6EC7 /* RaiCoreBase */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		51EADEB32007F62000660E4A /* WorkGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51EADEB22007F62000660E4A /* WorkGenerate.swift */; };
 		51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F971FC605C9009F045F /* AppDelegate.swift */; };
 		51FE1F9A1FC605C9009F045F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F991FC605C9009F045F /* HomeViewController.swift */; };
@@ -87,6 +89,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		514A3FB720C9F1C500FFC4D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51FE1F8C1FC605C9009F045F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 514A3FB120C9F1C500FFC4D8;
+			remoteInfo = Signy;
+		};
 		5174E90820112BE500DE86A0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 51FE1F8C1FC605C9009F045F /* Project object */;
@@ -94,23 +103,25 @@
 			remoteGlobalIDString = 51FE1F931FC605C9009F045F;
 			remoteInfo = Raiblocks;
 		};
-		51EADEA420067C6B00660E4A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 51FE1F8C1FC605C9009F045F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 51EADE9E20067C6B00660E4A;
-			remoteInfo = RaiCoreBase;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		514A3FC320CADAC700FFC4D8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51A520821FE8495D003F6EC7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				51EADEA720067C6B00660E4A /* RaiCoreBase.framework in CopyFiles */,
+				514A3FBA20C9F1C500FFC4D8 /* Signy.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +131,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				51EADEB12006A2C500660E4A /* RaiCoreBase in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +158,11 @@
 		5148279B1FEDAF0C00C788E3 /* SubscriptionTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTransaction.swift; sourceTree = "<group>"; };
 		5148279D1FEEBDD800C788E3 /* AccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfo.swift; sourceTree = "<group>"; };
 		514827A01FF2E98B00C788E3 /* HashReceive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashReceive.swift; sourceTree = "<group>"; };
+		514A3FB220C9F1C500FFC4D8 /* Signy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Signy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		514A3FB420C9F1C500FFC4D8 /* Signy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Signy.h; sourceTree = "<group>"; };
+		514A3FB520C9F1C500FFC4D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		514A3FC020CAD51300FFC4D8 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		5150177F20CAFDF400D01C0D /* librai_lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librai_lib.a; path = ../../../Downloads/librai_lib.a; sourceTree = "<group>"; };
 		515B4A4E1FD22AA20059F514 /* ReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReceiveViewController.swift; path = "Raiblocks/New Group/ReceiveViewController.swift"; sourceTree = SOURCE_ROOT; };
 		515E729E1FEC4ADB001272D4 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
 		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
@@ -188,8 +203,6 @@
 		51A5205C1FE33B04003F6EC7 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		51A5205E1FE422F2003F6EC7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		51A520611FE430D2003F6EC7 /* SeedScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedScanViewController.swift; sourceTree = "<group>"; };
-		51A5207D1FE8426B003F6EC7 /* RaiCoreBase */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = RaiCoreBase; sourceTree = "<group>"; };
-		51A520801FE8462D003F6EC7 /* interface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		51A520841FE99C63003F6EC7 /* RaiCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaiCore.swift; sourceTree = "<group>"; };
 		51A520861FE9AD3F003F6EC7 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		51A890742064589500BBA280 /* LegalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalViewController.swift; sourceTree = "<group>"; };
@@ -197,11 +210,10 @@
 		51C684941FEB05C000943815 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		51CD153E1FF854B5004102A2 /* SendKeyboardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboardButton.swift; sourceTree = "<group>"; };
 		51CD15401FF86B99004102A2 /* SendKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendKeyboard.swift; sourceTree = "<group>"; };
+		51DF450920C871CC00033406 /* StateBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateBlock.swift; sourceTree = "<group>"; };
 		51E945CA1FF6E1A4006B7081 /* SendReceiveHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReceiveHeaderView.swift; sourceTree = "<group>"; };
 		51E945D31FF6EC60006B7081 /* ShareCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCard.swift; sourceTree = "<group>"; };
 		51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RaiCoreBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		51EADEA120067C6B00660E4A /* RaiCoreBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RaiCoreBase.h; sourceTree = "<group>"; };
-		51EADEA220067C6B00660E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		51EADEB22007F62000660E4A /* WorkGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkGenerate.swift; sourceTree = "<group>"; };
 		51FE1F941FC605C9009F045F /* Raiblocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Raiblocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51FE1F971FC605C9009F045F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +226,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		514A3FAE20C9F1C500FFC4D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5150178220CAFE0D00D01C0D /* librai_lib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5174E90020112BE500DE86A0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,8 +252,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5150178120CAFE0100D01C0D /* librai_lib.a in Frameworks */,
 				B1B448F99EDC4C000021D555 /* Pods_Raiblocks.framework in Frameworks */,
-				51EADEAF2006A0E800660E4A /* RaiCoreBase in Frameworks */,
+				514A3FB920C9F1C500FFC4D8 /* Signy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +294,7 @@
 				519C1A181FEAE28E005EBA02 /* AccountCheck.swift */,
 				514827A01FF2E98B00C788E3 /* HashReceive.swift */,
 				51EADEB22007F62000660E4A /* WorkGenerate.swift */,
+				51DF450920C871CC00033406 /* StateBlock.swift */,
 			);
 			path = "JSON Responses";
 			sourceTree = "<group>";
@@ -290,6 +312,17 @@
 				51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */,
 			);
 			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		514A3FB320C9F1C500FFC4D8 /* Signy */ = {
+			isa = PBXGroup;
+			children = (
+				514A3FB420C9F1C500FFC4D8 /* Signy.h */,
+				514A3FC020CAD51300FFC4D8 /* interface.h */,
+				5150177F20CAFDF400D01C0D /* librai_lib.a */,
+				514A3FB520C9F1C500FFC4D8 /* Info.plist */,
+			);
+			path = Signy;
 			sourceTree = "<group>";
 		};
 		5174E8F7200FA6BC00DE86A0 /* Services */ = {
@@ -400,23 +433,12 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
-		51EADEA020067C6B00660E4A /* RaiCoreBase */ = {
-			isa = PBXGroup;
-			children = (
-				51EADEA120067C6B00660E4A /* RaiCoreBase.h */,
-				51A520801FE8462D003F6EC7 /* interface.h */,
-				51A5207D1FE8426B003F6EC7 /* RaiCoreBase */,
-				51EADEA220067C6B00660E4A /* Info.plist */,
-			);
-			path = RaiCoreBase;
-			sourceTree = "<group>";
-		};
 		51FE1F8B1FC605C9009F045F = {
 			isa = PBXGroup;
 			children = (
 				51FE1F961FC605C9009F045F /* Raiblocks */,
-				51EADEA020067C6B00660E4A /* RaiCoreBase */,
 				5174E90420112BE500DE86A0 /* RaiblocksTests */,
+				514A3FB320C9F1C500FFC4D8 /* Signy */,
 				51FE1F951FC605C9009F045F /* Products */,
 				181B5530205C5249D66451C2 /* Pods */,
 				C8887A5CA257542CA23A6941 /* Frameworks */,
@@ -429,6 +451,7 @@
 				51FE1F941FC605C9009F045F /* Raiblocks.app */,
 				51EADE9F20067C6B00660E4A /* RaiCoreBase.framework */,
 				5174E90320112BE500DE86A0 /* RaiblocksTests.xctest */,
+				514A3FB220C9F1C500FFC4D8 /* Signy.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -470,18 +493,44 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		514A3FAF20C9F1C500FFC4D8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				514A3FB620C9F1C500FFC4D8 /* Signy.h in Headers */,
+				514A3FC120CAD51300FFC4D8 /* interface.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		51EADE9C20067C6B00660E4A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51EADEAD20067CCA00660E4A /* interface.h in Headers */,
-				51EADEA320067C6B00660E4A /* RaiCoreBase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		514A3FB120C9F1C500FFC4D8 /* Signy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 514A3FBD20C9F1C500FFC4D8 /* Build configuration list for PBXNativeTarget "Signy" */;
+			buildPhases = (
+				514A3FAD20C9F1C500FFC4D8 /* Sources */,
+				514A3FAE20C9F1C500FFC4D8 /* Frameworks */,
+				514A3FAF20C9F1C500FFC4D8 /* Headers */,
+				514A3FB020C9F1C500FFC4D8 /* Resources */,
+				514A3FC320CADAC700FFC4D8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Signy;
+			productName = Signy;
+			productReference = 514A3FB220C9F1C500FFC4D8 /* Signy.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		5174E90220112BE500DE86A0 /* RaiblocksTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5174E90A20112BE500DE86A0 /* Build configuration list for PBXNativeTarget "RaiblocksTests" */;
@@ -536,7 +585,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				51EADEA520067C6B00660E4A /* PBXTargetDependency */,
+				514A3FB820C9F1C500FFC4D8 /* PBXTargetDependency */,
 			);
 			name = Raiblocks;
 			productName = Raiblocks;
@@ -553,6 +602,10 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Zack Shapiro";
 				TargetAttributes = {
+					514A3FB120C9F1C500FFC4D8 = {
+						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
+					};
 					5174E90220112BE500DE86A0 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -585,11 +638,19 @@
 				51FE1F931FC605C9009F045F /* Raiblocks */,
 				51EADE9E20067C6B00660E4A /* RaiCoreBase */,
 				5174E90220112BE500DE86A0 /* RaiblocksTests */,
+				514A3FB120C9F1C500FFC4D8 /* Signy */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		514A3FB020C9F1C500FFC4D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5174E90120112BE500DE86A0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -716,6 +777,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		514A3FAD20C9F1C500FFC4D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5174E8FF20112BE500DE86A0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -759,6 +827,7 @@
 				5125E4561FD22210004DB451 /* TransactionViewModel.swift in Sources */,
 				51203A3A1FE1E3FD00CD7D79 /* AccountBlockCount.swift in Sources */,
 				5122A61320124ACF00F7F43A /* SeedConfirmationViewController.swift in Sources */,
+				51DF450A20C871CC00033406 /* StateBlock.swift in Sources */,
 				51203A371FE1E0C400CD7D79 /* NSDecimalNumber+Extensions.swift in Sources */,
 				51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */,
 				5135307C201A246F00B615D4 /* BackgroundViewController.swift in Sources */,
@@ -805,15 +874,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		514A3FB820C9F1C500FFC4D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 514A3FB120C9F1C500FFC4D8 /* Signy */;
+			targetProxy = 514A3FB720C9F1C500FFC4D8 /* PBXContainerItemProxy */;
+		};
 		5174E90920112BE500DE86A0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 51FE1F931FC605C9009F045F /* Raiblocks */;
 			targetProxy = 5174E90820112BE500DE86A0 /* PBXContainerItemProxy */;
-		};
-		51EADEA520067C6B00660E4A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 51EADE9E20067C6B00660E4A /* RaiCoreBase */;
-			targetProxy = 51EADEA420067C6B00660E4A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -829,6 +898,70 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		514A3FBB20C9F1C500FFC4D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Signy/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Signy",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Signy;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		514A3FBC20C9F1C500FFC4D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Signy/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Signy",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Signy;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		5174E90B20112BE500DE86A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1037,7 +1170,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4ZFN7W45G2;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1048,6 +1181,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/RaiBlocks/RaiCore",
 					"$(PROJECT_DIR)/RaiCoreBase",
+					"$(PROJECT_DIR)/Signy",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1060,7 +1194,7 @@
 					"-framework",
 					"\"SwiftWebSocket\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nanowalletcompany.Nano;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Raiblocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1076,7 +1210,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4ZFN7W45G2;
+				DEVELOPMENT_TEAM = EBDVRZUPNN;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1087,6 +1221,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/RaiBlocks/RaiCore",
 					"$(PROJECT_DIR)/RaiCoreBase",
+					"$(PROJECT_DIR)/Signy",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1099,7 +1234,7 @@
 					"-framework",
 					"\"SwiftWebSocket\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nanowalletcompany.Nano;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackshapiro.Raiblocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -1110,6 +1245,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		514A3FBD20C9F1C500FFC4D8 /* Build configuration list for PBXNativeTarget "Signy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				514A3FBB20C9F1C500FFC4D8 /* Debug */,
+				514A3FBC20C9F1C500FFC4D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5174E90A20112BE500DE86A0 /* Build configuration list for PBXNativeTarget "RaiblocksTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

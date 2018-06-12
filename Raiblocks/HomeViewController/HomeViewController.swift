@@ -206,18 +206,21 @@ class HomeViewController: UIViewController {
         }
         self.tableView = tableView
 
-        if !viewModel.hasCompletedLegalAgreements {
-            let vc = LegalViewController(useForLoggedInState: true)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        if !appDelegate.devConfig.skipLegal {
+            if !viewModel.hasCompletedLegalAgreements {
+                let vc = LegalViewController(useForLoggedInState: true)
 
-            if !viewModel.hasCompletedAnalyticsOptIn {
-                vc.delegate = self
+                if !viewModel.hasCompletedAnalyticsOptIn {
+                    vc.delegate = self
+                }
+
+                present(vc, animated: true)
             }
 
-            present(vc, animated: true)
-        }
-
-        if !viewModel.hasCompletedAnalyticsOptIn {
-            showAnalyticsAlert()
+            if !viewModel.hasCompletedAnalyticsOptIn {
+                showAnalyticsAlert()
+            }
         }
     }
 
@@ -237,11 +240,9 @@ class HomeViewController: UIViewController {
     }
 
     @objc func sendNano() {
-        guard let representative = viewModel.temporaryRepresentative ?? viewModel.representative else { return }
-
         viewModel.isCurrentlySending.value = true
 
-        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, representative: representative))
+        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket))
         vc.delegate = self
 
         self.navigationController?.pushViewController(vc, animated: true)
@@ -353,6 +354,13 @@ extension HomeViewController: UITableViewDelegate {
 
     private func showExplorerAlert(forIndexPath indexPath: IndexPath) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Send Nano to Address", style: .default) { _ in
+            let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, toAddress: self.viewModel.transactions.value[indexPath.row].fromAddress))
+            vc.delegate = self
+
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
+
         ac.addAction(UIAlertAction(title: "View Transaction on Explorer", style: .default) { _ in self.view(atIndexPath: indexPath) })
 
         ac.addAction(UIAlertAction(title: "Copy Address", style: .default) { _ in
@@ -360,6 +368,7 @@ extension HomeViewController: UITableViewDelegate {
                 self.cellWasLongPressed(address: address)
             }
         })
+
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         present(ac, animated: true, completion: nil)

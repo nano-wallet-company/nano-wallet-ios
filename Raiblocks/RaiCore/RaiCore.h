@@ -8,7 +8,7 @@
 
 @import Foundation;
 
-@import RaiCoreBase;
+@import Signy;
 
 
 @interface RaiCore: NSObject
@@ -29,6 +29,8 @@
 - (NSString *)signatureToString:(NSData *)data;
 
 - (NSString *)signTransaction:(NSString *)transaction withPrivateKey:(NSData *)privateKey;
+
+- (NSString *)hashBlock:(NSString *)transaction;
 
 @end
 

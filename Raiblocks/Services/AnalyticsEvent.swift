@@ -25,8 +25,10 @@ enum AnalyticsEvent: String {
     case errorGeneratingWorkForSending = "Error Generating Work for Sending"
     case errorUnwrappingLocalCurrencyText = "Error unwrapping Local Currency text"
     case localCurrencySelected = "Local Currency Selected"
+    case logOut = "User Logged Out"
     case missingCredentials = "App crashed due to missing Credentials"
     case nanoAddressCopied = "Nano Address Copied"
+    case receiveMathError = "Receive Math Error"
     case seedCopyFailed = "Seed Copy Failed"
     case seedCopied = "Seed Copied"
     case seedConfirmatonContinueButtonPressed = "Seed Confirmation Continue Button Pressed"
@@ -39,7 +41,8 @@ enum AnalyticsEvent: String {
     case shareDialogueViewed = "Share Dialogue Viewed"
     case socketClosedHome = "Socket Closed in HomeVM"
     case socketErrorHome = "socket Error in HomeVM"
-    case logOut = "User Logged Out"
+    case unableToValidateHeadBlock = "Unable to validate head block"
+
 
     // Legal
     case disclaimerAgreementToggled = "Mobile Disclaimer Agreement Toggled"

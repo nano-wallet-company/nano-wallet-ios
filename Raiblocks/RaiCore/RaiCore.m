@@ -128,7 +128,6 @@
     return address;
 }
 
-
 // MARK: - String Converstion
 
 - (NSString *)seedOrKeyToString:(NSData *)data;
@@ -160,6 +159,15 @@
     const char *signedTransaction = xrb_sign_transaction((char *)txn, privateKeyBytePair);
 
     return [NSString stringWithFormat:@"%s", signedTransaction];
+}
+
+/// Takes a JSON-serialized string version of a block (state or legacy)
+- (NSString *)hashBlock:(NSString *)transaction;
+{
+    const char *txn = [transaction UTF8String];
+    const char *hash = xrb_hash_transaction((char *)txn);
+
+    return [NSString stringWithFormat:@"%s", hash];
 }
 
 @end

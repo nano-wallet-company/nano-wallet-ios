@@ -27,6 +27,8 @@ final class SendViewModel {
     let nanoAmount = MutableProperty<NSDecimalNumber>(0)
     var maxAmountInUse: Bool = false
 
+    let headBlockIsValid = MutableProperty<Bool>(false)
+
     let priceService = PriceService()
 
     private (set) var work: String?
@@ -40,15 +42,40 @@ final class SendViewModel {
         return credentials.address
     }
 
-    let representative: Address
+    private (set) var toAddress: Address?
+    var representative: Address?
 
     private var credentials: Credentials {
         return UserService().fetchCredentials()!
     }
 
-    init(homeSocket socket: WebSocket, representative: Address) {
+    private var updateWithLegacyBlock: Bool = false
+    private var accountInfo: AccountInfo?
+
+    private var headBlock: StateBlock? {
+        didSet {
+            guard
+                let headBlock = headBlock,
+                let representative = headBlock.representativeAddress,
+                let previous = previousFrontierHash,
+                let string = headBlock.asStringifiedDictionary,
+                let hash = RaiCore().hashBlock(string),
+                hash == previous
+            else {
+                AnalyticsEvent.unableToValidateHeadBlock.track()
+
+                return
+            }
+
+            self.sendableNanoBalance = headBlock.transactableBalance
+            self.representative = representative
+            self.headBlockIsValid.value = true
+        }
+    }
+
+    init(homeSocket socket: WebSocket, toAddress: Address? = nil) {
         self.socket = socket
-        self.representative = representative
+        self.toAddress = toAddress
 
         self.localCurrency = priceService.localCurrency.value
         self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
@@ -69,6 +96,17 @@ final class SendViewModel {
 
             if let accountInfo = genericDecoder(decodable: AccountInfo.self, from: data) {
                 return self.handle(accountInfo: accountInfo)
+            }
+
+            if let headBlock = genericDecoder(decodable: StateBlockContainer.self, from: data) {
+                if let _ = headBlock.block as? LegacyBlock {
+                    guard let accountInfo = self.accountInfo else { return }
+
+                    self.sendableNanoBalance = accountInfo.transactableBalance
+                    self.headBlockIsValid.value = true
+                } else {
+                    self.headBlock = (headBlock.block as! StateBlock)
+                }
             }
         }
 
@@ -115,13 +153,44 @@ final class SendViewModel {
         return hex
     }
 
+//    /// Only use this function for Send transactions
+//    /// its really only important for displaying an accurate amount in the case of a mitm
+//    func verifySignature(stateBlock block: StateBlock) -> Bool {
+//        var blockTypes: [BlockType] = [.open(sendBlockHash: block.link), .receive(sendBlockHash: block.link)]
+//
+//        if let toAddress = block.toAddress {
+//            blockTypes.append(.send(destinationAddress: toAddress))
+//        }
+//
+//        for blockType in blockTypes {
+//            let ep = Endpoint.createStateBlock(
+//                type: blockType,
+//                previous: block.previous,
+//                remainingBalance: block.transactableBalance.stringValue,
+//                work: block.work,
+//                fromAccount: block.accountAddress,
+//                representative: block.representativeAddress!
+//            )
+//
+//            if ep.stringify()!.contains(block.signature) {
+//                return true
+//            }
+//        }
+//
+//        return false
+//    }
+
     func checkAndOpenSocket() {
         if socket.readyState == .closed { socket.open() }
     }
 
     private func handle(accountInfo: AccountInfo) {
+        self.accountInfo = accountInfo
         self.previousFrontierHash = accountInfo.frontier
-        self.sendableNanoBalance = accountInfo.transactableBalance
+        self.representative = accountInfo.representative
+
+        // Get head block
+        sendSocket.send(endpoint: .getBlock(withHash: accountInfo.frontier))
 
         // Create work for the transaction
         DispatchQueue.global(qos: .background).async {

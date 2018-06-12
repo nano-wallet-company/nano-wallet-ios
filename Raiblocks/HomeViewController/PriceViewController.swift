@@ -34,7 +34,7 @@ class PriceViewController: UIViewController {
 
         switch self.type {
         case .nano:
-            viewModel.accountBalance
+            viewModel.transactableAccountBalance
                 .producer
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
@@ -44,13 +44,17 @@ class PriceViewController: UIViewController {
                     formatter.maximumFractionDigits = 10
                     formatter.locale = CurrencyService().localCurrency().locale
 
-                    self.priceLabel?.text = formatter.string(from: nanoBalance.rawAsUsableAmount) ?? "0" + " NANO"
+                    if let balance = formatter.string(from: nanoBalance.rawAsUsableAmount) {
+                        self.priceLabel?.text = "\(balance) NANO"
+                    } else {
+                        self.priceLabel?.text = "0 NANO"
+                    }
             }
 
         case .btc:
             let mark = Currency.btc.mark
 
-            Property.combineLatest(viewModel.accountBalance, viewModel.lastBTCTradePrice)
+            Property.combineLatest(viewModel.transactableAccountBalance, viewModel.lastBTCTradePrice)
                 .producer
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
@@ -76,7 +80,7 @@ class PriceViewController: UIViewController {
             viewModel.localCurrency
                 .producer
                 .flatMap(.latest) { _ in
-                    return SignalProducer.combineLatest(viewModel.accountBalance.producer, viewModel.lastBTCTradePrice.producer, viewModel.lastBTCLocalCurrencyPrice.producer)
+                    return SignalProducer.combineLatest(viewModel.transactableAccountBalance.producer, viewModel.lastBTCTradePrice.producer, viewModel.lastBTCLocalCurrencyPrice.producer)
                 }
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
@@ -118,15 +122,6 @@ class PriceViewController: UIViewController {
         }
         self.priceLabel = label
 
-        if case .nano = self.type {
-            let imageView = UIImageView(image: UIImage(named: "nanoCurrencyMarkWhite"))
-            view.addSubview(imageView)
-            constrain(imageView, label) {
-                $0.right == $1.left - CGFloat(4)
-                $0.top == $1.top + CGFloat(6)
-            }
-        }
-
         setDefaultValue()
     }
 
@@ -137,7 +132,7 @@ class PriceViewController: UIViewController {
     private func setDefaultValue() {
         switch type {
         case .nano:
-            self.priceLabel?.text = "0"
+            self.priceLabel?.text = "0 NANO"
         case .btc:
             self.priceLabel?.text = "\(Currency.btc.mark) 0"
         case .localCurrency:

@@ -10,29 +10,9 @@ struct SubscriptionTransaction: Decodable {
 
     private let account: String
     private let amount: String
-    private let block: SendBlock
+    let block: StateBlock
     private let hash: String // `source` for receiveBlock transaction
-
-    struct SendBlock: Decodable {
-
-        let type: TransactionType
-        let destination: String
-
-        enum CodingKeys: String, CodingKey {
-            case type
-            case destination = "link_as_account"
-        }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-
-            let _type = try! container.decode(String.self, forKey: .type)
-            self.type = TransactionType(rawValue: _type)!
-
-            self.destination = try container.decode(String.self, forKey: .destination)
-        }
-
-    }
+    private let is_send: String
 
     var transactionType: TransactionType {
         return block.type
@@ -42,13 +22,21 @@ struct SubscriptionTransaction: Decodable {
         return hash
     }
 
+    var isSend: Bool {
+        return is_send == "true"
+    }
+
     var fromAddress: Address? {
         return Address(account)
     }
 
     /// This should be your wallet address
     var toAddress: Address? {
-        return Address(block.destination)
+        return block.toAddress
+    }
+
+    var representative: Address? {
+        return block.representativeAddress
     }
 
     var transactionAmount: NSDecimalNumber {
