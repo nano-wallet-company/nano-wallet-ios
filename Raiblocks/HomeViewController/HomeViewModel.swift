@@ -254,7 +254,7 @@ final class HomeViewModel {
                 self.pendingBlocks = pending.setPendingItemHashes()
 
                 if self.pendingBlocks.count > 0 {
-                    self.isCurrentlySyncing.value = true // note: pull to refresh and refresh button are slightly different, fix
+                    self.isCurrentlySyncing.value = true
 
                     if self.lastBlockCount.value == 0 {
                         guard let source = self.pendingBlocks.first?.key, // Continue if there is a block to process
@@ -289,7 +289,6 @@ final class HomeViewModel {
                 } else {
                     self.headBlock = (headBlock.block as! StateBlock)
                 }
-                // NOTE: balance here for legacy is a string but hex encoded balance
 
                 return
             }

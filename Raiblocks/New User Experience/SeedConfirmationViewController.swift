@@ -134,11 +134,12 @@ class SeedConfirmationViewController: UIViewController {
         textBody.isUserInteractionEnabled = true
         textBody.isEditable = false
         textBody.isSelectable = false
-        let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is how we generate your wallet. It’s also how you log into the iOS Wallet or any of our other wallets, including NanoWallet.io.\n\nIf you lose your Wallet Seed, your funds cannot be recovered.\n\nKeep your Wallet Seed somewhere safe (like password management software or print it out and put it in a safe).\n\nNever give it to anyone, ever.")
+        let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is a unique code that enables you to access your wallet on the Nano network.\n\nIt is the only way for you to recover your wallet and access any Nano currency you may have.\n\nWe do not have access to it and cannot recover your Wallet Seed or any funds in your wallet without your Wallet Seed.\n\nYou are solely responsible for recording your Wallet Seed in a safe and secure place and manner. Never share your Wallet Seed with anyone.")
         attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.darkBlue.color, range: NSMakeRange(0, attributedText.length))
-        attributedText.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 18), range: NSMakeRange(0, attributedText.length))
-        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(150, 64)) // Middle sentence "If you lose your wallet..."
-        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(attributedText.length - 30, 30)) // last sentence "Never give it..."
+        attributedText.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 16), range: NSMakeRange(0, attributedText.length))
+
+        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(192, 119)) // Middle sentence "We do not have access..."
+        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(attributedText.length - 42, 42)) // last sentence "Never give it..."
         textBody.attributedText = attributedText
         textBody.isScrollEnabled = true
         view.addSubview(textBody)
@@ -148,10 +149,10 @@ class SeedConfirmationViewController: UIViewController {
 
             if isiPhoneSE() {
                 $0.top == $1.bottom + CGFloat(22)
-                $0.bottom == $2.top - CGFloat(22)
+                $0.bottom == $2.top - CGFloat(6 )
             } else {
                 $0.top == $1.bottom + CGFloat(33)
-                $0.bottom == $2.top - CGFloat(33)
+                $0.bottom == $2.top - CGFloat(16)
             }
         }
     }
