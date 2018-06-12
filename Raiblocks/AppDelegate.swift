@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appBackgroundingForSeedOrSend: Bool = false
 
     // TODO: Before deploy, make sure this is set to nil/false
-    let devConfig: (device: Device?, skipLegal: Bool) = (nil, true)
+    let devConfig: (device: Device?, skipLegal: Bool) = (nil, false)
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let currentSchemaVersion: UInt64 = 2
