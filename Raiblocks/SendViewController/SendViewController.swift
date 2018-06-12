@@ -56,13 +56,13 @@ final class SendViewController: UIViewController {
 
         AnalyticsEvent.sendViewed.track()
 
-        SignalProducer.combineLatest(sendAddressIsValid.producer, sendableAmountIsValid.producer)
+        SignalProducer.combineLatest(sendAddressIsValid.producer, sendableAmountIsValid.producer, viewModel.headBlockIsValid.producer)
             .producer
             .take(during: lifetime)
             .observe(on: UIScheduler())
             .startWithValues { [weak self] in
                 let state = self?.viewModel.socket.readyState == .open
-                self?.sendButton?.isEnabled = ($0 && $1 && state)
+                self?.sendButton?.isEnabled = ($0 && $1 && $2 && state)
             }
 
         viewModel.socket.event.open = { [weak self] in
@@ -106,6 +106,11 @@ final class SendViewController: UIViewController {
         addressTextView.delegate = self
         addressTextView.inputAccessoryView = keyboardAccessoryView()
         addressTextView.placeholder = "Enter a Nano Address"
+        if let toAddress = viewModel.toAddress {
+            addressTextView.togglePlaceholder(show: false)
+            addressTextView.attributedText = addAttributes(forAttributedText: toAddress.longAddressWithColor)
+            sendAddressIsValid.value = true
+        }
         view.addSubview(addressTextView)
         constrain(addressTextView) {
             $0.top == $0.superview!.top
@@ -219,6 +224,10 @@ final class SendViewController: UIViewController {
             $0.bottom == $2.top - (isiPhoneSE() ? CGFloat(9) : CGFloat(36))
             $0.width == $0.superview!.width * CGFloat(0.8)
             $0.centerX == $0.superview!.centerX
+        }
+
+        if let _ = viewModel.toAddress {
+            nanoTextField.becomeFirstResponder()
         }
 
         // MARK: - Get balance and frontier for sending
@@ -452,7 +461,7 @@ final class SendViewController: UIViewController {
         AnalyticsEvent.sendBegan.track()
         // TODO: make your own address show error
 
-        guard let textView = addressTextView, let address = Address(textView.attributedText.string) else {
+        guard let textView = addressTextView, let address = Address(textView.attributedText.string), let representative = viewModel.representative else {
             AnalyticsEvent.sendAddressFetchFailed.track()
 
             let ac = UIAlertController(title: "Address Problem", message: "There was a problem getting the address for your transaction. Please try again.", preferredStyle: .actionSheet)
@@ -491,8 +500,7 @@ final class SendViewController: UIViewController {
             remainingBalance: remainingBalance.stringValue,
             work: work,
             fromAccount: viewModel.address,
-            representative: viewModel.representative,
-            privateKey: viewModel.privateKeyData
+            representative: representative
         )
 
         authenticateAndSend(endpoint: endpoint, amountYoullSend: subtractor)
