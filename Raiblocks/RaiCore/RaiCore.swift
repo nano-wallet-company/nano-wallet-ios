@@ -31,6 +31,8 @@ extension RaiCore {
             guard let str = message as? String, let data = str.asUTF8Data() else {
                 AnalyticsEvent.createWorkFailedForOpenBlock.track()
 
+                socket.close()
+
                 return completion(nil)
             }
 
@@ -40,6 +42,8 @@ extension RaiCore {
                 completion(work.work)
             }
         }
+
+        socket.event.error = { _ in socket.close() }
 
         socket.open()
         socket.send(endpoint: .createWorkForOpenBlock(publicKey: publicKey))
@@ -52,6 +56,8 @@ extension RaiCore {
             guard let str = message as? String, let data = str.asUTF8Data() else {
                 AnalyticsEvent.createWorkFailed.track()
 
+                socket.close()
+
                 return completion(nil)
             }
 
@@ -61,6 +67,8 @@ extension RaiCore {
                 completion(work.work)
             }
         }
+
+        socket.event.error = { _ in socket.close() }
 
         socket.open()
         socket.send(endpoint: .createWork(previousHash: previous))

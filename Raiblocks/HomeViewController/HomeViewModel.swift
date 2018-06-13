@@ -517,7 +517,10 @@ final class HomeViewModel {
     }
 
     func checkAndOpenSockets() {
-        if socket.readyState == .closed { socket.open() }
+        switch socket.readyState {
+        case .closed: socket.open()
+        case .closing, .connecting, .open: break
+        }
     }
 
     // MARK: - Analytics

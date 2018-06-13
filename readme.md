@@ -35,6 +35,8 @@ contributor [code of conduct](CODE_OF_CONDUCT.md).
 
 ### How to update RaiCoreBase if a new `.dylib` file is provided:
 
+**TODO:** Rewrite this section with the .a lib
+
 `RaiCoreBase` is an internal framework that handles Wallet Seed creation, private/public key creation, work signing and more. It can be found in the `RaiCoreBase` directory in the project.
 
 It currently supports `arm64` devices which means it does not support devices that don't support iOS 11.
