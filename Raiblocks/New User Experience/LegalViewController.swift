@@ -29,7 +29,6 @@ final class LegalViewController: UIViewController {
 
     private let (lifetime, token) = Lifetime.make()
 
-    private weak var disclaimerCheckbox: M13Checkbox?
     private weak var eulaCheckbox: M13Checkbox?
     private weak var privacyPolicyCheckbox: M13Checkbox?
     private weak var agreeButton: NanoButton?
@@ -92,7 +91,7 @@ final class LegalViewController: UIViewController {
         view.addSubview(viewTitle)
         constrain(viewTitle, disagreeButton) {
             if isiPhoneSE() {
-                $0.top == $0.superview!.top + CGFloat(11)
+                $0.top == $0.superview!.top + CGFloat(33)
             } else {
                 $0.top == $0.superview!.top + CGFloat(44)
             }
@@ -101,16 +100,16 @@ final class LegalViewController: UIViewController {
 
         let viewCopy = UILabel()
         viewCopy.numberOfLines = 0
-        if isiPhoneSE() {
-            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 13)
+        if isiPhonePlus() {
+            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 18)
         } else if isiPhoneRegular() {
-            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
-        } else {
             viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 16)
+        } else {
+            viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         }
         viewCopy.lineBreakMode = .byWordWrapping
         viewCopy.text = """
-        Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the “Terms and Conditions”). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping “Agree,” you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device.
+        Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the "Terms and Conditions"). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping "I Agree," you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device.
         """
         view.addSubview(viewCopy)
         constrain(viewCopy, viewTitle, agreeButton) {
@@ -123,30 +122,16 @@ final class LegalViewController: UIViewController {
             $0.right == $2.right
         }
 
-        let disclaimerCheckbox = createCheckbox()
-        view.addSubview(disclaimerCheckbox)
-        constrain(disclaimerCheckbox, viewCopy) {
-            $0.top == $1.bottom + CGFloat(20)
-            $0.left == $1.left
-            $0.width == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
-            $0.height == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
-        }
-        self.disclaimerCheckbox = disclaimerCheckbox
-
-        let disclaimer = createUnderlinedButton()
-        disclaimer.setTitle("Mobile Disclaimer", for: .normal)
-        disclaimer.addTarget(self, action: #selector(viewDisclaimer), for: .touchUpInside)
-        disclaimer.underline()
-        view.addSubview(disclaimer)
-        constrain(disclaimer, disclaimerCheckbox) {
-            $0.bottom == $1.bottom
-            $0.left == $1.right + CGFloat(20)
-        }
-
         let eulaCheckbox = createCheckbox()
         view.addSubview(eulaCheckbox)
-        constrain(eulaCheckbox, disclaimerCheckbox) {
-            $0.top == $1.bottom + CGFloat(40)
+        constrain(eulaCheckbox, viewCopy) {
+            if isiPhoneSE() {
+                $0.top == $1.bottom + CGFloat(30)
+            } else if isiPhoneRegular() {
+                $0.top == $1.bottom + CGFloat(30)
+            } else {
+                $0.top == $1.bottom + CGFloat(40)
+            }
             $0.left == $1.left
             $0.width == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
             $0.height == (isiPhoneSE() ? CGFloat(30) : CGFloat(40))
@@ -185,17 +170,6 @@ final class LegalViewController: UIViewController {
 
         // MARK: - Reactive
 
-        SignalProducer(disclaimerCheckbox.reactive.checkboxTapped)
-            .producer
-            .take(during: lifetime)
-            .startWithValues { _ in
-                if self.disclaimerCheckbox?.checkState == .checked {
-                    self.disclaimerCheckbox?.toggleAgreement()
-                }
-
-                self.viewDisclaimer()
-        }
-
         SignalProducer(eulaCheckbox.reactive.checkboxTapped)
             .producer
             .take(during: lifetime)
@@ -219,19 +193,6 @@ final class LegalViewController: UIViewController {
         }
 
         // MARK: - Reactive For Analytics
-
-        SignalProducer(disclaimerCheckbox.reactive.valueChanged)
-            .producer
-            .take(during: lifetime)
-            .startWithValues { _ in
-                guard let checkbox = self.disclaimerCheckbox else { return }
-
-                AnalyticsEvent.disclaimerAgreementToggled.track(customAttributes: [
-                    "device_id": UIDevice.current.identifierForVendor!.uuidString,
-                    "accepted": checkbox.checkState.rawValue, // 0 = unchecked, 1 = checked
-                    "date": self.dateString
-                ])
-        }
 
         SignalProducer(eulaCheckbox.reactive.valueChanged)
             .producer
@@ -261,13 +222,12 @@ final class LegalViewController: UIViewController {
 
         // MARK: - Master Button Enable/Disable Check
 
-        SignalProducer.combineLatest(SignalProducer(disclaimerCheckbox.reactive.valueChanged), SignalProducer(eulaCheckbox.reactive.valueChanged), SignalProducer(privacyPolicyCheckbox.reactive.valueChanged))
+        SignalProducer.combineLatest(SignalProducer(eulaCheckbox.reactive.valueChanged), SignalProducer(privacyPolicyCheckbox.reactive.valueChanged))
             .producer
             .take(during: lifetime)
             .observe(on: UIScheduler())
-            .startWithValues { _, _, _ in
-                if self.disclaimerCheckbox?.checkState == .checked &&
-                    self.eulaCheckbox?.checkState == .checked &&
+            .startWithValues { _, _ in
+                if self.eulaCheckbox?.checkState == .checked &&
                     self.privacyPolicyCheckbox?.checkState == .checked {
                     self.agreeButton?.isEnabled = true
                 } else {
@@ -296,26 +256,13 @@ final class LegalViewController: UIViewController {
         return button
     }
 
-    @objc func viewDisclaimer() {
-        AnalyticsEvent.disclaimerViewed.track(customAttributes: [
-            "device_id": UIDevice.current.identifierForVendor!.uuidString,
-            "date": dateString
-        ])
-
-        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
-//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-disclaimer")!, useForLegalPurposes: true, agreement: .disclaimer)
-        vc.delegate = self
-        present(vc, animated: true)
-    }
-
     @objc func viewEula() {
         AnalyticsEvent.eulaViewed.track(customAttributes: [
             "device_id": UIDevice.current.identifierForVendor!.uuidString,
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
-//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-end-user-license-agreement")!, useForLegalPurposes: true, agreement: .eula)
+        let vc = WebViewController(url: URL(string: "http://nanowalletcompany.com/ios_eula")!, useForLegalPurposes: true, agreement: .eula)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -326,8 +273,7 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "https://nano.org/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
-//        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+        let vc = WebViewController(url: URL(string: "http://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -375,11 +321,6 @@ extension LegalViewController: WebViewControllerDelegate {
 
     func didDismissWithAcceptance(agreement: Agreement) {
         switch agreement {
-        case .disclaimer:
-            if self.disclaimerCheckbox?.checkState == .unchecked {
-                self.disclaimerCheckbox?.toggleAgreement()
-            }
-
         case .eula:
             if self.eulaCheckbox?.checkState == .unchecked {
                 self.eulaCheckbox?.toggleAgreement()

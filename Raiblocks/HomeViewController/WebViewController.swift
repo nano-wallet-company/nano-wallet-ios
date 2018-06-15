@@ -17,7 +17,7 @@ protocol WebViewControllerDelegate: class {
 }
 
 enum Agreement {
-    case disclaimer, eula, privacyPolicy
+    case eula, privacyPolicy
 }
 
 // TODO: Subclass

@@ -108,7 +108,7 @@ class WelcomeViewController: UIViewController {
         versionLabel.text =
         """
         Nano Wallet Company, LLC.
-        v \(version) (\(build))
+        v\(version) (\(build))
         """
         view.addSubview(versionLabel)
         constrain(versionLabel) {
