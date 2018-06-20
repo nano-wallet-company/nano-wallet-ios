@@ -383,22 +383,9 @@ extension HomeViewController: UITableViewDelegate {
         self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)
     }
 
+    // TODO: clean this up
     private func showAnalyticsAlert() {
-        let ac = UIAlertController(title: "Analytics Opt-In", message: """
-        Nano Wallet Company LLC ('we' or 'us') would like to collect your device ID, as well as usage metrics and error and crash reports relating to your use of this Nano Wallet mobile application (the 'Wallet'), in order to help us understand how users are using the Wallet and where errors might occur in the Wallet, and to use this data to help us maintain, develop and improve the Wallet and our products and services.
-
-        No data about your name, contact information, funds, Nano tokens, Wallet Seed or private keys are ever collected through the Wallet. You can see exactly what types of data we collect through the Wallet by viewing our Privacy Policy.
-
-        Do you consent to our collection and use of this data for these purposes? (Your consent is not a prerequisite for using the Wallet and, if you consent, you will have the right to withdraw your consent at any time as described in the Privacy Policy.)
-        """, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "I Consent", style: .default) { _ in
-            self.viewModel.startAnalyticsService()
-        })
-        ac.addAction(UIAlertAction(title: "I Do Not Consent", style: .default) { _ in
-            self.viewModel.stopAnalyticsService()
-        })
-
-        present(ac, animated: true)
+        self.viewModel.startAnalyticsService()
     }
 
 }
