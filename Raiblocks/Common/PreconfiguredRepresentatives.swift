@@ -8,11 +8,7 @@
 
 /// These are a list of representatives that serve as a default for new accounts. These will be expanded later to more nodes/addresses
 let preconfiguredRepresentatives = [
-    "xrb_1q3hqecaw15cjt7thbtxu3pbzr1eihtzzpzxguoc37bj1wc5ffoh7w74gi6p",
-    "xrb_3crzecs58y9gd1ucqcfcdsh56ywty5ixzqk41oa5d3i1ggm4bd6c9q5u34m3",
     "xrb_1w77aapnijnm5mo16r3xtpqu7n459r61fqpcdt3kxfmz8gtqgzbozswxmduy",
-    "xrb_1n4dtjocgft8aexcr5ftiibu9f47g3j13ay8yzx35qk3qe6sfdq16nsnu5h3",
-    "xrb_3ju9wdb8zpzdn3bnhz6ypm5sipccok9urqif9kdyweimj9c9zyi54ceos1qu",
     "xrb_1nanode8ngaakzbck8smq6ru9bethqwyehomf79sae1k7xd47dkidjqzffeg",
     "xrb_1w77aapnijnm5mo16r3xtpqu7n459r61fqpcdt3kxfmz8gtqgzbozswxmduy",
     "xrb_1bkabdt3h7b5xr8it8886jybrprgqm4s4ntg65uz3y8izutpn5ri5bozhouo",
