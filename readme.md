@@ -26,7 +26,7 @@ contributor [code of conduct](CODE_OF_CONDUCT.md).
 
 | Link | Description |
 | :----- | :------ |
-[NanoWalletCompany.com](https://nanowalletco.com/) | Nano Wallet Company Homepage
+[NanoWalletCompany.com](https://nanowalletcompany.com/) | Nano Wallet Company Homepage
 [Nano.org](https://nano.org/) | Nano Homepage
 [@NanoWalletCo](https://twitter.com/nanowalletco) | Follow Nano on Twitter to stay up to date.
 [Releases](https://github.com/nano-wallet-company/nano-wallet-ios/releases) | Check out the releases and their changelogs.
