@@ -53,9 +53,12 @@ enum Endpoint {
         switch self {
         case let .accountBalance(address),
              let .accountBlockCount(address),
-             let .accountCheck(address),
-             let .accountInfo(address):
+             let .accountCheck(address):
             dict["account"] = address.longAddress
+
+        case let .accountInfo(address):
+            dict["account"] = address.longAddress
+            dict["representative"] = true
 
         case let .accountSubscribe(uuid, address):
             if let uuid = uuid {

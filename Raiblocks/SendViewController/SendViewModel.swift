@@ -187,7 +187,7 @@ final class SendViewModel {
     private func handle(accountInfo: AccountInfo) {
         self.accountInfo = accountInfo
         self.previousFrontierHash = accountInfo.frontier
-        self.representative = accountInfo.representative
+        self.representative = accountInfo.representativeAddress
 
         // Get head block
         sendSocket.send(endpoint: .getBlock(withHash: accountInfo.frontier))
