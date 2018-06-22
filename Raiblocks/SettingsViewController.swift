@@ -246,11 +246,11 @@ final class SettingsViewController: UIViewController {
     }
 
     @objc func viewEula() {
-        self.present(WebViewController(url: URL(string: "http://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: false), animated: true)
+        self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: false), animated: true)
     }
 
     @objc func viewPrivacyPolicy() {
-        self.present(WebViewController(url: URL(string: "http://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
+        self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
     }
 
     @objc func viewOnExplorer(_ sender: UIButton) {
