@@ -35,7 +35,7 @@ class SeedScanViewController: UIViewController {
         }
         self.scannerCameraView = scannerCameraView
 
-        scannerCameraView.label?.text = "Scan a Nano Wallet Seed QR code to import an existing wallet."
+        scannerCameraView.label?.text = "Scan a Nano Wallet Seed QR code to import an existing wallet.".localized()
 
         scanSeed()
     }
@@ -65,9 +65,9 @@ class SeedScanViewController: UIViewController {
         scannerCameraView?.qrCodeProducer()
             .startWithValues {
                 if let _ = Address($0) {
-                    let alertController = UIAlertController(title: "Address Scanned", message: "You scanned a Nano address (xrb_...) instead of a Wallet Seed (64 character hexadecimal number).\n\nScan your Wallet Seed or press Cancel to type it in.", preferredStyle: .actionSheet)
-                    alertController.addAction(UIAlertAction(title: "Scan Again", style: .default))
-                    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                    let alertController = UIAlertController(title: "Address Scanned".localized(), message: "You scanned a Nano address (xrb_...) instead of a Wallet Seed (64 character hexadecimal number).\n\nScan your Wallet Seed or press Cancel to type it in.".localized(), preferredStyle: .actionSheet)
+                    alertController.addAction(UIAlertAction(title: "Scan Again".localized(), style: .default))
+                    alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { _ in
                         self.delegate?.seedScanDidCancel()
                     })
 

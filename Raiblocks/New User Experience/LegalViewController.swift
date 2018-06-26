@@ -62,7 +62,7 @@ final class LegalViewController: UIViewController {
 
         let disagreeButton = NanoButton(withType: .grey)
         disagreeButton.addTarget(self, action: #selector(disagreeToLegal), for: .touchUpInside)
-        disagreeButton.setAttributedTitle("Disagree")
+        disagreeButton.setAttributedTitle("Disagree".localized())
         view.addSubview(disagreeButton)
         constrain(disagreeButton) {
             $0.bottom == $0.superview!.bottom - (isiPhoneSE() ? CGFloat(17) : CGFloat(34))
@@ -73,7 +73,7 @@ final class LegalViewController: UIViewController {
 
         let agreeButton = NanoButton(withType: .lightBlue)
         agreeButton.addTarget(self, action: #selector(agreeToLegal), for: .touchUpInside)
-        agreeButton.setAttributedTitle("Agree")
+        agreeButton.setAttributedTitle("Agree".localized())
         agreeButton.isEnabled = false
         view.addSubview(agreeButton)
         constrain(agreeButton, disagreeButton) {
@@ -85,7 +85,7 @@ final class LegalViewController: UIViewController {
         self.agreeButton = agreeButton
 
         let viewTitle = UILabel()
-        viewTitle.text = "Terms and Conditions"
+        viewTitle.text = "Terms and Conditions".localized()
         viewTitle.font = Styleguide.Fonts.nunitoRegular.font(ofSize: 24)
         viewTitle.underline()
         view.addSubview(viewTitle)
@@ -108,9 +108,8 @@ final class LegalViewController: UIViewController {
             viewCopy.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         }
         viewCopy.lineBreakMode = .byWordWrapping
-        viewCopy.text = """
-        Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the "Terms and Conditions"). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping "I Agree," you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device.
-        """
+        viewCopy.text = "Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the \"Terms and Conditions\"). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping \"I Agree,\" you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device.".localized()
+
         view.addSubview(viewCopy)
         constrain(viewCopy, viewTitle, agreeButton) {
             if isiPhoneSE() {
@@ -139,7 +138,7 @@ final class LegalViewController: UIViewController {
         self.eulaCheckbox = eulaCheckbox
 
         let eula = createUnderlinedButton()
-        eula.setTitle("End User License Agreement", for: .normal)
+        eula.setTitle("End User License Agreement".localized(), for: .normal)
         eula.addTarget(self, action: #selector(viewEula), for: .touchUpInside)
         eula.underline()
         view.addSubview(eula)
@@ -159,7 +158,7 @@ final class LegalViewController: UIViewController {
         self.privacyPolicyCheckbox = privacyPolicyCheckbox
 
         let privacyPolicy = createUnderlinedButton()
-        privacyPolicy.setTitle("Privacy Policy", for: .normal)
+        privacyPolicy.setTitle("Privacy Policy".localized(), for: .normal)
         privacyPolicy.addTarget(self, action: #selector(viewPrivacyPolicy), for: .touchUpInside)
         privacyPolicy.underline()
         view.addSubview(privacyPolicy)
@@ -280,11 +279,11 @@ final class LegalViewController: UIViewController {
 
     @objc func disagreeToLegal() {
         if useForLoggedInState {
-            let ac = UIAlertController(title: "Log Out Warning", message: "Not agreeing will result in logging out of the app.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Log Me Out", style: .destructive) { _ in
+            let ac = UIAlertController(title: "Log Out Warning".localized(), message: "Not agreeing will result in logging out of the app.".localized(), preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Log Me Out".localized(), style: .destructive) { _ in
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LogOut"), object: nil)
             })
-            ac.addAction(UIAlertAction(title: "Cancel", style: .default))
+            ac.addAction(UIAlertAction(title: "Cancel".localized(), style: .default))
 
             present(ac, animated: true)
         } else {

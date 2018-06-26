@@ -27,7 +27,7 @@ final class SendReceiveHeaderView: UIView {
         let title = UILabel()
         title.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 18)
         title.textColor = type == .receive ? Styleguide.Colors.darkBlue.color : .white
-        title.attributedText = NSAttributedString(string: type.rawValue.uppercased(), attributes: [.kern: 3.0])
+        title.attributedText = NSAttributedString(string: type.description.uppercased(), attributes: [.kern: 3.0])
         addSubview(title)
         constrain(title, image) {
             $0.centerY == $0.superview!.centerY + CGFloat(3)

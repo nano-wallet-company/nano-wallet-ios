@@ -179,8 +179,8 @@ class ScannerViewContoller: UIViewController {
     }
 
     func showNoCameraAlert() {
-        let ac = UIAlertController(title: "Uh oh!", message: "It looks like your phone is missing a camera. Scanning isn't supported on phones without cameras.", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Okay", style: .default))
+        let ac = UIAlertController(title: "Uh oh!".localized(), message: "It looks like your phone is missing a camera. Scanning isn't supported on phones without cameras.".localized(), preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
         present(ac, animated: true)
 
         captureSession = nil
@@ -189,11 +189,11 @@ class ScannerViewContoller: UIViewController {
     func checkDeviceAuthorizationStatus() {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             if !granted {
-                let ac = UIAlertController(title: "Uh oh!", message: "Nano Wallet doesn't have permission to use the camera.\n\nPlease turn on camera settings under Nano Wallet preferences.", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Take Me to Settings", style: .default) { _ in
+                let ac = UIAlertController(title: "Uh oh!".localized(), message: "Nano Wallet doesn't have permission to use the camera.\n\nPlease turn on camera settings under Nano Wallet preferences.".localized(), preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Take Me to Settings".localized(), style: .default) { _ in
                     UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
                 })
-                ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                ac.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
 
                 self.present(ac, animated: true)
             }

@@ -4,6 +4,17 @@
 
 enum TransactionType: String, Codable {
     case open, send, receive, change, state
+    
+    var description: String {
+        switch self {
+        case .send:
+            return "send".localized()
+        case .receive:
+            return "receive".localized()
+        default:
+            return self.rawValue
+        }
+    }
 }
 
 enum NanoTransaction: Equatable {

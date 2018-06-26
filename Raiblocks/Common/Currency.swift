@@ -124,45 +124,45 @@ enum Currency: String {
 
     var name: String {
         switch self {
-        case .aud: return "Australian Dollar"
-        case .btc: return "Bitcoin"
-        case .brl: return "Brazilian Real"
-        case .cad: return "Canadian Dollar"
-        case .chf: return "Swiss Franc"
-        case .clp: return "Chilean Peso"
-        case .cny: return "Chinese Yuan"
-        case .czk: return "Czech Koruna"
-        case .dkk: return "Danish Krone"
-        case .eur: return "Euro"
-        case .gbp: return "Great British Pound"
-        case .hkd: return "Hong Kong Dollar"
-        case .huf: return "Hungarian Forint"
-        case .idr: return "Indonesian Rupiah"
-        case .ils: return "Israeli Shekel"
-        case .inr: return "Indian Rupee"
-        case .jpy: return "Japanese Yen"
-        case .krw: return "South Korean Won"
-        case .mxn: return "Mexican Peso"
-        case .myr: return "Malaysian Ringgit"
-        case .nok: return "Norwegian Krone"
-        case .nzd: return "New Zealand Dollar"
-        case .php: return "Philippine Peso"
-        case .pkr: return "Pakistani Rupee"
-        case .pln: return "Polish Zloty"
-        case .rub: return "Russian Ruble"
-        case .sek: return "Swedish Krona"
-        case .sgd: return "Singapore Dollar"
-        case .thb: return "Thai Baht"
-        case ._try: return "Turkish Lira"
-        case .twd: return "Taiwan New Dollar"
-        case .zar: return "South African Rand"
-        case .usd: return "US Dollar"
+        case .aud: return "Australian Dollar".localized()
+        case .btc: return "Bitcoin".localized()
+        case .brl: return "Brazilian Real".localized()
+        case .cad: return "Canadian Dollar".localized()
+        case .chf: return "Swiss Franc".localized()
+        case .clp: return "Chilean Peso".localized()
+        case .cny: return "Chinese Yuan".localized()
+        case .czk: return "Czech Koruna".localized()
+        case .dkk: return "Danish Krone".localized()
+        case .eur: return "Euro".localized()
+        case .gbp: return "Great British Pound".localized()
+        case .hkd: return "Hong Kong Dollar".localized()
+        case .huf: return "Hungarian Forint".localized()
+        case .idr: return "Indonesian Rupiah".localized()
+        case .ils: return "Israeli Shekel".localized()
+        case .inr: return "Indian Rupee".localized()
+        case .jpy: return "Japanese Yen".localized()
+        case .krw: return "South Korean Won".localized()
+        case .mxn: return "Mexican Peso".localized()
+        case .myr: return "Malaysian Ringgit".localized()
+        case .nok: return "Norwegian Krone".localized()
+        case .nzd: return "New Zealand Dollar".localized()
+        case .php: return "Philippine Peso".localized()
+        case .pkr: return "Pakistani Rupee".localized()
+        case .pln: return "Polish Zloty".localized()
+        case .rub: return "Russian Ruble".localized()
+        case .sek: return "Swedish Krona".localized()
+        case .sgd: return "Singapore Dollar".localized()
+        case .thb: return "Thai Baht".localized()
+        case ._try: return "Turkish Lira".localized()
+        case .twd: return "Taiwan New Dollar".localized()
+        case .zar: return "South African Rand".localized()
+        case .usd: return "US Dollar".localized()
         }
     }
 
     var nameWithMark: String {
         switch self {
-        case .btc: return "Bitcoin"
+        case .btc: return "Bitcoin".localized()
         default: return mark + " " + name
         }
     }

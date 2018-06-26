@@ -1,0 +1,227 @@
+/* 
+  Localizable.strings
+  Raiblocks
+
+  Created by Aplicativos Legais on 25/06/2018.
+  Copyright © 2018 Zack Shapiro. All rights reserved.
+ 
+  Brazilian Portuguese
+*/
+
+
+//General
+"Okay" = "OK";
+"Uh Oh" = "Ops";
+"Cancel" = "Cancelar";
+"Back" = "Voltar";
+"Dismiss" = "Dispensar";
+"Done" = "Pronto";
+"Copy Address" = "Copiar Endereço";
+"Log Out" = "Sair";
+
+"Privacy Policy" = "Política de Privacidade";
+
+"Camera Permissions Required" = "Permissão da câmera necessária";
+"Please enable Camera permissions in iOS Settings" = "Por favor, habilite a permissão da câmera nos Ajustes do iOS";
+
+"Error" = "Erro";
+"There was a problem" = "Existe um problema";
+"Please try again." = "Por favor, tente novamente";
+
+
+//WelcomeViewController
+"Welcome to Nano Wallet" = "Bem-Vindo a Nano Wallet";
+"Create a new Wallet" = "Criar uma nova carteira";
+"Enter existing Wallet Seed" = "Inserir uma Seed existente";
+"(Tap to type or paste Wallet Seed)" = "(Toque para digitar ou cole uma Seed)";
+
+"Welcome!" = "Bem-Vindo!";
+"Thank you for using the Nano Wallet for iOS!" = "Obrigado por usar a Nano Wallet para iOS!";
+
+"There was a problem with your Wallet Seed" = "Existe um problema com a sua Wallet Seed";
+"There was a problem importing your Wallet Seed. Please double check it and try again or contact Nano's support channel." = "Ocorreu um problema ao importar sua Wallet Seed. Por favor, verifique e tente novamente ou entre em contato com o canal de suporte da Nano.";
+
+"It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again." = "Parece que você inseriu um Endereço Nano em vez de uma Wallet Seed.\n\nInsira sua Wallet Seed para tentar novamente.";
+
+"There was a problem with the Wallet Seed you pasted.\n\nPlease make sure it's 64 characters, only using 0-9 and A-F." = "Houve um problema com a Wallet Seed que você colou.\n\nPor favor, certifique-se que contém 64 caracteres, usando apenas 0-9 e A-F.";
+
+"Something went wrong scanning your Wallet Seed. Please try again." = "Algo errado ocorreu ao escanear a sua Wallet Seed. Por favor, tente novamente.";
+
+
+//SeedScanViewController
+"Scan a Nano Wallet Seed QR code to import an existing wallet." = "Escaneie um QR code com uma Wallet Seed para importar uma carteira existente";
+
+"Address Scanned" = "Endereço escaneado";
+"You scanned a Nano address (xrb_...) instead of a Wallet Seed (64 character hexadecimal number).\n\nScan your Wallet Seed or press Cancel to type it in." = "Você escaneou o endereço Nano (xrb _...) em vez de um Wallet Seed (número hexadecimal de 64 caracteres).\n\nEscaneie sua Wallet Seed ou pressione cancelar para digitá-la.";
+"Scan Again" = "Escanear novamente";
+
+
+//SeedConfirmationViewController
+"Your Nano Wallet Seed" = "Sua Wallet Seed";
+"I Understand, Continue" = "Eu entendi, continue";
+"Tap to copy" = "Toque para copiar";
+"Your Nano Wallet Seed is a unique code that enables you to access your wallet on the Nano network.\n\nIt is the only way for you to recover your wallet and access any Nano currency you may have." = "Sua Wallet Seed é um código único que permite você acessar sua carteira na rede Nano.\n\nÉ a única maneira de recuperar sua carteira e acessar as moedas Nano que você possa ter.";
+"We do not have access to it and cannot recover your Wallet Seed or any funds in your wallet without your Wallet Seed." = "Nós não temos acesso a ela e não podemos recuperar sua Wallet Seed ou quaisquer fundos em sua carteira sem sua Wallet Seed.";
+"You are solely responsible for recording your Wallet Seed in a safe and secure place and manner." = "Você é o único responsável por registrar sua Wallet Seed em um local seguro e protegido.";
+"Never share your Wallet Seed with anyone." = "Nunca compartilhe sua Wallet Seed com ninguém.";
+
+"Wallet Seed Copied" = "Wallet Seed copiada";
+"Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like password management software or print it out and put it in a safe." = "Sua Wallet Seed pode ser colada em 2 minutos.\nDepois, você pode acessá-la nos Ajustes.\n\nPor favor, faça o backup da sua Wallet Seed em algum lugar seguro, como um software de gerenciamento de senhas, ou imprima-o e coloque-o em um cofre.";
+
+"Welcome to Nano Wallet!" = "Bem-vindo a Nano Wallet!";
+"Please confirm you have properly stored your Wallet Seed somewhere safe." = "Por favor, confirme que você armazenou adequadamente sua Wallet Seed em algum lugar seguro.";
+
+"I have backed up my Wallet Seed" = "Fiz um backup da minha Wallet Seed";
+
+
+//LegalViewController
+"Disagree" = "Discordo";
+"Agree" = "Concordo";
+"Terms and Conditions" = "Termos e Condições";
+
+"Your use of this Nano Wallet mobile application is subject to your agreement to all terms and conditions of the End User License Agreement and Privacy Policy linked below (collectively, the \"Terms and Conditions\"). Please tap the links below and read all Terms and Conditions carefully. By checking the boxes below and tapping \"I Agree,\" you acknowledge that you have read, understand and agree to all of the Terms and Conditions, which are binding legal agreements. If you do not understand or agree to any of the Terms and Conditions, you are not licensed or authorized to use this application and should delete it from your device." = "O uso deste aplicativo (Nano Wallet), está sujeito à sua concordância com todos os termos e condições do End User License Agreement e da Política de Privacidade relacionados abaixo (coletivamente, os \"Termos e Condições\"). Por favor, toque nos links abaixo e leia todos os Termos e Condições cuidadosamente. Ao marcar as caixas abaixo e tocar em \"Eu aceito,\" você reconhece que leu, entendeu e concordou com todos os Termos e Condições, que são acordos legais vinculantes. Se você não entende ou concorda com qualquer um dos Termos e Condições, você não está licenciado ou autorizado a usar este aplicativo e deve excluí-lo do seu dispositivo.";
+
+"End User License Agreement" = "End User License Agreement";
+
+"Log Out Warning" = "Aviso de uso";
+"Not agreeing will result in logging out of the app." = "Se não concorda não poderá usar o aplicativo.";
+"Log Me Out" = "Sair";
+
+
+//HomeViewController
+"You are offline" = "Você está offline";
+"Nano Wallet is having trouble connecting to the network right now.\n\nPlease try again." = "Nano Wallet está com problemas para se conectar com a rede agora.\n\nPor favor, tente novamente.";
+"View Account on Nanode" = "Ver conta em Nanode";
+
+"Send Nano to Address" = "Enviar Nano para Endereço";
+"View Transaction on Explorer" = "Ver Transação no Explorer";
+
+"Address Copied" = "Endereço Copiado";
+"%@ was copied." = "%@ foi copiado.";
+
+
+//WebViewController
+"I Accept" = "Eu aceito";
+"Could not load url" = "Não foi possível carregar a URL";
+
+
+//ReceiveViewController
+"Scan the QR code\nto receive NANO" = "Escaneie o QR code\npara receber NANO";
+"NANO Address" = "Endereço NANO";
+
+"Your Nano Address Has Been Copied" = "Seu Endereço Nano foi copiado";
+"Share it with a friend to receive Nano!" = "Compartilhe com um amigo para receber o Nano!";
+
+
+//SettingsViewController
+"Settings" = "Ajustes";
+
+"Show My Local Currency" = "Mostrar minha moeda local";
+"Select Local Currency" = "Selecionar moeda local";
+"Copy My Wallet Seed" = "Copiar minha Wallet Seed";
+"View Account on Explorer" = "Ver conta no Explorer";
+
+"Read the" = "Leia o";
+"EULA" = "EULA";
+"and" = "e";
+
+"Verify your identity to view your wallet seed." = "Verifique sua identidade para ver sua Wallet Seed";
+"Authentication failed" = "Falha na autenticação";
+
+"⚠️ Here is your Wallet Seed, be careful. ⚠️" = "⚠️ Aqui está sua Wallet Seed, tenha cuidado. ⚠️";
+"Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances." = "Toque no botão abaixo para copiar sua Seed para colar depois. A Seed pode ser colada por 2 minutos e depois expira.\n\nSugerimos que você copie para um aplicativo como um software de gerenciamento de senhas ou imprima a Wallet Seed e oculte-o em algum lugar seguro.\n\nNunca compartilhe sua seed com ninguém, sob quaisquer circunstâncias.";
+"Copy Seed" = "Copiar Seed";
+
+"Touch ID not available" = "Touch ID não disponível";
+"Your device is not configured for Touch ID." = "Seu dispositivo não está configurado para Touch ID.";
+
+"Are you sure you want to log out?" = "Você tem certeza que gostaria de sair?";
+"Logging out will remove your Wallet Seed, keys and all of your Nano-related data from this device." = "Ao sair, sua Wallet Seed, chaves e todos os seus dados relacionados a Nano neste dispositivo, serão removidos.";
+
+
+//SendViewController
+"Send To" = "Enviar para";
+
+"Enter a Nano Address" = "Insira um Endereço Nano";
+"MAX" = "MÁX";
+"SEND" = "ENVIAR";
+
+"Error Generating Work" = "Erro ao gerar a prova de trabalho";
+"There was a problem creating work for your transaction." = "Houve um problema ao criar a prova de trabalho para sua transação.";
+
+"Error Getting Nano Price" = "Erro ao obter o preço da Nano";
+
+"Amount Too Large" = "Quantia muito grande";
+"The amount you entered was larger than your Nano balance.\n\nWe've filled the form with your full balance." = "A quantia que você inseriu foi maior que seu saldo Nano.\n\nNós preenchemos o formulário com o saldo total.";
+
+"Address Problem" = "Problema com o endereço";
+"There was a problem getting the address for your transaction. Please try again." = "Houve um problema ao obter o endereço da sua transação. Por favor, tente novamente.";
+
+"Something went wrong." = "Algo deu errado.";
+"There was a problem sending Nano. Please try again." = "Houve um problema ao enviar o Nano. Por favor, tente novamente.";
+
+"Send %@ Nano?" = "Enviar %@ Nano?";
+
+"Too Many Tries" = "Muitas tentativas";
+"There were too many failed attempts. Please try your passcode." = "Muitas tentativas sem sucesso. Por favor, tente sua senha.";
+
+"FaceID/TouchID are not available on your device." = "FaceID/TouchID não está disponível para seu dispositivo.";
+"Please add your face for FaceID or a fingerprint for TouchID." = "Por favor, adicione o seu rosto para o Face ID ou uma impressão digital para Touch ID.";
+
+"Passcode Not Set" = "Senha não configurada";
+"Please set a passcode for your phone to send Nano (and for security reasons, in general)." = "Por favor, defina uma senha para o seu telefone para enviar o Nano (e por razões de segurança, em geral).";
+
+"Authentication Not Available" = "Autenticação não disponível";
+"Please set your iOS device up with a password, TouchID, or FaceID." = "Por favor, configure seu dispositivo iOS com uma senha, TouchID ou FaceID.";
+
+
+//CodeScanViewController
+"Scan a Nano address QR code" = "Escanear um QR code com um endereço Nano";
+
+
+//ScannerViewContoller
+"It looks like your phone is missing a camera. Scanning isn't supported on phones without cameras." = "Parece que o seu dispositivo não possui uma camera. Não é possível escanear em dispositivos sem câmeras.";
+
+"Nano Wallet doesn't have permission to use the camera.\n\nPlease turn on camera settings under Nano Wallet preferences." = "Nano Wallet não tem permissão para usar a câmera.\n\nPor favor, ative a câmera nas preferências da Nano Wallet nos Ajustes.";
+"Take Me to Settings" = "Ir para os Ajustes";
+
+
+//TransactionType:
+"send" = "enviar";
+"receive" = "receber";
+
+
+//Currency
+"Australian Dollar" = "Dólar australiano";
+"Bitcoin" = "Bitcoin";
+"Brazilian Real" = "Real brasileiro";
+"Canadian Dollar" = "Dólar canadense";
+"Swiss Franc" = "Franco Suíço";
+"Chilean Peso" = "Peso Chileno";
+"Chinese Yuan" = "Yuan Chinês";
+"Czech Koruna" = "Coroa checa";
+"Danish Krone" = "Coroa dinamarquesa";
+"Euro" = "Euro";
+"Great British Pound" = "Libra esterlina";
+"Hong Kong Dollar" = "Dólar de Hong Kong";
+"Hungarian Forint" = "Florim húngaro";
+"Indonesian Rupiah" = "Rupia indonésia";
+"Israeli Shekel" = "Novo shekel israelense";
+"Indian Rupee" = "Rupia indiana";
+"Japanese Yen" = "Iene";
+"South Korean Won" = "Won sul-coreano";
+"Mexican Peso" = "Peso mexicano";
+"Malaysian Ringgit" = "Ringgit malaio";
+"Norwegian Krone" = "Coroa norueguesa";
+"New Zealand Dollar" = "Dólar neozelandês";
+"Philippine Peso" = "Peso filipino";
+"Pakistani Rupee" = "Rupia paquistanesa";
+"Polish Zloty" = "Zloty polaco";
+"Russian Ruble" = "Rublo russo";
+"Swedish Krona" = "Coroa sueca";
+"Singapore Dollar" = "Dólar de Singapura";
+"Thai Baht" = "Baht tailandês";
+"Turkish Lira" = "Lira turca";
+"Taiwan New Dollar" = "Novo dólar de Taiwan";
+"South African Rand" = "Rand sul-africano";
+"US Dollar" = "Dólar americano";

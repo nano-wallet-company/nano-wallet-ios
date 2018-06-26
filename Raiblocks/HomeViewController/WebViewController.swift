@@ -70,7 +70,7 @@ class WebViewController: UIViewController {
 
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
 
-        let closeButtonTitle = useForLegal ? "Cancel" : "Done"
+        let closeButtonTitle = useForLegal ? "Cancel".localized() : "Done".localized()
         let closeButton = UIBarButtonItem(title: closeButtonTitle, style: .done, target: self, action: #selector(closeWebview))
         closeButton.tintColor = Styleguide.Colors.darkBlue.color
 
@@ -97,7 +97,7 @@ class WebViewController: UIViewController {
 
         if useForLegal {
             let acceptButton = NanoButton(withType: .lightBlueSend)
-            acceptButton.setAttributedTitle("I Accept")
+            acceptButton.setAttributedTitle("I Accept".localized())
             acceptButton.addTarget(self, action: #selector(agreeToLegalAgreement), for: .touchUpInside)
             #if DEBUG
             acceptButton.isEnabled = true
@@ -179,8 +179,8 @@ extension WebViewController: WKNavigationDelegate {
     func webView(webView: WKWebView, navigation: WKNavigation, withError error: NSError) {
         progressBar?.setProgress(1, animated: true)
 
-        let alertController = UIAlertController(title: "Error", message: "Could not load url", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Okay", style: .cancel) { _ in self.closeWebview() }
+        let alertController = UIAlertController(title: "Error".localized(), message: "Could not load url".localized(), preferredStyle: .alert)
+        let action = UIAlertAction(title: "Okay".localized(), style: .cancel) { _ in self.closeWebview() }
         alertController.addAction(action)
 
         present(alertController, animated: true, completion: nil)

@@ -230,7 +230,7 @@ class HomeViewController: UIViewController {
 
     private func setupButton(withTransactionType type: TransactionType) -> NanoButton {
         let button = NanoButton(withType: .lightBlueSend)
-        button.setAttributedTitle(type.rawValue.uppercased())
+        button.setAttributedTitle(type.description.uppercased())
 
         return button
     }
@@ -256,18 +256,14 @@ class HomeViewController: UIViewController {
     }
 
     private func showAlertWhenOffline(endRefreshing: Bool = false) {
-        let ac = UIAlertController(title: "You are offline", message: """
-            Nano Wallet is having trouble connecting to the network right now.
-
-            Please try again.
-        """, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "View Account on Nanode", style: .default) { _ in
+        let ac = UIAlertController(title: "You are offline".localized(), message: "Nano Wallet is having trouble connecting to the network right now.\n\nPlease try again.".localized(), preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "View Account on Nanode".localized(), style: .default) { _ in
             guard let url = URL(string: "https://www.nanode.co/account/" + self.address.longAddress) else { return }
 
             self.present(WebViewController(url: url, useForLegalPurposes: false), animated: true, completion: nil)
 
         })
-        ac.addAction(UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+        ac.addAction(UIAlertAction(title: "Dismiss".localized(), style: .cancel) { _ in
             if endRefreshing {
                 self.refreshControl?.endRefreshing()
             }
@@ -354,22 +350,22 @@ extension HomeViewController: UITableViewDelegate {
 
     private func showExplorerAlert(forIndexPath indexPath: IndexPath) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Send Nano to Address", style: .default) { _ in
+        ac.addAction(UIAlertAction(title: "Send Nano to Address".localized(), style: .default) { _ in
             let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, toAddress: self.viewModel.transactions.value[indexPath.row].fromAddress))
             vc.delegate = self
 
             self.navigationController?.pushViewController(vc, animated: true)
         })
 
-        ac.addAction(UIAlertAction(title: "View Transaction on Explorer", style: .default) { _ in self.view(atIndexPath: indexPath) })
+        ac.addAction(UIAlertAction(title: "View Transaction on Explorer".localized(), style: .default) { _ in self.view(atIndexPath: indexPath) })
 
-        ac.addAction(UIAlertAction(title: "Copy Address", style: .default) { _ in
+        ac.addAction(UIAlertAction(title: "Copy Address".localized(), style: .default) { _ in
             if let address = self.viewModel.transactions.value[indexPath.row].fromAddress {
                 self.cellWasLongPressed(address: address)
             }
         })
 
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
 
         present(ac, animated: true, completion: nil)
     }
@@ -434,8 +430,9 @@ extension HomeViewController: TransactionTableViewCellDelegate {
     func cellWasLongPressed(address: Address) {
         UIPasteboard.general.string = address.longAddress
 
-        let ac = UIAlertController(title: "Address Copied", message: "\(address.longAddress) was copied.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Okay", style: .default))
+        
+        let ac = UIAlertController(title: "Address Copied".localized(), message: String.localizedStringWithFormat("%@ was copied.".localized(), address.longAddress), preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
 
         present(ac, animated: true)
     }

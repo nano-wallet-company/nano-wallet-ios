@@ -59,10 +59,7 @@ class ReceiveViewController: UIViewController {
         let scanLabel = UILabel()
         scanLabel.numberOfLines = 2
         scanLabel.textAlignment = .center
-        scanLabel.text = """
-        Scan the QR code
-        to receive NANO
-        """
+        scanLabel.text = "Scan the QR code\nto receive NANO".localized()
         scanLabel.lineBreakMode = .byWordWrapping
         scanLabel.font = Styleguide.Fonts.nunitoRegular.font(ofSize: 20)
         scanLabel.textColor = Styleguide.Colors.darkBlue.color
@@ -104,7 +101,7 @@ class ReceiveViewController: UIViewController {
 
         let copyButton = NanoButton(withType: .lightBlue)
         copyButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
-        copyButton.setAttributedTitle("Copy Address".uppercased())
+        copyButton.setAttributedTitle("Copy Address".localized().uppercased())
         view.addSubview(copyButton)
         constrain(copyButton) {
             $0.height == CGFloat(55)
@@ -148,7 +145,7 @@ class ReceiveViewController: UIViewController {
         }
 
         let nanoAddressLabel = UILabel()
-        nanoAddressLabel.attributedText = NSAttributedString(string: "NANO Address".uppercased(), attributes: [.kern: 5.0])
+        nanoAddressLabel.attributedText = NSAttributedString(string: "NANO Address".localized().uppercased(), attributes: [.kern: 5.0])
         nanoAddressLabel.textColor = Styleguide.Colors.darkBlue.color
         nanoAddressLabel.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 16)
         view.addSubview(nanoAddressLabel)
@@ -172,8 +169,8 @@ class ReceiveViewController: UIViewController {
 
         UIPasteboard.general.string = viewModel.address.longAddress
 
-        let ac = UIAlertController(title: "Your Nano Address Has Been Copied", message: "Share it with a friend to receive Nano!", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Done", style: .default))
+        let ac = UIAlertController(title: "Your Nano Address Has Been Copied".localized(), message: "Share it with a friend to receive Nano!".localized(), preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Done".localized(), style: .default))
 
         present(ac, animated: true, completion: nil)
     }

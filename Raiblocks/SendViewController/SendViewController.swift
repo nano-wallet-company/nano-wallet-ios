@@ -99,13 +99,13 @@ final class SendViewController: UIViewController {
         ]
 
         self.navigationItem.titleView = SendReceiveHeaderView(withType: .send)
-        self.navigationItem.title = "Send To".uppercased()
+        self.navigationItem.title = "Send To".localized().uppercased()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera"), style: .plain, target: self, action: #selector(openCamera))
 
         let addressTextView = SendAddressTextView()
         addressTextView.delegate = self
         addressTextView.inputAccessoryView = keyboardAccessoryView()
-        addressTextView.placeholder = "Enter a Nano Address"
+        addressTextView.placeholder = "Enter a Nano Address".localized()
         if let toAddress = viewModel.toAddress {
             addressTextView.togglePlaceholder(show: false)
             addressTextView.attributedText = addAttributes(forAttributedText: toAddress.longAddressWithColor)
@@ -149,7 +149,7 @@ final class SendViewController: UIViewController {
         maxButton.clipsToBounds = true
         maxButton.setBackgroundColor(color: UIColor.white.withAlphaComponent(0.2), forState: .normal)
         maxButton.setBackgroundColor(color: UIColor.white.withAlphaComponent(0.3), forState: .highlighted)
-        let title = NSMutableAttributedString(string: "MAX")
+        let title = NSMutableAttributedString(string: "MAX".localized())
         title.addAttribute(.kern, value: 3.0, range: NSMakeRange(0, title.length))
         title.addAttribute(.foregroundColor, value: UIColor.white, range: NSMakeRange(0, title.length))
         maxButton.titleLabel?.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
@@ -204,7 +204,7 @@ final class SendViewController: UIViewController {
         }
 
         let sendButton = NanoButton(withType: .lightBlueSend)
-        sendButton.setAttributedTitle("SEND")
+        sendButton.setAttributedTitle("SEND".localized())
         sendButton.addTarget(self, action: #selector(sendNano), for: .touchUpInside)
         sendButton.isEnabled = false
         bottomSection.addSubview(sendButton)
@@ -235,8 +235,8 @@ final class SendViewController: UIViewController {
         viewModel.sendSocket.send(endpoint: .accountInfo(address: viewModel.address))
 
         viewModel.workErrorClosure = { [weak self] in
-            let ac = UIAlertController(title: "Error Generating Work", message: "There was a problem creating work for your transaction.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+            let ac = UIAlertController(title: "Error Generating Work".localized(), message: "There was a problem creating work for your transaction.".localized(), preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default) { _ in
                 self?.delegate?.didFinishWithViewController()
             })
 
@@ -323,7 +323,7 @@ final class SendViewController: UIViewController {
 
             guard let updatedText = textField.text else {
                 AnalyticsEvent.errorUnwrappingLocalCurrencyText.track(customAttributes: ["text": textField.text ?? ""])
-                textField.text = "There was a problem"
+                textField.text = "There was a problem".localized()
 
                 return
             }
@@ -344,7 +344,7 @@ final class SendViewController: UIViewController {
             // Code for converstion to Nano amount
             let lastTradePrice = NSDecimalNumber(value: strongSelf.viewModel.priceService.lastNanoLocalCurrencyPrice.value)
             guard lastTradePrice.compare(0) == .orderedDescending else {
-                strongSelf.nanoTextField?.text = "Error Getting Nano Price"
+                strongSelf.nanoTextField?.text = "Error Getting Nano Price".localized()
                 strongSelf.sendableAmountIsValid.value = false
 
                 // TODO: make this more apparent to the user with online/offline UI states
@@ -429,8 +429,8 @@ final class SendViewController: UIViewController {
         if showAlert {
             self.viewModel.maxAmountInUse = true
 
-            let ac = UIAlertController(title: "Amount Too Large", message: "The amount you entered was larger than your Nano balance.\n\nWe've filled the form with your full balance.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+            let ac = UIAlertController(title: "Amount Too Large".localized(), message: "The amount you entered was larger than your Nano balance.\n\nWe've filled the form with your full balance.".localized(), preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default, handler: nil))
             self.present(ac, animated: true, completion: nil)
         }
     }
@@ -448,8 +448,8 @@ final class SendViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    let ac = UIAlertController(title: "Camera Permissions Required", message: "Please enable Camera permissions in iOS Settings", preferredStyle: .actionSheet)
-                    ac.addAction(UIAlertAction(title: "Okay", style: .default))
+                    let ac = UIAlertController(title: "Camera Permissions Required".localized(), message: "Please enable Camera permissions in iOS Settings".localized(), preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
 
                     self.present(ac, animated: true, completion: nil)
                 }
@@ -464,8 +464,8 @@ final class SendViewController: UIViewController {
         guard let textView = addressTextView, let address = Address(textView.attributedText.string), let representative = viewModel.representative else {
             AnalyticsEvent.sendAddressFetchFailed.track()
 
-            let ac = UIAlertController(title: "Address Problem", message: "There was a problem getting the address for your transaction. Please try again.", preferredStyle: .actionSheet)
-            ac.addAction(UIAlertAction(title: "Okay", style: .default) { _ in
+            let ac = UIAlertController(title: "Address Problem".localized(), message: "There was a problem getting the address for your transaction. Please try again.".localized(), preferredStyle: .actionSheet)
+            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default) { _ in
                 self.delegate?.didFinishWithViewController()
             })
 
@@ -508,7 +508,7 @@ final class SendViewController: UIViewController {
 
     private func authenticateAndSend(endpoint: Endpoint, amountYoullSend: NSDecimalNumber) {
         guard let amount = amountYoullSend.rawAsLongerUsableString else {
-            self.showError(title: "Something went wrong.", message: "There was a problem sending Nano. Please try again.")
+            self.showError(title: "Something went wrong.".localized(), message: "There was a problem sending Nano. Please try again.".localized())
 
             AnalyticsEvent.trackCrash(error: .longUsableStringCastFailed)
 
@@ -522,7 +522,8 @@ final class SendViewController: UIViewController {
         var error: NSError?
 
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "Send \(amount) Nano?"
+            
+            let reason = String.localizedStringWithFormat("Send %@ Nano?".localized(), amount)
 
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { [unowned self] success, error in
                 DispatchQueue.main.async {
@@ -530,7 +531,7 @@ final class SendViewController: UIViewController {
                         guard let error = error else {
                             AnalyticsEvent.sendAuthError.track(customAttributes: ["description": "Generic error"])
 
-                            return self.showError(title: "There was a problem", message: "Please try again.")
+                            return self.showError(title: "There was a problem".localized(), message: "Please try again.".localized())
                         }
 
                         AnalyticsEvent.sendAuthError.track(customAttributes: ["description": error.localizedDescription])
@@ -538,17 +539,17 @@ final class SendViewController: UIViewController {
                         switch error {
                         case LAError.userCancel: return
                         case LAError.biometryLockout:
-                            return self.showError(title: "Too Many Tries", message: "There were too many failed attempts. Please try your passcode.")
+                            return self.showError(title: "Too Many Tries".localized(), message: "There were too many failed attempts. Please try your passcode.".localized())
                         case LAError.biometryNotAvailable:
-                            return self.showError(title: "Uh oh", message: "FaceID/TouchID are not available on your device.")
+                            return self.showError(title: "Uh oh".localized(), message: "FaceID/TouchID are not available on your device.".localized())
                         case LAError.biometryNotEnrolled:
-                            return self.showError(title: "There was a problem", message: "Please add your face for FaceID or a fingerprint for TouchID.")
+                            return self.showError(title: "There was a problem".localized(), message: "Please add your face for FaceID or a fingerprint for TouchID.".localized())
                         case LAError.authenticationFailed:
-                            return self.showError(title: "There was a problem", message: "Please try again.")
+                            return self.showError(title: "There was a problem".localized(), message: "Please try again.".localized())
                         case LAError.passcodeNotSet:
-                            return self.showError(title: "Passcode Not Set", message: "Please set a passcode for your phone to send Nano (and for security reasons, in general).")
+                            return self.showError(title: "Passcode Not Set".localized(), message: "Please set a passcode for your phone to send Nano (and for security reasons, in general).".localized())
                         default:
-                            return self.showError(title: "There was a problem", message: "Please try again.")
+                            return self.showError(title: "There was a problem".localized(), message: "Please try again.".localized())
                         }
                     }
 
@@ -562,11 +563,11 @@ final class SendViewController: UIViewController {
                 }
             }
         } else {
-            showError(title: "Authentication Not Available", message: "Please set your iOS device up with a password, TouchID, or FaceID.")
+            showError(title: "Authentication Not Available".localized(), message: "Please set your iOS device up with a password, TouchID, or FaceID.".localized())
         }
     }
 
-    private func showError(title: String, message: String, buttonText text: String = "Okay") {
+    private func showError(title: String, message: String, buttonText text: String = "Okay".localized()) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.appBackgroundingForSeedOrSend = false
 

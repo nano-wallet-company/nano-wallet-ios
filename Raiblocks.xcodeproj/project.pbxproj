@@ -85,6 +85,7 @@
 		51FE1F9A1FC605C9009F045F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F991FC605C9009F045F /* HomeViewController.swift */; };
 		51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1F9E1FC605C9009F045F /* Assets.xcassets */; };
 		51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */; };
+		6A4E004120E11FC90031865E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6A4E004320E11FC90031865E /* Localizable.strings */; };
 		B1B448F99EDC4C000021D555 /* Pods_Raiblocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */; };
 /* End PBXBuildFile section */
 
@@ -222,6 +223,8 @@
 		51FE1FA11FC605C9009F045F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		51FE1FA31FC605C9009F045F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Raiblocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A4E004220E11FC90031865E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6A4E004420E11FCB0031865E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D52FEF9BCCC6F2F4A4622ECE /* Pods-Raiblocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -478,6 +481,7 @@
 				516C54A32008130E0044E0D2 /* Common.plist */,
 				519C1A101FEAC39C005EBA02 /* Fonts */,
 				51A520811FE846E7003F6EC7 /* RaiCore */,
+				6A4E004320E11FC90031865E /* Localizable.strings */,
 			);
 			path = Raiblocks;
 			sourceTree = "<group>";
@@ -599,7 +603,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Zack Shapiro";
 				TargetAttributes = {
 					514A3FB120C9F1C500FFC4D8 = {
@@ -629,6 +633,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"pt-BR",
 			);
 			mainGroup = 51FE1F8B1FC605C9009F045F;
 			productRefGroup = 51FE1F951FC605C9009F045F /* Products */;
@@ -672,6 +677,7 @@
 				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
+				6A4E004120E11FC90031865E /* Localizable.strings in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
 				515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */,
@@ -893,6 +899,15 @@
 				51FE1FA11FC605C9009F045F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6A4E004320E11FC90031865E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A4E004220E11FC90031865E /* en */,
+				6A4E004420E11FCB0031865E /* pt-BR */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

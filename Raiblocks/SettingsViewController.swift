@@ -74,11 +74,11 @@ final class SettingsViewController: UIViewController {
             .kern: 5.0
         ]
 
-        self.navigationItem.title = "Settings".uppercased()
+        self.navigationItem.title = "Settings".localized().uppercased()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "dismissBlack"), style: .plain, target: self, action: #selector(dismissVC))
 
         let localCurrencyButton = SettingsButton()
-        localCurrencyButton.setTitle("Show My Local Currency", for: .normal)
+        localCurrencyButton.setTitle("Show My Local Currency".localized(), for: .normal)
         localCurrencyButton.addTarget(self, action: #selector(selectLocalCurrency), for: .touchUpInside)
         view.addSubview(localCurrencyButton)
         constrain(localCurrencyButton) {
@@ -98,7 +98,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let showSeedButton = SettingsButton()
-        showSeedButton.setTitle("Copy My Wallet Seed", for: .normal)
+        showSeedButton.setTitle("Copy My Wallet Seed".localized(), for: .normal)
         showSeedButton.addTarget(self, action: #selector(showSeed), for: .touchUpInside)
         view.addSubview(showSeedButton)
         constrain(showSeedButton, localCurrencyButton) {
@@ -117,7 +117,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let viewOnExplorerButton = SettingsButton()
-        viewOnExplorerButton.setTitle("View Account on Explorer", for: .normal)
+        viewOnExplorerButton.setTitle("View Account on Explorer".localized(), for: .normal)
         viewOnExplorerButton.addTarget(self, action: #selector(viewOnExplorer(_:)), for: .touchUpInside)
         view.addSubview(viewOnExplorerButton)
         constrain(viewOnExplorerButton, divider2) {
@@ -136,7 +136,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let readThe = UILabel()
-        readThe.text = "Read the"
+        readThe.text = "Read the".localized()
         readThe.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         readThe.textColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(readThe)
@@ -149,7 +149,7 @@ final class SettingsViewController: UIViewController {
         eula.addTarget(self, action: #selector(viewEula), for: .touchUpInside)
         eula.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
         eula.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
-        eula.setTitle("EULA", for: .normal)
+        eula.setTitle("EULA".localized(), for: .normal)
         eula.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         eula.underline()
         view.addSubview(eula)
@@ -159,7 +159,7 @@ final class SettingsViewController: UIViewController {
         }
 
         let andLabel = UILabel()
-        andLabel.text = "and"
+        andLabel.text = "and".localized()
         andLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         andLabel.textColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(andLabel)
@@ -172,7 +172,7 @@ final class SettingsViewController: UIViewController {
         privacyPolicy.addTarget(self, action: #selector(viewPrivacyPolicy), for: .touchUpInside)
         privacyPolicy.setTitleColor(Styleguide.Colors.lightBlue.color.withAlphaComponent(0.4), for: .normal)
         privacyPolicy.setTitleColor(Styleguide.Colors.lightBlue.color.darkerColor(percent: 0.2), for: .normal)
-        privacyPolicy.setTitle("Privacy Policy", for: .normal)
+        privacyPolicy.setTitle("Privacy Policy".localized(), for: .normal)
         privacyPolicy.titleLabel?.font = Styleguide.Fonts.nunitoLight.font(ofSize: 14)
         privacyPolicy.underline()
         view.addSubview(privacyPolicy)
@@ -201,7 +201,7 @@ final class SettingsViewController: UIViewController {
         self.pickerView = picker
 
         let logOutButton = SettingsButton()
-        logOutButton.setTitle("Log Out", for: .normal)
+        logOutButton.setTitle("Log Out".localized(), for: .normal)
         logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         view.addSubview(logOutButton)
         constrain(logOutButton,showSeedButton) {
@@ -267,7 +267,7 @@ final class SettingsViewController: UIViewController {
         var error: NSError?
 
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "Verify your identity to view your wallet seed."
+            let reason = "Verify your identity to view your wallet seed.".localized()
 
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { [unowned self] success, error in
                 DispatchQueue.main.async {
@@ -276,8 +276,8 @@ final class SettingsViewController: UIViewController {
                             AnalyticsEvent.seedCopyFailed.track(customAttributes: ["type": "generic"])
                             appDelegate.appBackgroundingForSeedOrSend = false
 
-                            let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
-                            ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+                            let ac = UIAlertController(title: "Authentication failed".localized(), message: "Please try again.".localized(), preferredStyle: .actionSheet)
+                            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default, handler: { _ in
                                 self.dismiss(animated: true, completion: nil)
                             }))
 
@@ -292,8 +292,8 @@ final class SettingsViewController: UIViewController {
                         default:
                             AnalyticsEvent.seedCopyFailed.track(customAttributes: ["type": error.localizedDescription])
 
-                            let ac = UIAlertController(title: "Authentication failed", message: "Please try again.", preferredStyle: .actionSheet)
-                            ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: { _ in
+                            let ac = UIAlertController(title: "Authentication failed".localized(), message: "Please try again.".localized(), preferredStyle: .actionSheet)
+                            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default, handler: { _ in
                                 self.dismiss(animated: true, completion: nil)
                             }))
                             self.present(ac, animated: true)
@@ -304,14 +304,14 @@ final class SettingsViewController: UIViewController {
 
                     AnalyticsEvent.seedCopied.track(customAttributes: ["location": "settings"])
 
-                    let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️", message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.", preferredStyle: .actionSheet)
-                    ac.addAction(UIAlertAction(title: "Copy Seed", style: .default, handler: { _ in
+                    let ac = UIAlertController(title: "⚠️ Here is your Wallet Seed, be careful. ⚠️".localized(), message: "Tap the button below to copy your Seed to paste later. The Seed is pasteable for 2 minutes and then expires.\n\nWe suggest copying to an app like password management software or printing the Wallet Seed out and hiding it somewhere safe.\n\nNever share your seed with anyone, ever, under any circumstances.".localized(), preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Copy Seed".localized(), style: .default, handler: { _ in
                         appDelegate.appBackgroundingForSeedOrSend = false
 
                         // you have 2 minutes to paste this or it expires
                         UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
                     }))
-                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                    ac.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel) { _ in
                         appDelegate.appBackgroundingForSeedOrSend = false
                     })
 
@@ -322,8 +322,8 @@ final class SettingsViewController: UIViewController {
             AnalyticsEvent.seedCopyFailed.track()
             appDelegate.appBackgroundingForSeedOrSend = false
 
-            let ac = UIAlertController(title: "Touch ID not available", message: "Your device is not configured for Touch ID.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Okay", style: .default))
+            let ac = UIAlertController(title: "Touch ID not available".localized(), message: "Your device is not configured for Touch ID.".localized(), preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
             present(ac, animated: true)
         }
     }
@@ -332,7 +332,7 @@ final class SettingsViewController: UIViewController {
         let height: CGFloat = pickerViewHeightLayoutConstraint?.constant == 0 ? 200 : 0
         self.pickerViewHeightLayoutConstraint?.constant = height
 
-        let buttonCopy = height == 0 ? "Show My Local Currency" : "Select Local Currency"
+        let buttonCopy = height == 0 ? "Show My Local Currency".localized() : "Select Local Currency".localized()
         self.localCurrencyButton?.setTitle(buttonCopy, for: .normal)
 
         UIView.animate(withDuration: 0.3) {
@@ -345,11 +345,11 @@ final class SettingsViewController: UIViewController {
     }
 
     @objc func logOut() {
-        let ac = UIAlertController(title: "Are you sure you want to log out?", message: "Logging out will remove your Wallet Seed, keys and all of your Nano-related data from this device.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Log Out", style: .destructive) { _ in
+        let ac = UIAlertController(title: "Are you sure you want to log out?".localized(), message: "Logging out will remove your Wallet Seed, keys and all of your Nano-related data from this device.".localized(), preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Log Out".localized(), style: .destructive) { _ in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "LogOut"), object: nil)
         })
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel".localized(), style: .default, handler: nil))
 
         present(ac, animated: true)
     }

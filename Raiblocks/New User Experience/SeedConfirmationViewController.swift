@@ -72,7 +72,7 @@ class SeedConfirmationViewController: UIViewController {
         }
 
         let titleLabel = UILabel()
-        titleLabel.text = "Your Nano Wallet Seed"
+        titleLabel.text = "Your Nano Wallet Seed".localized()
         titleLabel.textColor = Styleguide.Colors.darkBlue.color
         titleLabel.font = Styleguide.Fonts.nunitoRegular.font(ofSize: 20)
         view.addSubview(titleLabel)
@@ -83,7 +83,7 @@ class SeedConfirmationViewController: UIViewController {
 
         let button = NanoButton(withType: .lightBlue)
         button.addTarget(self, action: #selector(continueButtonWasPressed), for: .touchUpInside)
-        button.setAttributedTitle("I Understand, Continue", withKerning: 0.8)
+        button.setAttributedTitle("I Understand, Continue".localized(), withKerning: 0.8)
         view.addSubview(button)
         constrain(button) {
             $0.centerX == $0.superview!.centerX
@@ -122,7 +122,7 @@ class SeedConfirmationViewController: UIViewController {
         let smallCopy = UILabel()
         smallCopy.font = Styleguide.Fonts.notoSansRegular.font(ofSize: 14)
         smallCopy.textColor = Styleguide.Colors.darkBlue.color
-        smallCopy.attributedText = NSAttributedString(string: "Tap to copy", attributes: [.kern: 1.0])
+        smallCopy.attributedText = NSAttributedString(string: "Tap to copy".localized(), attributes: [.kern: 1.0])
         view.addSubview(smallCopy)
         constrain(smallCopy, textView) {
             $0.centerX == $1.centerX
@@ -134,12 +134,23 @@ class SeedConfirmationViewController: UIViewController {
         textBody.isUserInteractionEnabled = true
         textBody.isEditable = false
         textBody.isSelectable = false
-        let attributedText = NSMutableAttributedString(string: "Your Nano Wallet Seed is a unique code that enables you to access your wallet on the Nano network.\n\nIt is the only way for you to recover your wallet and access any Nano currency you may have.\n\nWe do not have access to it and cannot recover your Wallet Seed or any funds in your wallet without your Wallet Seed.\n\nYou are solely responsible for recording your Wallet Seed in a safe and secure place and manner. Never share your Wallet Seed with anyone.")
+        
+        
+        let textPart1 = "Your Nano Wallet Seed is a unique code that enables you to access your wallet on the Nano network.\n\nIt is the only way for you to recover your wallet and access any Nano currency you may have.".localized()
+        let textPart2 = "We do not have access to it and cannot recover your Wallet Seed or any funds in your wallet without your Wallet Seed.".localized()
+        let textPart3 = "You are solely responsible for recording your Wallet Seed in a safe and secure place and manner.".localized()
+        let textPart4 = "Never share your Wallet Seed with anyone.".localized()
+        
+        let text = "\(textPart1)\n\n\(textPart2)\n\n\(textPart3) \(textPart4)"
+        let attributedText = NSMutableAttributedString(string: text)
         attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.darkBlue.color, range: NSMakeRange(0, attributedText.length))
         attributedText.addAttribute(.font, value: Styleguide.Fonts.nunitoRegular.font(ofSize: 16), range: NSMakeRange(0, attributedText.length))
 
-        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(192, 119)) // Middle sentence "We do not have access..."
-        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: NSMakeRange(attributedText.length - 42, 42)) // last sentence "Never give it..."
+        let textPart2Range = (text as NSString).range(of: textPart2)
+        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: textPart2Range) // Middle sentence "We do not have access..."
+        
+        let textPart4Range = (text as NSString).range(of: textPart4)
+        attributedText.addAttribute(.foregroundColor, value: Styleguide.Colors.red.color, range: textPart4Range) // last sentence "Never give it..."
         textBody.attributedText = attributedText
         textBody.isScrollEnabled = true
         view.addSubview(textBody)
@@ -170,8 +181,8 @@ class SeedConfirmationViewController: UIViewController {
             UIPasteboard.general.setObjects([self], localOnly: false, expirationDate: Date().addingTimeInterval(120))
 
             DispatchQueue.main.sync {
-                let ac = UIAlertController(title: "Wallet Seed Copied", message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like  password management software or print it out and put it in a safe.", preferredStyle: .actionSheet)
-                ac.addAction(UIAlertAction(title: "Okay", style: .default))
+                let ac = UIAlertController(title: "Wallet Seed Copied".localized(), message: "Your Wallet Seed is pastable for 2 minutes.\nAfter, you can access it in Settings.\n\nPlease backup your Wallet Seed somewhere safe like password management software or print it out and put it in a safe.".localized(), preferredStyle: .actionSheet)
+                ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
 
                 self.present(ac, animated: true, completion: nil)
             }
@@ -181,11 +192,11 @@ class SeedConfirmationViewController: UIViewController {
     @objc func continueButtonWasPressed() {
         AnalyticsEvent.seedConfirmatonContinueButtonPressed.track()
 
-        let ac = UIAlertController(title: "Welcome to Nano Wallet!", message: "Please confirm you have properly stored your Wallet Seed somewhere safe.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "I have backed up my Wallet Seed", style: .default) { _ in
+        let ac = UIAlertController(title: "Welcome to Nano Wallet!".localized(), message: "Please confirm you have properly stored your Wallet Seed somewhere safe.".localized(), preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "I have backed up my Wallet Seed".localized(), style: .default) { _ in
             self.navigationController?.pushViewController(HomeViewController(viewModel: HomeViewModel()), animated: true)
         })
-        ac.addAction(UIAlertAction(title: "Back", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Back".localized(), style: .cancel))
 
         present(ac, animated: true, completion: nil)
     }

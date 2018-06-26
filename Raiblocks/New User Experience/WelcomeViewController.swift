@@ -32,7 +32,7 @@ class WelcomeViewController: UIViewController {
 
         let welcomeLabel = UILabel()
         welcomeLabel.font = Styleguide.Fonts.nunitoLight.font(ofSize: 20)
-        welcomeLabel.text = "Welcome to Nano Wallet"
+        welcomeLabel.text = "Welcome to Nano Wallet".localized()
         welcomeLabel.textColor = Styleguide.Colors.darkBlue.color
         view.addSubview(welcomeLabel)
         constrain(welcomeLabel) {
@@ -48,7 +48,7 @@ class WelcomeViewController: UIViewController {
         }
 
         let startButton = NanoButton(withType: .lightBlue)
-        startButton.setAttributedTitle("Create a new Wallet", withKerning: 1)
+        startButton.setAttributedTitle("Create a new Wallet".localized(), withKerning: 1)
         startButton.addTarget(self, action: #selector(startANewWallet), for: .touchUpInside)
         view.addSubview(startButton)
         constrain(startButton, welcomeLabel) {
@@ -59,7 +59,7 @@ class WelcomeViewController: UIViewController {
         }
 
         let existingWalletButton = NanoButton(withType: .lightBlue)
-        existingWalletButton.setAttributedTitle("Enter existing Wallet Seed", withKerning: 1)
+        existingWalletButton.setAttributedTitle("Enter existing Wallet Seed".localized(), withKerning: 1)
         existingWalletButton.addTarget(self, action: #selector(toggleTextFieldForSeed), for: .touchUpInside)
         view.addSubview(existingWalletButton)
         constrain(existingWalletButton, startButton) {
@@ -71,7 +71,7 @@ class WelcomeViewController: UIViewController {
 
         let textView = SeedTextView()
         textView.delegate = self
-        textView.placeholder = "(Tap to type or paste Wallet Seed)"
+        textView.placeholder = "(Tap to type or paste Wallet Seed)".localized()
         view.addSubview(textView)
         constrain(textView, existingWalletButton) {
             textFieldHeightConstraint = $0.height == CGFloat(0)
@@ -219,8 +219,8 @@ class WelcomeViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    let ac = UIAlertController(title: "Camera Permissions Required", message: "Please enable Camera permissions in iOS Settings", preferredStyle: .actionSheet)
-                    ac.addAction(UIAlertAction(title: "Okay", style: .default))
+                    let ac = UIAlertController(title: "Camera Permissions Required".localized(), message: "Please enable Camera permissions in iOS Settings".localized(), preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default))
 
                     self.present(ac, animated: true, completion: nil)
                 }
@@ -231,7 +231,7 @@ class WelcomeViewController: UIViewController {
     @objc func celebrate() {
         AnalyticsEvent.easterEggViewed.track()
 
-        let alertController = UIAlertController(title: "Welcome!", message: "Thank you for using the Nano Wallet for iOS!", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Welcome!".localized(), message: "Thank you for using the Nano Wallet for iOS!".localized(), preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "🎉", style: .default, handler: nil))
 
         present(alertController, animated: true, completion: nil)
@@ -240,8 +240,8 @@ class WelcomeViewController: UIViewController {
     private func showAlertForBadSeed(message: String? = nil) {
         AnalyticsEvent.badSeedViewed.track()
 
-        let ac = UIAlertController(title: "There was a problem with your Wallet Seed", message: message ?? "There was a problem importing your Wallet Seed. Please double check it and try again or contact Nano's support channel.", preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        let ac = UIAlertController(title: "There was a problem with your Wallet Seed".localized(), message: message ?? "There was a problem importing your Wallet Seed. Please double check it and try again or contact Nano's support channel.".localized(), preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Okay".localized(), style: .default, handler: nil))
 
         present(ac, animated: true, completion: nil)
     }
@@ -264,7 +264,7 @@ extension WelcomeViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Pastes an address
         if (Address(text)) != nil || text.contains("_") {
-            showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
+            showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.".localized())
 
             return false
         }
@@ -275,7 +275,7 @@ extension WelcomeViewController: UITextViewDelegate {
             if (Address(text) != nil || text.contains("_")) {
                 AnalyticsEvent.badWalletSeedPasted.track(customAttributes: ["error_type": "Address pasted"])
 
-                showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.")
+                showAlertForBadSeed(message: "It looks like you've entered a Nano Address rather than a Wallet Seed.\n\nEnter your Wallet Seed to try again.".localized())
 
                 return false
             } else {
@@ -286,7 +286,7 @@ extension WelcomeViewController: UITextViewDelegate {
                 } else {
                     AnalyticsEvent.badWalletSeedPasted.track(customAttributes: ["error_type": "Didn't match regex"])
 
-                    showAlertForBadSeed(message: "There was a problem with the Wallet Seed you pasted.\n\nPlease make sure it's 64 characters, only using 0-9 and A-F.")
+                    showAlertForBadSeed(message: "There was a problem with the Wallet Seed you pasted.\n\nPlease make sure it's 64 characters, only using 0-9 and A-F.".localized())
                 }
             }
         }
@@ -337,8 +337,8 @@ extension WelcomeViewController: SeedScanViewControllerDelegate {
                 }
             }
         } else {
-            let alertController = UIAlertController(title: "Uh Oh", message: "Something went wrong scanning your Wallet Seed. Please try again.", preferredStyle: .actionSheet)
-            alertController.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+            let alertController = UIAlertController(title: "Uh Oh".localized(), message: "Something went wrong scanning your Wallet Seed. Please try again.".localized(), preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "Okay".localized(), style: .default, handler: nil))
 
             present(alertController, animated: true, completion: nil)
         }
