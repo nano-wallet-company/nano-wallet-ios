@@ -6,6 +6,7 @@ use_frameworks!
 workspace 'Raiblocks'
 
 target 'Raiblocks' do
+  pod 'Alamofire', '~> 4.7'
   pod 'SwiftWebSocket'
   pod 'ReactiveSwift', '~> 3.0'
   pod 'ReactiveCocoa', '~> 7.0.1'
