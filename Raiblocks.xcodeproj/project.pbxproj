@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10BEEC6320E4957000827CEC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BEEC6220E4957000827CEC /* Network.swift */; };
+		10BEEC6620E4957800827CEC /* mobile-privacy-policy.html in Resources */ = {isa = PBXBuildFile; fileRef = 10BEEC6420E4957700827CEC /* mobile-privacy-policy.html */; };
+		10BEEC6720E4957800827CEC /* ios-eula.html in Resources */ = {isa = PBXBuildFile; fileRef = 10BEEC6520E4957700827CEC /* ios-eula.html */; };
 		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
 		510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510C391F2084F3DC004DDC6B /* GenericFunctions.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
@@ -137,6 +140,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		10BEEC6220E4957000827CEC /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		10BEEC6420E4957700827CEC /* mobile-privacy-policy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "mobile-privacy-policy.html"; sourceTree = "<group>"; };
+		10BEEC6520E4957700827CEC /* ios-eula.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "ios-eula.html"; sourceTree = "<group>"; };
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
 		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		510C391F2084F3DC004DDC6B /* GenericFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFunctions.swift; sourceTree = "<group>"; };
@@ -397,6 +403,9 @@
 				5122A6142017931E00F7F43A /* NanoWalletError.swift */,
 				5135307B201A246E00B615D4 /* BackgroundViewController.swift */,
 				510C391F2084F3DC004DDC6B /* GenericFunctions.swift */,
+				10BEEC6220E4957000827CEC /* Network.swift */,
+				10BEEC6520E4957700827CEC /* ios-eula.html */,
+				10BEEC6420E4957700827CEC /* mobile-privacy-policy.html */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -577,7 +586,6 @@
 				51FE1F911FC605C9009F045F /* Frameworks */,
 				51FE1F921FC605C9009F045F /* Resources */,
 				8D470C91ABDA43EE836B8F03 /* [CP] Embed Pods Frameworks */,
-				F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */,
 				51A520641FE43791003F6EC7 /* ShellScript */,
 				51A520821FE8495D003F6EC7 /* CopyFiles */,
 				5171EE7B201FB80800E4CE7C /* ShellScript */,
@@ -618,7 +626,7 @@
 					51FE1F931FC605C9009F045F = {
 						CreatedOnToolsVersion = 9.1;
 						LastSwiftMigration = 0910;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -669,12 +677,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10BEEC6620E4957800827CEC /* mobile-privacy-policy.html in Resources */,
 				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
 				515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */,
+				10BEEC6720E4957800827CEC /* ios-eula.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,21 +769,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -804,6 +799,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10BEEC6320E4957000827CEC /* Network.swift in Sources */,
 				510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */,
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
@@ -1169,8 +1165,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
@@ -1210,8 +1206,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;

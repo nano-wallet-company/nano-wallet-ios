@@ -31,8 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let currentSchemaVersion: UInt64 = 2
         let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
         Realm.Configuration.defaultConfiguration = config
-
-        Connectivity.shared.startNetworkConnectivityObserver()
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()

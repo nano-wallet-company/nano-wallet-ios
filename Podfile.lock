@@ -28,6 +28,20 @@ DEPENDENCIES:
   - RealmSwift (~> 3.3.0)
   - SwiftWebSocket
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Cartography
+    - Crashlytics
+    - EFQRCode
+    - Fabric
+    - M13Checkbox
+    - ReactiveCocoa
+    - ReactiveSwift
+    - Realm
+    - RealmSwift
+    - Result
+    - SwiftWebSocket
+
 SPEC CHECKSUMS:
   Cartography: 19c2223a8dfed35d82b098d365213b7ceb25ab2b
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
@@ -43,4 +57,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1f75c9d0d147ecae1d2606185c8243a2e1312f0c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

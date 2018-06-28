@@ -245,22 +245,26 @@ final class SettingsViewController: UIViewController {
 
     @objc func viewEula() {
         // check if nanowalletcomapny.com will load and if not, load local eula
-        if Connectivity.shared.getStatus() == .Reachable{
-            self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: false), animated: true)
-        } else {
-            let fileUrl = Bundle.main.url(forResource: "ios-eula", withExtension: "html")
-            self.present(WebViewController(url: fileUrl!, useForLegalPurposes: false), animated: true)
-        }
+        Connectivity.shared.getStatus(completion: { status in
+            if status == .Reachable{
+                self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: false), animated: true)
+            } else {
+                let fileUrl = Bundle.main.url(forResource: "ios-eula", withExtension: "html")
+                self.present(WebViewController(url: fileUrl!, useForLegalPurposes: false), animated: true)
+            }
+        })
     }
 
     @objc func viewPrivacyPolicy() {
         // check if nanowalletcomapny.com will load and if not, load local privacy policy
-        if Connectivity.shared.getStatus() == .Reachable{
-            self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
-        } else {
-            let fileUrl = Bundle.main.url(forResource: "mobile-privacy-policy", withExtension: "html")
-            self.present(WebViewController(url: fileUrl!, useForLegalPurposes: false), animated: true)
-        }
+        Connectivity.shared.getStatus(completion: { status in
+            if status == .Reachable{
+                self.present(WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: false), animated: true)
+            } else {
+                let fileUrl = Bundle.main.url(forResource: "mobile-privacy-policy", withExtension: "html")
+                self.present(WebViewController(url: fileUrl!, useForLegalPurposes: false), animated: true)
+            }
+        })
     }
 
     @objc func viewOnExplorer(_ sender: UIButton) {

@@ -263,16 +263,18 @@ final class LegalViewController: UIViewController {
         ])
         
         // check if nanowalletcomapny.com will load and if not, load local eula
-        if Connectivity.shared.getStatus() == .Reachable{
-            let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: true, agreement: .eula)
-            vc.delegate = self
-            present(vc, animated: true)
-        } else {
-            let fileUrl = Bundle.main.url(forResource: "ios-eula", withExtension: "html")
-            let vc = WebViewController(url: fileUrl!, useForLegalPurposes: true, agreement: .eula)
-            vc.delegate = self
-            present(vc, animated: true)
-        }
+        Connectivity.shared.getStatus(completion: { status in
+            if status == .Reachable{
+                let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: true, agreement: .eula)
+                vc.delegate = self
+                self.present(vc, animated: true)
+            } else {
+                let fileUrl = Bundle.main.url(forResource: "ios-eula", withExtension: "html")
+                let vc = WebViewController(url: fileUrl!, useForLegalPurposes: true, agreement: .eula)
+                vc.delegate = self
+                self.present(vc, animated: true)
+            }
+        })
     }
 
     @objc func viewPrivacyPolicy() {
@@ -282,16 +284,18 @@ final class LegalViewController: UIViewController {
         ])
         
         // check if nanowalletcomapny.com will load and if not, load local privacy policy
-        if Connectivity.shared.getStatus() == .Reachable{
-            let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
-            vc.delegate = self
-            present(vc, animated: true)
-        } else {
-            let fileUrl = Bundle.main.url(forResource: "mobile-privacy-policy", withExtension: "html")
-            let vc = WebViewController(url: fileUrl!, useForLegalPurposes: true, agreement: .privacyPolicy)
-            vc.delegate = self
-            present(vc, animated: true)
-        }
+        Connectivity.shared.getStatus(completion: { status in
+            if status == .Reachable{
+                let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+                vc.delegate = self
+                self.present(vc, animated: true)
+            } else {
+                let fileUrl = Bundle.main.url(forResource: "mobile-privacy-policy", withExtension: "html")
+                let vc = WebViewController(url: fileUrl!, useForLegalPurposes: true, agreement: .privacyPolicy)
+                vc.delegate = self
+                self.present(vc, animated: true)
+            }
+        })
     }
 
     @objc func disagreeToLegal() {
