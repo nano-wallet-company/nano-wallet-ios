@@ -577,7 +577,6 @@
 				51FE1F911FC605C9009F045F /* Frameworks */,
 				51FE1F921FC605C9009F045F /* Resources */,
 				8D470C91ABDA43EE836B8F03 /* [CP] Embed Pods Frameworks */,
-				F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */,
 				51A520641FE43791003F6EC7 /* ShellScript */,
 				51A520821FE8495D003F6EC7 /* CopyFiles */,
 				5171EE7B201FB80800E4CE7C /* ShellScript */,
@@ -757,21 +756,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1169,8 +1153,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
@@ -1210,8 +1194,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
