@@ -612,25 +612,14 @@ extension SendViewController: CodeScanViewControllerDelegate {
         self.addressTextView?.togglePlaceholder(show: false)
         self.addressTextView?.attributedText = addAttributes(forAttributedText: address.longAddressWithColor)
 
-        switch amount.compare(0) {
-        case .orderedSame, .orderedAscending:
-            navigationController?.dismiss(animated: true) {
-                self.nanoTextField?.becomeFirstResponder()
+        navigationController?.dismiss(animated: true) { [weak self] in
+            switch amount.compare(0) {
+            case .orderedSame, .orderedAscending: break
+            case .orderedDescending:
+                self?.viewModel.nanoAmount.value = amount
+                self?.nanoTextField?.text = amount.stringValue
             }
-
-        case .orderedDescending:
-            if amount.asRawValue.compare(viewModel.sendableNanoBalance) == .orderedDescending {
-                navigationController?.dismiss(animated: true) {
-                    self.nanoTextField?.becomeFirstResponder()
-                }
-            } else {
-                navigationController?.dismiss(animated: true) {
-                    self.sendableAmountIsValid.value = true
-
-                    self.viewModel.nanoAmount.value = amount
-                    self.nanoTextField?.text = amount.stringValue
-                }
-            }
+            self?.nanoTextField?.becomeFirstResponder()
         }
     }
 
