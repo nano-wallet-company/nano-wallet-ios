@@ -131,9 +131,8 @@ class WelcomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidChangeFrame(_:)), name: .UIKeyboardDidChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -148,29 +147,26 @@ class WelcomeViewController: UIViewController {
         super.viewWillDisappear(animated)
 
         view.endEditing(true)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidChangeFrame, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override var prefersStatusBarHidden: Bool { return true }
 
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo, !keyboardIsVisible else { return }
-        
-        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+
+        let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let animationDuration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
-        
-        self.adjustViewForKeyboard(height: keyboardHeight, animationDuration: animationDuration)
-        
+
+        // The 20 points gives some breathing room for the camera icon
+        welcomeTextTopConstraint?.constant -= view.center.y + 20 - (view.bounds.height - keyboardFrame.height) / 2
+
         keyboardIsVisible = true
-    }
-    
-    @objc func keyboardDidChangeFrame(_ notification: Notification) {
-        guard let userInfo = notification.userInfo, keyboardIsVisible else { return }
-        
-        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-        self.adjustViewForKeyboard(height: keyboardHeight)
+
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
@@ -239,26 +235,6 @@ class WelcomeViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "🎉", style: .default, handler: nil))
 
         present(alertController, animated: true, completion: nil)
-    }
-    
-    private func adjustViewForKeyboard(height: CGFloat, animationDuration: Double = 0.0) {
-        
-        let seedTextViewY = self.textView?.frame.origin.y ?? 0.0
-        let seedTextHeight = self.textFieldHeightConstraint?.constant ?? 0.0
-        
-        let viewHeight = view.bounds.height
-        
-        let seedTextBottom = seedTextViewY + seedTextHeight
-        let keyboardTop = viewHeight - height
-        
-        let coveredSpace = seedTextBottom - keyboardTop
-        if coveredSpace > 0 {
-            welcomeTextTopConstraint?.constant -= coveredSpace + 20
-        }
-        
-        UIView.animate(withDuration: animationDuration) {
-            self.view.layoutIfNeeded()
-        }
     }
 
     private func showAlertForBadSeed(message: String? = nil) {
