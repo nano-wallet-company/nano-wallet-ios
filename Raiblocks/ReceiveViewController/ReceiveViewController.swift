@@ -116,7 +116,7 @@ class ReceiveViewController: UIViewController {
     @objc func copyAddress() {
         UIPasteboard.general.string = self.viewModel.address.longAddress
 
-        let ac = UIAlertController(title: "Your Nano Address Has Been Copied", message: "Give someone your address to receive Nano in your wallet", preferredStyle: .actionSheet)
+        let ac = UIAlertController(title: "Your Nano Address Has Been Copied", message: "Give someone your address to receive Nano in your wallet", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Done", style: .default))
         present(ac, animated: true, completion: nil)
     }

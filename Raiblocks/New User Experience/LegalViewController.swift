@@ -261,7 +261,7 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "http://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: true, agreement: .eula)
+        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/ios-eula")!, useForLegalPurposes: true, agreement: .eula)
         vc.delegate = self
         present(vc, animated: true)
     }
@@ -272,7 +272,7 @@ final class LegalViewController: UIViewController {
             "date": dateString
         ])
 
-        let vc = WebViewController(url: URL(string: "http://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
+        let vc = WebViewController(url: URL(string: "https://nanowalletcompany.com/mobile-privacy-policy")!, useForLegalPurposes: true, agreement: .privacyPolicy)
         vc.delegate = self
         present(vc, animated: true)
     }
