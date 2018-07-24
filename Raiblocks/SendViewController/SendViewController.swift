@@ -606,16 +606,19 @@ final class SendViewController: UIViewController {
 
 extension SendViewController: CodeScanViewControllerDelegate {
 
-    func didReceiveAddress(address: Address, amount: NSDecimalNumber) {
+    func didReceive(address: String) {
+        guard let qrCode = QRCode(address: address) else {
+            AnalyticsEvent.errorParsingQRCode.track(customAttributes: ["qr_code_string": address])
+            return
+        }
+        
         self.sendAddressIsValid.value = true
         self.isScanningAmount = true
         self.addressTextView?.togglePlaceholder(show: false)
-        self.addressTextView?.attributedText = addAttributes(forAttributedText: address.longAddressWithColor)
+        self.addressTextView?.attributedText = addAttributes(forAttributedText: qrCode.address.longAddressWithColor)
 
         navigationController?.dismiss(animated: true) { [weak self] in
-            switch amount.compare(0) {
-            case .orderedSame, .orderedAscending: break
-            case .orderedDescending:
+            if let amount = qrCode.amount {
                 self?.viewModel.nanoAmount.value = amount
                 self?.nanoTextField?.text = amount.stringValue
             }
