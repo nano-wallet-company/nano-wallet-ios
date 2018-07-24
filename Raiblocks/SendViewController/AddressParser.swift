@@ -22,12 +22,12 @@ final class AddressParser {
         
         guard let address = Address(String(addressString)) else { return nil }
         
-        var amount: NSDecimalNumber = 0
+        var amount: NSDecimalNumber? = nil
         if String(_addressString).contains("amount=") {
             // TODO: protect against strings formatted as 1,000.00
             let values = _addressString.split(separator: "=")
             
-            guard values.count > 1 else { return (address: address, amount: 0) }
+            guard values.count > 1 else { return (address: address, amount: nil) }
             let val = values[1].replacingOccurrences(of: ",", with: ".")
             amount = NSDecimalNumber(string: val)
         }
