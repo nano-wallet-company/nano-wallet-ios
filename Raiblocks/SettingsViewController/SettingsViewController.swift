@@ -74,11 +74,12 @@ final class SettingsViewController: UIViewController {
             .kern: 5.0
         ]
 
-        self.navigationItem.title = "Settings".uppercased()
+        self.navigationItem.title = NSLocalizedString("SettingsViewController.title", comment: "").uppercased()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "dismissBlack"), style: .plain, target: self, action: #selector(dismissVC))
 
         let localCurrencyButton = SettingsButton()
-        localCurrencyButton.setTitle("Show My Local Currency", for: .normal)
+        let localCurrencyButtonTitle = NSLocalizedString("SettingsViewController.show_local_currency", comment: "")
+        localCurrencyButton.setTitle(localCurrencyButtonTitle, for: .normal)
         localCurrencyButton.addTarget(self, action: #selector(selectLocalCurrency), for: .touchUpInside)
         view.addSubview(localCurrencyButton)
         constrain(localCurrencyButton) {

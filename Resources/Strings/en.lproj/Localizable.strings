@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Raiblocks
+
+  Created by Fawaz Tahir on 7/27/18.
+  Copyright © 2018 Zack Shapiro. All rights reserved.
+*/
+
+"SettingsViewController.title" = "Settings";
+"SettingsViewController.show_local_currency" = "Show My Local Currency";

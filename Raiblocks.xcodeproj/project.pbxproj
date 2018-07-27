@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		298FA46F210BCF49006A632F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 298FA471210BCF49006A632F /* Localizable.strings */; };
 		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
 		510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510C391F2084F3DC004DDC6B /* GenericFunctions.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
@@ -137,6 +138,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		298FA470210BCF49006A632F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		298FA472210BCF57006A632F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		298FA473210BCF57006A632F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		298FA474210BCF5B006A632F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		298FA475210BCF5B006A632F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		298FA476210BCF64006A632F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		298FA477210BCF64006A632F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		298FA478210BCF68006A632F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		298FA479210BCF68006A632F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		298FA47A210BCF6C006A632F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		298FA47B210BCF6C006A632F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		298FA47C210BCF70006A632F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		298FA47D210BCF70006A632F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		298FA47E210BCF74006A632F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		298FA47F210BCF74006A632F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
 		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		510C391F2084F3DC004DDC6B /* GenericFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFunctions.swift; sourceTree = "<group>"; };
@@ -270,6 +286,52 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		298FA45A210BCE86006A632F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */,
+				519C1A101FEAC39C005EBA02 /* Fonts */,
+				298FA480210BCFFA006A632F /* Strings */,
+				298FA481210BD00A006A632F /* Storyboards */,
+				51FE1F9E1FC605C9009F045F /* Assets.xcassets */,
+				51FE1FA31FC605C9009F045F /* Info.plist */,
+				516C54A32008130E0044E0D2 /* Common.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		298FA45B210BCEB6006A632F /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				519B4D371FD23521006B7B6E /* SettingsViewController.swift */,
+			);
+			path = SettingsViewController;
+			sourceTree = "<group>";
+		};
+		298FA45C210BCECC006A632F /* ScannerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */,
+			);
+			path = ScannerViewController;
+			sourceTree = "<group>";
+		};
+		298FA480210BCFFA006A632F /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				298FA471210BCF49006A632F /* Localizable.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		298FA481210BD00A006A632F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		51203A3B1FE1ECF700CD7D79 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,13 +398,13 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		5174E90420112BE500DE86A0 /* RaiblocksTests */ = {
+		5174E90420112BE500DE86A0 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				5174E90520112BE500DE86A0 /* RaiblocksTests.swift */,
 				5174E90720112BE500DE86A0 /* Info.plist */,
 			);
-			path = RaiblocksTests;
+			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
 		5186C5411FC92FFE0040E66C /* Extensions */ = {
@@ -436,8 +498,9 @@
 		51FE1F8B1FC605C9009F045F = {
 			isa = PBXGroup;
 			children = (
+				298FA45A210BCE86006A632F /* Resources */,
 				51FE1F961FC605C9009F045F /* Raiblocks */,
-				5174E90420112BE500DE86A0 /* RaiblocksTests */,
+				5174E90420112BE500DE86A0 /* Unit Tests */,
 				514A3FB320C9F1C500FFC4D8 /* Signy */,
 				51FE1F951FC605C9009F045F /* Products */,
 				181B5530205C5249D66451C2 /* Pods */,
@@ -459,25 +522,19 @@
 		51FE1F961FC605C9009F045F /* Raiblocks */ = {
 			isa = PBXGroup;
 			children = (
-				519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */,
+				51FE1F971FC605C9009F045F /* AppDelegate.swift */,
+				51A520811FE846E7003F6EC7 /* RaiCore */,
 				51A520571FE32E47003F6EC7 /* Common */,
 				51203A3B1FE1ECF700CD7D79 /* Models */,
+				5174E8F7200FA6BC00DE86A0 /* Services */,
 				5186C5411FC92FFE0040E66C /* Extensions */,
 				5125E4491FD1FE8A004DB451 /* JSON Responses */,
-				51FE1F971FC605C9009F045F /* AppDelegate.swift */,
-				5174E8F7200FA6BC00DE86A0 /* Services */,
 				51A520601FE430BD003F6EC7 /* New User Experience */,
 				5125E4541FD21C5D004DB451 /* HomeViewController */,
+				298FA45B210BCEB6006A632F /* SettingsViewController */,
 				51E945D21FF6EC45006B7081 /* ReceiveViewController */,
-				519B4D371FD23521006B7B6E /* SettingsViewController.swift */,
 				51912ECA1FDB4DA9001BDF2C /* SendViewController */,
-				51912EC81FDB23BD001BDF2C /* ScannerViewContoller.swift */,
-				51FE1F9E1FC605C9009F045F /* Assets.xcassets */,
-				51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */,
-				51FE1FA31FC605C9009F045F /* Info.plist */,
-				516C54A32008130E0044E0D2 /* Common.plist */,
-				519C1A101FEAC39C005EBA02 /* Fonts */,
-				51A520811FE846E7003F6EC7 /* RaiCore */,
+				298FA45C210BCECC006A632F /* ScannerViewController */,
 			);
 			path = Raiblocks;
 			sourceTree = "<group>";
@@ -629,6 +686,13 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				de,
+				"zh-Hans",
+				"zh-Hant",
+				ja,
+				es,
+				ko,
 			);
 			mainGroup = 51FE1F8B1FC605C9009F045F;
 			productRefGroup = 51FE1F951FC605C9009F045F /* Products */;
@@ -672,6 +736,7 @@
 				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
+				298FA46F210BCF49006A632F /* Localizable.strings in Resources */,
 				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
 				515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */,
@@ -887,10 +952,32 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		298FA471210BCF49006A632F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				298FA470210BCF49006A632F /* en */,
+				298FA473210BCF57006A632F /* fr */,
+				298FA475210BCF5B006A632F /* de */,
+				298FA477210BCF64006A632F /* zh-Hans */,
+				298FA479210BCF68006A632F /* zh-Hant */,
+				298FA47B210BCF6C006A632F /* ja */,
+				298FA47D210BCF70006A632F /* es */,
+				298FA47F210BCF74006A632F /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				51FE1FA11FC605C9009F045F /* Base */,
+				298FA472210BCF57006A632F /* fr */,
+				298FA474210BCF5B006A632F /* de */,
+				298FA476210BCF64006A632F /* zh-Hans */,
+				298FA478210BCF68006A632F /* zh-Hant */,
+				298FA47A210BCF6C006A632F /* ja */,
+				298FA47C210BCF70006A632F /* es */,
+				298FA47E210BCF74006A632F /* ko */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1060,6 +1147,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1117,6 +1205,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1173,7 +1262,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Raiblocks/Info.plist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Crashlytics\"",
+					"\"${PODS_ROOT}/Headers/Public/Fabric\"",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1197,7 +1292,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nanowalletcompany.Nano;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Resources/Raiblocks-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1214,7 +1309,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Raiblocks/Info.plist;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Crashlytics\"",
+					"\"${PODS_ROOT}/Headers/Public/Fabric\"",
+					"\"$(PROJECT_DIR)/Resources\"",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1238,8 +1340,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nanowalletcompany.Nano;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Raiblocks/Raiblocks-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Resources/Raiblocks-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
