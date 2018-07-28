@@ -367,11 +367,14 @@ final class SendViewController: UIViewController {
         // MARK: - NSDecimalNumber Producer
 
         viewModel.nanoAmount.producer.startWithValues { [weak self] amount in
+            guard let strongSelf = self else {
+                return
+            }
             // TODO: fix case where local currency amount is selected, you scan a code with an amount and the translated amount isn't present
-            if self?.activeTextField == self?.nanoTextField || self?.activeTextField == nil {
-                self?.localCurrencyTextField?.text = self?.convertNanoToLocalCurrency(value: amount) ?? "0\(self?.viewModel.decimalSeparator)0"
+            if strongSelf.activeTextField == strongSelf.nanoTextField || strongSelf.activeTextField == nil {
+                strongSelf.localCurrencyTextField?.text = strongSelf.convertNanoToLocalCurrency(value: amount) ?? "0\(strongSelf.viewModel.decimalSeparator)0"
             } else {
-                self?.nanoTextField?.text = amount.stringValue
+                strongSelf.nanoTextField?.text = amount.stringValue
             }
         }
     }
