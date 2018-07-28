@@ -10,11 +10,8 @@ import Foundation
 
 final class DeepLinkParser {
     
-    func deepLinkType(from url: URL) -> DeepLink? {
-        guard let deepLinkURL = DeepLinkURL(url: url), let destination = deepLinkURL.destination else {
-            return nil
-        }
-        return DeepLink(url: url, destination: destination, parameters: url.queryDictionary)
+    func deepLink(from url: URL) -> DeepLink? {
+        return DeepLink(url: url)
     }
 }
 
@@ -25,10 +22,7 @@ extension AddressParser {
         case amount
     }
     
-    static func parseDeepLink(queryParameters: DeepLink.Parameters?) -> TransactionMeta? {
-        guard let parameters = queryParameters else {
-            return nil
-        }
+    static func parseDeepLink(parameters: DeepLink.Parameters) -> TransactionMeta? {
         guard
             let addressString = parameters[QueryParameter.address.rawValue] as? String,
             let address = Address(addressString) else {
