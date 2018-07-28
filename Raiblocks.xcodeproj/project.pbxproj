@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2999DEE2210CF9A2000BEFC4 /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999DEE1210CF9A2000BEFC4 /* DeepLinkParser.swift */; };
+		2999DEE4210CFCB3000BEFC4 /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2999DEE3210CFCB3000BEFC4 /* DeepLink.swift */; };
+		29EE7843210D27FA0084C938 /* DeepLinkURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EE7842210D27FA0084C938 /* DeepLinkURL.swift */; };
 		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
 		510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510C391F2084F3DC004DDC6B /* GenericFunctions.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
@@ -137,6 +140,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2999DEE1210CF9A2000BEFC4 /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
+		2999DEE3210CFCB3000BEFC4 /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
+		29EE7842210D27FA0084C938 /* DeepLinkURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkURL.swift; sourceTree = "<group>"; };
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
 		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		510C391F2084F3DC004DDC6B /* GenericFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFunctions.swift; sourceTree = "<group>"; };
@@ -268,6 +274,16 @@
 				415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2999DEE0210CF877000BEFC4 /* Deep Link Routing */ = {
+			isa = PBXGroup;
+			children = (
+				2999DEE1210CF9A2000BEFC4 /* DeepLinkParser.swift */,
+				2999DEE3210CFCB3000BEFC4 /* DeepLink.swift */,
+				29EE7842210D27FA0084C938 /* DeepLinkURL.swift */,
+			);
+			path = "Deep Link Routing";
 			sourceTree = "<group>";
 		};
 		51203A3B1FE1ECF700CD7D79 /* Models */ = {
@@ -466,6 +482,7 @@
 				5125E4491FD1FE8A004DB451 /* JSON Responses */,
 				51FE1F971FC605C9009F045F /* AppDelegate.swift */,
 				5174E8F7200FA6BC00DE86A0 /* Services */,
+				2999DEE0210CF877000BEFC4 /* Deep Link Routing */,
 				51A520601FE430BD003F6EC7 /* New User Experience */,
 				5125E4541FD21C5D004DB451 /* HomeViewController */,
 				51E945D21FF6EC45006B7081 /* ReceiveViewController */,
@@ -807,6 +824,7 @@
 				510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */,
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
+				2999DEE4210CFCB3000BEFC4 /* DeepLink.swift in Sources */,
 				51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */,
 				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
@@ -860,11 +878,13 @@
 				5148279E1FEEBDD800C788E3 /* AccountInfo.swift in Sources */,
 				51C684951FEB05C000943815 /* HomeViewModel.swift in Sources */,
 				51FE1F981FC605C9009F045F /* AppDelegate.swift in Sources */,
+				29EE7843210D27FA0084C938 /* DeepLinkURL.swift in Sources */,
 				51A890752064589500BBA280 /* LegalViewController.swift in Sources */,
 				51CD15411FF86B99004102A2 /* SendKeyboard.swift in Sources */,
 				515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */,
 				51E945D41FF6EC60006B7081 /* ShareCard.swift in Sources */,
 				519B4D381FD23521006B7B6E /* SettingsViewController.swift in Sources */,
+				2999DEE2210CF9A2000BEFC4 /* DeepLinkParser.swift in Sources */,
 				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
 				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
 				51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */,

@@ -6,9 +6,14 @@
 //  Copyright © 2018 Nano Wallet Company. All rights reserved.
 //
 
-final class AddressParser {
+struct TransactionMeta {
+    let address: Address
+    let amount: NSDecimalNumber?
+}
 
-    static func parse(string: String) -> (address: Address, amount: NSDecimalNumber)? {
+final class AddressParser {
+    
+    static func parse(string: String) -> TransactionMeta? {
         if string.contains(":") {
             let _addressString = string.split(separator: ":")[1]
             let addressString = _addressString.split(separator: "?")[0]
@@ -20,17 +25,17 @@ final class AddressParser {
                 // TODO: protect against strings formatted as 1,000.00
                 let values = _addressString.split(separator: "=")
 
-                guard values.count > 1 else { return (address: address, amount: 0) }
+                guard values.count > 1 else { return TransactionMeta(address: address, amount: 0) }
                 let val = values[1].replacingOccurrences(of: ",", with: ".")
                 amount = NSDecimalNumber(string: val)
             }
 
-            return (address: address, amount: amount)
+            return TransactionMeta(address: address, amount: amount)
         } else {
             guard let address = Address(string) else { return nil }
 
-            return (address: address, amount: 0)
+            return TransactionMeta(address: address, amount: 0)
         }
     }
-
+    
 }

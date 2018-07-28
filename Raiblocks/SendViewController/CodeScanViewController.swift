@@ -61,7 +61,7 @@ final class CodeScanViewController: ScannerViewContoller {
                 if let address = Address(string) {
                     self.delegate?.didReceiveAddress(address: address, amount: 0)
                 } else if let parsedAddress = AddressParser.parse(string: string) {
-                    self.delegate?.didReceiveAddress(address: parsedAddress.address, amount: parsedAddress.amount)
+                    self.delegate?.didReceiveAddress(address: parsedAddress.address, amount: parsedAddress.amount ?? 0)
                 } else {
                     AnalyticsEvent.errorParsingQRCode.track(customAttributes: ["qr_code_string": string])
                 }
