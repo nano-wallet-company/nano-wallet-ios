@@ -600,7 +600,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
-				ORGANIZATIONNAME = "Zack Shapiro";
+				ORGANIZATIONNAME = "Nano Wallet Company";
 				TargetAttributes = {
 					514A3FB120C9F1C500FFC4D8 = {
 						CreatedOnToolsVersion = 9.3;
