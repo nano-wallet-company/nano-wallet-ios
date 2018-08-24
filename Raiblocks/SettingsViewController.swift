@@ -41,7 +41,7 @@ final class SettingsViewController: UIViewController {
     private let userService = UserService()
     private let currencyService = CurrencyService()
 
-    private let currencies: [Currency] = Currency.allCurrencies
+    private let currencies: [Currency] = Currency.allFiatCurrencies
     private let localCurrency: Currency
 
     private weak var pickerView: UIPickerView?

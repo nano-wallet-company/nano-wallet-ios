@@ -34,25 +34,24 @@ class PriceViewController: UIViewController {
 
         switch self.type {
         case .nano:
+            let currency = Currency.nano
+            let mark = currency.mark
+            
             viewModel.transactableAccountBalance
                 .producer
                 .take(during: lifetime)
                 .observe(on: UIScheduler())
                 .startWithValues { nanoBalance in
-                    let formatter = NumberFormatter()
-                    formatter.numberStyle = .decimal
-                    formatter.maximumFractionDigits = 10
-                    formatter.locale = CurrencyService().localCurrency().locale
-
-                    if let balance = formatter.string(from: nanoBalance.rawAsUsableAmount) {
-                        self.priceLabel?.text = "\(balance) NANO"
+                    if let balance = currency.numberFormatter.string(from: nanoBalance.rawAsUsableAmount) {
+                        self.priceLabel?.text = "\(balance) \(mark)"
                     } else {
-                        self.priceLabel?.text = "0 NANO"
+                        self.priceLabel?.text = "0 \(mark)"
                     }
             }
 
         case .btc:
-            let mark = Currency.btc.mark
+            let currency = Currency.btc
+            let mark = currency.mark
 
             Property.combineLatest(viewModel.transactableAccountBalance, viewModel.lastBTCTradePrice)
                 .producer
@@ -68,7 +67,7 @@ class PriceViewController: UIViewController {
                     let sats = btcPrice * 100_000_000
                     let myBtcBalance = (sats * balance) / 100_000_000
 
-                    if let string = Currency.btc.numberFormatter.string(from: NSNumber(value: myBtcBalance)) {
+                    if let string = currency.numberFormatter.string(from: NSNumber(value: myBtcBalance)) {
                         // NumberFormatter doesn't include the mark for BTC which is why we include it here
                         self.priceLabel?.text = "\(mark) \(string)"
                     } else {

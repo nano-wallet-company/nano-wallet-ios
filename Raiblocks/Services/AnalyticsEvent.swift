@@ -17,11 +17,6 @@ enum AnalyticsEvent: String {
     case createWorkFailedForOpenBlock = "Create Work For Open Block Failed"
     case endpointUnwrapFailed = "Endpoint Unwrap Failed"
     case errorParsingQRCode = "Error Parsing QR Code"
-    case errorDecodingCMCBTCPriceData = "Error decoding CoinMarketCap BTC price data"
-    case errorDecodingCMCNanoPriceData = "Error decoding CoinMarketCap Nano price data"
-    case errorGettingCMCBTCPriceData = "Error getting CoinMarketCap BTC price data"
-    case errorGettingCMCNanoPriceData = "Error getting CoinMarketCap Nano price data"
-    case errorGettingExchangePriceData = "Error getting exchange price data"
     case errorGeneratingWorkForSending = "Error Generating Work for Sending"
     case errorUnwrappingLocalCurrencyText = "Error unwrapping Local Currency text"
     case localCurrencySelected = "Local Currency Selected"
@@ -53,15 +48,6 @@ enum AnalyticsEvent: String {
     case eulaViewed = "Mobile EULA Viewed"
     case privacyPolicyViewed = "Mobile Privacy Policy Viewed"
 
-    // LocalCurrencyPair
-    case errorFormattingLocalCurrencyStringToDouble = "Error formatting Local Currency String to Double"
-    case errorInLocalCurrencyDecodeFunction = "Error in LocalCurrencyPair.decode function"
-    case unableToGetLocalCurrencyPairBTCPrice = "Local Currency Pair Error: unable to get Bitcoin price"
-
-    case errorFormattingNanoStringToDouble = "Error formatting Nano Price Pair String to Double"
-    case errorInNanoDecodeFunction = "Error in NanoPricePair.decode function"
-    case unableToGetNanoPrice = "Nano Price Pair Error: unable to get price"
-
     // VCs Viewed
     case addressScanCameraViewed = "Address Scan Camera View Viewed"
     case homeViewed = "Home VC Viewed"
@@ -72,6 +58,11 @@ enum AnalyticsEvent: String {
     case seedScanCameraViewed = "Seed Scan Camera View Viewed"
     case sendViewed = "Send VC Viewed"
 
+    // Price Service
+    case errorGettingCMCPriceData = "Error getting CoinMarketCap price data"
+    case errorGettingCCAPIPriceData = "Error getting Currency Converter API price data"
+    case errorGettingExchangePriceData = "Error getting exchange price data"
+    
     // MARK: - Functions
 
     // NOTE: Legal has track differently, has to record values

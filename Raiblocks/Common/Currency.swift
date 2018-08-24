@@ -25,7 +25,6 @@ final class StorableCurrency: Object {
 enum Currency: String {
     case aud
     case brl
-    case btc
     case cad
     case chf
     case clp
@@ -54,12 +53,21 @@ enum Currency: String {
     case thb
     case _try
     case twd
+    case vef
     case zar
     case usd
+    
+    // Cryptocurrencies
+    case btc
+    case nano
 
     // Unicode Nano symbol would be dope
     var mark: String {
-        return self == .btc ? "₿" : locale.currencySymbol!
+        switch self {
+        case .btc: return "₿"
+        case .nano: return "NANO"
+        default: return locale.currencySymbol!
+        }
     }
 
     var currencyCode: String {
@@ -72,7 +80,6 @@ enum Currency: String {
         switch self {
         case .aud: return "en_US"
         case .brl: return "en_BR"
-        case .btc: return "en_US"
         case .cad: return "en_US" // uses $
         case .chf: return "en_CH"
         case .clp: return "en_US" // uses $
@@ -101,14 +108,17 @@ enum Currency: String {
         case .thb: return "th_TH"
         case ._try: return "tr_TR"
         case .twd: return "en_TW"
+        case .vef: return "es_VE"
         case .zar: return "pt_BR"
         case .usd: return "en_US"
+        
+        // Cryptocurrencies
+        case .btc, .nano: return "en_US"
         }
     }
 
-    /// All currencies but BTC
-    static var allCurrencies: [Currency] {
-        return [.aud, .brl, .cad, .chf, .clp, .cny, .czk, .dkk, .eur, .gbp, .hkd, .huf, .idr, .ils, .inr, .jpy, .krw, .mxn, .myr, .nok, .nzd, .php, .pkr, .pln, .rub, .sek, .sgd, .thb, ._try, .twd, .zar, .usd]
+    static var allFiatCurrencies: [Currency] {
+        return [.aud, .brl, .cad, .chf, .clp, .cny, .czk, .dkk, .eur, .gbp, .hkd, .huf, .idr, .ils, .inr, .jpy, .krw, .mxn, .myr, .nok, .nzd, .php, .pkr, .pln, .rub, .sek, .sgd, .thb, ._try, .twd, .vef, .zar, .usd]
     }
 
     var paramValue: String {
@@ -125,7 +135,6 @@ enum Currency: String {
     var name: String {
         switch self {
         case .aud: return "Australian Dollar"
-        case .btc: return "Bitcoin"
         case .brl: return "Brazilian Real"
         case .cad: return "Canadian Dollar"
         case .chf: return "Swiss Franc"
@@ -155,14 +164,20 @@ enum Currency: String {
         case .thb: return "Thai Baht"
         case ._try: return "Turkish Lira"
         case .twd: return "Taiwan New Dollar"
+        case .vef: return "Venezuelan Bolivar"
         case .zar: return "South African Rand"
         case .usd: return "US Dollar"
+            
+        // Cryptocurrencies
+        case .btc: return "Bitcoin"
+        case .nano: return "Nano"
         }
     }
 
     var nameWithMark: String {
         switch self {
         case .btc: return "Bitcoin"
+        case .nano: return "Nano"
         default: return mark + " " + name
         }
     }
@@ -170,16 +185,21 @@ enum Currency: String {
     var numberFormatter: NumberFormatter {
         let numberFormatter = NumberFormatter()
         numberFormatter.locale = locale
+        numberFormatter.maximumFractionDigits = 20
 
-        switch self {
-        case .btc:
+        if isCryptoCurrency {
             numberFormatter.numberStyle = .decimal
-            numberFormatter.maximumFractionDigits = 8
-        default:
+        } else {
             numberFormatter.numberStyle = .currency
         }
 
         return numberFormatter
     }
 
+    var isCryptoCurrency: Bool {
+        switch self {
+        case .btc, .nano: return true
+        default: return false
+        }
+    }
 }

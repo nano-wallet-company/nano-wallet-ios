@@ -42,7 +42,7 @@ extension NSDecimalNumber {
         guard let string = rawAsUsableString else { return nil }
 
         // This is gross, clean this up (just included to ship v1)
-        return Double(string.replacingOccurrences(of: Locale.current.decimalSeparator ?? ",", with: "."))
+        return Double(string.replacingOccurrences(of: CurrencyService().localCurrency().locale.decimalSeparator ?? ",", with: "."))
     }
 
     var asRawValue: NSDecimalNumber {

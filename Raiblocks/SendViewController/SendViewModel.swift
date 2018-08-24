@@ -112,8 +112,8 @@ final class SendViewModel {
 
         sendSocket.open()
 
-        priceService.fetchLatestBTCLocalCurrencyPrice()
-        priceService.fetchLatestNanoLocalCurrencyPrice()
+        priceService.fetchLatestLocalCurrencyPrice(for: .btc)
+        priceService.fetchLatestLocalCurrencyPrice(for: .nano)
     }
 
     /// Turn the remaining balance into a hex

@@ -12,6 +12,18 @@ import Result
 
 final class PriceService {
 
+    enum Endpoint: String {
+        case coinMarketCap
+        case currencyConverterAPI
+    }
+    
+    enum APIResponse {
+        case success(Double)
+        case error(PricePair, Error?)
+    }
+    
+    typealias PriceServiceCompletionBlock = (APIResponse)->()
+    
     var localCurrency: Property<Currency>
     private let _localCurrency = MutableProperty<Currency>(CurrencyService().localCurrency())
 
@@ -37,7 +49,7 @@ final class PriceService {
 
     func fetchLatestPrices() {
         fetchLatestPrice(exchange: .binance, decodable: BinanceNanoBTCPair.self)
-        fetchLatestBTCLocalCurrencyPrice()
+        fetchLatestLocalCurrencyPrice(for: .btc)
     }
 
     func fetchLatestPrice<T: ExchangePair>(exchange: Exchange, decodable: T.Type) {
@@ -67,47 +79,126 @@ final class PriceService {
             }
         }.resume()
     }
-
-    func fetchLatestBTCLocalCurrencyPrice() {
-        guard let url = URL(string: "https://api.coinmarketcap.com/v1/ticker/?convert=\(localCurrency.value.paramValue)&limit=1") else { return }
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error == nil else {
-                AnalyticsEvent.errorGettingCMCBTCPriceData.track(customAttributes: ["error_description": error?.localizedDescription ?? ""])
-
-                return self._lastBTCLocalCurrencyPrice.value = 0
+    
+    func fetchLatestLocalCurrencyPrice(for cryptoCurrency: Currency) {
+        guard cryptoCurrency.isCryptoCurrency else {
+            assertionFailure()
+            return
+        }
+        
+        let localCurrency = self.localCurrency.value
+        fetchLatestPrice(for: cryptoCurrency, in: localCurrency, from: .coinMarketCap) { [weak self] apiResponse in
+            guard let strongSelf = self else {
+                return
             }
-
-            let pair = LocalCurrencyPair(currency: self.localCurrency.value)
-            if let data = data, let price = try? pair.decode(fromData: data) {
-                self._lastBTCLocalCurrencyPrice.value = price
-            } else {
-                AnalyticsEvent.errorDecodingCMCBTCPriceData.track(customAttributes: ["error_description": "No description", "url": url.absoluteString])
-
-                self._lastBTCLocalCurrencyPrice.value = 0
+            
+            strongSelf.handle(response: apiResponse, from: cryptoCurrency, to: localCurrency, endPoint: .coinMarketCap)
+            
+            switch apiResponse {
+            case .success: break
+            case .error: strongSelf.fetchLatestLocalCurrencyInRelationToUSD(for: cryptoCurrency)
             }
-        }.resume()
+        }
     }
-
-    func fetchLatestNanoLocalCurrencyPrice() {
-        guard let url = URL(string: "https://api.coinmarketcap.com/v1/ticker/?convert=\(localCurrency.value.paramValue)&limit=50") else { return }
-
+    
+    fileprivate func fetchLatestLocalCurrencyInRelationToUSD(for cryptoCurrency: Currency) {
+        guard cryptoCurrency.isCryptoCurrency else {
+            assertionFailure()
+            return
+        }
+        
+        let localCurrency = self.localCurrency.value
+        fetchLatestPrice(for: cryptoCurrency, in: .usd, from: .coinMarketCap) { [weak self] apiResponse in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            switch apiResponse {
+            case let .success(priceInUSD):
+                strongSelf.fetchLatestPrice(for: .usd, in: localCurrency, from: .currencyConverterAPI) { apiResponse in
+                    switch apiResponse {
+                    case let .success(USDInLocalCurrency):
+                        strongSelf.handle(response: .success(priceInUSD * USDInLocalCurrency), from: cryptoCurrency, to: localCurrency, endPoint: .currencyConverterAPI)
+                    case .error:
+                        strongSelf.handle(response: apiResponse, from: cryptoCurrency, to: localCurrency, endPoint: .currencyConverterAPI)
+                    }
+                }
+            case .error:
+                strongSelf.handle(response: apiResponse, from: cryptoCurrency, to: .usd, endPoint: .coinMarketCap)
+            }
+        }
+    }
+    
+    fileprivate func fetchLatestPrice(for currency: Currency,
+                                      in otherCurrency: Currency,
+                                      from endpoint: Endpoint,
+                                      completion: @escaping PriceServiceCompletionBlock) {
+        
+        let pair = PricePair(from: currency, to: otherCurrency, endpoint: endpoint)
+        guard let url = endpoint.conversionURL(from: currency, to: otherCurrency) else {
+            completion(.error(pair, nil))
+            return
+        }
+        
         URLSession.shared.dataTask(with: url) { data, _, error in
-            guard error == nil else {
-                AnalyticsEvent.errorGettingCMCNanoPriceData.track(customAttributes: ["error_description": error?.localizedDescription ?? ""])
-
-                return self._lastNanoLocalCurrencyPrice.value = 0
+            guard let data = data, let optionalPrice = try? pair.decode(fromData: data), let price = optionalPrice else {
+                completion(.error(pair, error))
+                return
             }
-
-            let pair = NanoPricePair(currency: self.localCurrency.value)
-            if let data = data, let price = try? pair.decode(fromData: data) {
-                self._lastNanoLocalCurrencyPrice.value = price
-            } else {
-                AnalyticsEvent.errorDecodingCMCNanoPriceData.track(customAttributes: ["url": url.absoluteString, "event": "data unwrap failed", "currency": pair.currency.paramValue])
-
-                self._lastNanoLocalCurrencyPrice.value = 0
-            }
+            completion(.success(price))
         }.resume()
     }
+    
+    fileprivate func handle(response: APIResponse,
+                            from currency: Currency,
+                            to otherCurrency: Currency,
+                            endPoint: Endpoint) {
+        switch response {
+        case let .success(price):
+            if otherCurrency == localCurrency.value {
+                switch currency {
+                case .btc: _lastBTCLocalCurrencyPrice.value = price
+                case .nano: _lastNanoLocalCurrencyPrice.value = price
+                default:
+                    assertionFailure("Currency \(currency.paramValue) is unsupported.")
+                    break
+                }
+            }
+        case let .error(pair, error):
+            var logParams = pair.logParams
+            logParams["error_description"] = error?.localizedDescription ?? "n/a"
+            endPoint.errorEvent.track(customAttributes: logParams)
+        }
+    }
+}
 
+extension PriceService.Endpoint {
+    
+    var errorEvent: AnalyticsEvent {
+        switch self {
+        case .coinMarketCap: return .errorGettingCMCPriceData
+        case .currencyConverterAPI: return .errorGettingCCAPIPriceData
+        }
+    }
+    
+    func conversionURL(from: Currency, to: Currency) -> URL? {
+        switch self {
+        case .coinMarketCap:
+            let baseURLString = "https://api.coinmarketcap.com/v1/ticker"
+            switch from {
+            case .btc: return URL(string: "\(baseURLString)/bitcoin/?convert=\(to.paramValue)")
+            case .nano: return URL(string: "\(baseURLString)/nano/?convert=\(to.paramValue)")
+            default:
+                assertionFailure("This API does not support \(from.paramValue).")
+                return nil
+            }
+        case .currencyConverterAPI:
+            guard from.isCryptoCurrency == false && to.isCryptoCurrency == false else {
+                assertionFailure("This API does not support cryptocurrency conversions.")
+                return nil
+            }
+            let baseURLString = "https://free.currencyconverterapi.com/api/v5"
+            return URL(string: "\(baseURLString)/convert?q=\(from.paramValue)_\(to.paramValue)&compact=y")
+        }
+    }
 }
