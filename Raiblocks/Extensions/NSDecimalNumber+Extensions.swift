@@ -19,30 +19,13 @@ extension NSDecimalNumber {
     var rawAsUsableString: String? {
         let result = rawAsUsableAmount
 
-        let numberFormatter = NumberFormatter()
-        numberFormatter.locale = CurrencyService().localCurrency().locale
-        numberFormatter.roundingMode = .floor
-        numberFormatter.maximumFractionDigits = 6
-
-        return numberFormatter.string(from: result)
-    }
-
-    var rawAsLongerUsableString: String? {
-        let result = rawAsUsableAmount
-
-        let numberFormatter = NumberFormatter()
-        numberFormatter.locale = CurrencyService().localCurrency().locale
-        numberFormatter.roundingMode = .floor
-        numberFormatter.maximumFractionDigits = 10
-
+        let numberFormatter = Currency.nano.numberFormatter
         return numberFormatter.string(from: result)
     }
 
     var rawAsDouble: Double? {
         guard let string = rawAsUsableString else { return nil }
-
-        // This is gross, clean this up (just included to ship v1)
-        return Double(string.replacingOccurrences(of: CurrencyService().localCurrency().locale.decimalSeparator ?? ",", with: "."))
+        return Double(string)
     }
 
     var asRawValue: NSDecimalNumber {

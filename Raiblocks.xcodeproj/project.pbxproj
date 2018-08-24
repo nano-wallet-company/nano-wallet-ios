@@ -64,7 +64,7 @@
 		519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519C1A181FEAE28E005EBA02 /* AccountCheck.swift */; };
 		51A5204F1FE2D6AC003F6EC7 /* PricePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */; };
 		51A520521FE2D7A1003F6EC7 /* PriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */; };
-		51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */; };
+		51A520551FE320C0003F6EC7 /* PricePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520541FE320C0003F6EC7 /* PricePair.swift */; };
 		51A520591FE32E53003F6EC7 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A520581FE32E53003F6EC7 /* Currency.swift */; };
 		51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205A1FE3314F003F6EC7 /* NanoButton.swift */; };
 		51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A5205C1FE33B04003F6EC7 /* WebViewController.swift */; };
@@ -197,7 +197,7 @@
 		519C1A181FEAE28E005EBA02 /* AccountCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCheck.swift; sourceTree = "<group>"; };
 		51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePageViewController.swift; sourceTree = "<group>"; };
 		51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceViewController.swift; sourceTree = "<group>"; };
-		51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalCurrencyPair+NanoPricePair.swift"; sourceTree = "<group>"; };
+		51A520541FE320C0003F6EC7 /* PricePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePair.swift; sourceTree = "<group>"; };
 		51A520581FE32E53003F6EC7 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		51A5205A1FE3314F003F6EC7 /* NanoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NanoButton.swift; sourceTree = "<group>"; };
 		51A5205C1FE33B04003F6EC7 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -309,7 +309,7 @@
 				5125E4551FD22210004DB451 /* TransactionViewModel.swift */,
 				51A5204E1FE2D6AC003F6EC7 /* PricePageViewController.swift */,
 				51A520511FE2D7A1003F6EC7 /* PriceViewController.swift */,
-				51A520541FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift */,
+				51A520541FE320C0003F6EC7 /* PricePair.swift */,
 			);
 			path = HomeViewController;
 			sourceTree = "<group>";
@@ -618,7 +618,7 @@
 					51FE1F931FC605C9009F045F = {
 						CreatedOnToolsVersion = 9.1;
 						LastSwiftMigration = 0910;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -807,7 +807,7 @@
 				510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */,
 				5186C5401FC92FE50040E66C /* UIColor+Extension.swift in Sources */,
 				5185DC6A1FDF48D90096E687 /* Endpoint.swift in Sources */,
-				51A520551FE320C0003F6EC7 /* LocalCurrencyPair+NanoPricePair.swift in Sources */,
+				51A520551FE320C0003F6EC7 /* PricePair.swift in Sources */,
 				51A5205B1FE3314F003F6EC7 /* NanoButton.swift in Sources */,
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
 				517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */,
@@ -1169,8 +1169,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
@@ -1210,8 +1210,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;

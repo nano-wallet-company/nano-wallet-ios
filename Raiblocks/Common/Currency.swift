@@ -113,7 +113,13 @@ enum Currency: String {
         case .usd: return "en_US"
         
         // Cryptocurrencies
-        case .btc, .nano: return "en_US"
+        case .btc, .nano:
+            // Use the same locale for cryptocurrencies as the local currency.
+            let localCurrency = CurrencyService().localCurrency()
+            if localCurrency != self {
+                return localCurrency.localIdentifier
+            }
+            return "en_US"
         }
     }
 
@@ -185,10 +191,11 @@ enum Currency: String {
     var numberFormatter: NumberFormatter {
         let numberFormatter = NumberFormatter()
         numberFormatter.locale = locale
-        numberFormatter.maximumFractionDigits = 20
 
         if isCryptoCurrency {
             numberFormatter.numberStyle = .decimal
+            numberFormatter.roundingMode = .floor
+            numberFormatter.maximumFractionDigits = 8
         } else {
             numberFormatter.numberStyle = .currency
         }

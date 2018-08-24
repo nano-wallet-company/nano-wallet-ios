@@ -47,6 +47,8 @@ final class SendViewController: UIViewController {
     let nanoProducer: SignalProducer<KeyboardButton, NoError>
     let localCurrencyProducer: SignalProducer<KeyboardButton, NoError>
 
+    private let nanoDecimalSeparator: String = Currency.nano.numberFormatter.decimalSeparator
+    
     init(viewModel: SendViewModel) {
         self.viewModel = viewModel
         self.nanoProducer = SignalProducer(nanoSignal)
@@ -259,7 +261,7 @@ final class SendViewController: UIViewController {
                 strongSelf.viewModel.maxAmountInUse = false
 
                 // TODO: add case: if second to last char is decimalSeparator, deleteBackwardsx2 (see also in other producer below)
-                if textField.text! == "0\(strongSelf.viewModel.decimalSeparator)" {
+                if textField.text! == "0\(strongSelf.nanoDecimalSeparator)" {
                     textField.deleteBackward()
                     textField.deleteBackward()
                 } else {
@@ -268,7 +270,7 @@ final class SendViewController: UIViewController {
             case .number:
                 if textField.text! == "", button.valueIsDecimalIndicator {
                     textField.text!.insert("0", at: String.Index(encodedOffset: 0))
-                    textField.text!.insert(Character(strongSelf.viewModel.decimalSeparator), at: String.Index(encodedOffset: 1))
+                    textField.text!.insert(Character(strongSelf.nanoDecimalSeparator), at: String.Index(encodedOffset: 1))
                 } else {
                     textField.text!.insert(button.characterValue, at: String.Index(encodedOffset: text.count))
                 }
@@ -368,10 +370,13 @@ final class SendViewController: UIViewController {
 
         viewModel.nanoAmount.producer.startWithValues { [weak self] amount in
             // TODO: fix case where local currency amount is selected, you scan a code with an amount and the translated amount isn't present
-            if self?.activeTextField == self?.nanoTextField || self?.activeTextField == nil {
-                self?.localCurrencyTextField?.text = self?.convertNanoToLocalCurrency(value: amount) ?? "0\(self?.viewModel.decimalSeparator)0"
+            guard let strongSelf = self else {
+                return
+            }
+            if strongSelf.activeTextField == strongSelf.nanoTextField || strongSelf.activeTextField == nil {
+                strongSelf.localCurrencyTextField?.text = strongSelf.convertNanoToLocalCurrency(value: amount) ?? "0\(strongSelf.nanoDecimalSeparator)0"
             } else {
-                self?.nanoTextField?.text = amount.stringValue
+                strongSelf.nanoTextField?.text = amount.stringValue
             }
         }
     }
@@ -381,15 +386,13 @@ final class SendViewController: UIViewController {
     }
 
     func formatForMath(_ string: String) -> String {
-        guard let separator = viewModel.localCurrency.locale.decimalSeparator, separator != "." else { return string }
-
-        return string.replacingOccurrences(of: separator, with: ".")
+        return string.replacingOccurrences(of: viewModel.decimalSeparator, with: ".").replacingOccurrences(of: nanoDecimalSeparator, with: ".")
     }
 
     func formatForView(_ string: String) -> String {
         guard let separator = viewModel.localCurrency.locale.decimalSeparator else { return string }
 
-        return string.replacingOccurrences(of: ".", with: separator)
+        return string.replacingOccurrences(of: nanoDecimalSeparator, with: ".")
     }
 
     private func convertNanoToLocalCurrency(value: NSDecimalNumber) -> String? {
@@ -400,10 +403,7 @@ final class SendViewController: UIViewController {
             val = NSDecimalNumber(string: value.rawAsUsableString)
         }
 
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .currency
-        numberFormatter.locale = viewModel.localCurrency.locale
-
+        let numberFormatter = viewModel.localCurrency.numberFormatter
         let amount = val.doubleValue * viewModel.priceService.lastNanoLocalCurrencyPrice.value
         return numberFormatter.string(from: NSNumber(floatLiteral: amount))
     }
@@ -507,7 +507,7 @@ final class SendViewController: UIViewController {
     }
 
     private func authenticateAndSend(endpoint: Endpoint, amountYoullSend: NSDecimalNumber) {
-        guard let amount = amountYoullSend.rawAsLongerUsableString else {
+        guard let amount = amountYoullSend.rawAsUsableString else {
             self.showError(title: "Something went wrong.", message: "There was a problem sending Nano. Please try again.")
 
             AnalyticsEvent.trackCrash(error: .longUsableStringCastFailed)
@@ -775,7 +775,12 @@ extension SendViewController: UITextFieldDelegate {
         // handle backspace, NOTE: this needs to come after line above to prevent the user from removing the $
         if string == "<" { return true }
 
-        let separator = viewModel.decimalSeparator
+        let separator: String
+        if textField === nanoTextField {
+            separator = nanoDecimalSeparator
+        } else {
+            separator = viewModel.decimalSeparator
+        }
         if text.contains(separator), string == separator { return false }
 
         if text == "0" && string != separator { return false } // Don't allow 000

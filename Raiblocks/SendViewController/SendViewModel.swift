@@ -78,8 +78,8 @@ final class SendViewModel {
         self.toAddress = toAddress
 
         self.localCurrency = priceService.localCurrency.value
-        self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
-        self.decimalSeparator = localCurrency.locale.decimalSeparator ?? "."
+        self.groupingSeparator = localCurrency.numberFormatter.groupingSeparator
+        self.decimalSeparator = localCurrency.numberFormatter.decimalSeparator
         // Default values are USD grouping/separator values
 
         guard

@@ -64,7 +64,7 @@ final class SendKeyboard: UIView {
         ])
 
 
-        let divider = CurrencyService().localCurrency().locale.decimalSeparator
+        let divider = CurrencyService().localCurrency().numberFormatter.decimalSeparator
         createHorizontalStackView(forButtons: [
             SendKeyboardButton(withKey: divider ?? "."),
             SendKeyboardButton(withKey: "0"),
@@ -97,7 +97,7 @@ enum KeyboardButton {
     }
 
     var valueIsDecimalIndicator: Bool {
-        return self.stringValue == (CurrencyService().localCurrency().locale.decimalSeparator ?? ".")
+        return self.stringValue == (CurrencyService().localCurrency().numberFormatter.decimalSeparator)
     }
 }
 

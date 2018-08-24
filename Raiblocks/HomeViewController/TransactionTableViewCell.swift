@@ -30,11 +30,7 @@ final class TransactionTableViewCell: UITableViewCell {
                 self.icon?.image = UIImage(named: TransactionType.receive.rawValue)
             }
 
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = isiPhoneSE() ? 7 : 10
-            formatter.locale = CurrencyService().localCurrency().locale
-
+            let formatter = Currency.nano.numberFormatter
             self.amountLabel?.text = formatter.string(from: viewModel.amount) ?? "0"
             self.addressLabel?.attributedText = viewModel.address?.shortAddressWithColor
             self.nanoCurrencySymbol?.image = viewModel.type == .send ? UIImage(named: "nanoCurrencyMarkBlue") : UIImage(named: "nanoCurrencyMarkGrey")
