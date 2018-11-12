@@ -242,7 +242,11 @@ class HomeViewController: UIViewController {
     @objc func sendNano() {
         viewModel.isCurrentlySending.value = true
 
-        let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket))
+        let homeSocket = self.viewModel.socket
+        let initialSendableBalance = viewModel.transactableAccountBalance.value
+        let sendViewModel = SendViewModel(homeSocket: homeSocket, initialSendableBalance: initialSendableBalance)
+        
+        let vc = SendViewController(viewModel: sendViewModel)
         vc.delegate = self
 
         self.navigationController?.pushViewController(vc, animated: true)
@@ -355,7 +359,13 @@ extension HomeViewController: UITableViewDelegate {
     private func showExplorerAlert(forIndexPath indexPath: IndexPath) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Send Nano to Address", style: .default) { _ in
-            let vc = SendViewController(viewModel: SendViewModel(homeSocket: self.viewModel.socket, toAddress: self.viewModel.transactions.value[indexPath.row].fromAddress))
+            let homeSocket = self.viewModel.socket
+            let sendAddress = self.viewModel.transactions.value[indexPath.row].fromAddress
+            let initialSendableBalance = self.viewModel.transactableAccountBalance.value
+            let sendViewModel = SendViewModel(homeSocket: homeSocket,
+                                              toAddress: sendAddress,
+                                              initialSendableBalance: initialSendableBalance)
+            let vc = SendViewController(viewModel: sendViewModel)
             vc.delegate = self
 
             self.navigationController?.pushViewController(vc, animated: true)
