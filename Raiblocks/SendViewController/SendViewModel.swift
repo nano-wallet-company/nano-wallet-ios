@@ -14,7 +14,7 @@ import SwiftWebSocket
 
 final class SendViewModel {
 
-    var sendableNanoBalance: NSDecimalNumber = 0
+    private(set) var sendableNanoBalance: NSDecimalNumber
     var previousFrontierHash: String?
 
     let socket: WebSocket
@@ -73,9 +73,10 @@ final class SendViewModel {
         }
     }
 
-    init(homeSocket socket: WebSocket, toAddress: Address? = nil) {
+    init(homeSocket socket: WebSocket, toAddress: Address? = nil, initialSendableBalance: NSDecimalNumber) {
         self.socket = socket
         self.toAddress = toAddress
+        self.sendableNanoBalance = initialSendableBalance
 
         self.localCurrency = priceService.localCurrency.value
         self.groupingSeparator = localCurrency.locale.groupingSeparator ?? ","
