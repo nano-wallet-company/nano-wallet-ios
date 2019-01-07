@@ -12,7 +12,7 @@ import Cartography
 
 final class NanoButton: UIButton {
 
-    enum ButtonType {
+    enum NanoButtonType {
         case lightBlue, lightBlueSend, darkBlue, orange, grey
 
         var textColor: UIColor {
@@ -40,7 +40,7 @@ final class NanoButton: UIButton {
         }
     }
 
-    init(withType type: ButtonType) {
+    init(withType type: NanoButtonType) {
         super.init(frame: .zero)
 
         layer.cornerRadius = 3

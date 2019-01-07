@@ -24,59 +24,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import Foundation
 import CoreGraphics
 
-@objc public enum EFQRCodeMode: Int {
-    case none           = 0
-    case grayscale      = 1
-    case binarization   = 2
-}
-
-@objc public enum EFPointShape: Int {
-    case square         = 0
-    case circle         = 1
-}
-
-public struct EFUIntPixel {
-    public var red: UInt8 = 0
-    public var green: UInt8 = 0
-    public var blue: UInt8 = 0
-    public var alpha: UInt8 = 0
-}
-
-public class EFIntSize: NSObject {
-    public private(set) var width: Int = 0
-    public private(set) var height: Int = 0
-
-    public init(width: Int, height: Int) {
-        self.width = width
-        self.height = height
-    }
-
-    public func toCGSize() -> CGSize {
-        return CGSize(width: self.width, height: self.height)
-    }
-
-    public func widthCGFloat() -> CGFloat {
-        return CGFloat(width)
-    }
-
-    public func heightCGFloat() -> CGFloat {
-        return CGFloat(height)
-    }
-}
-
-// EFInputCorrectionLevel
-@objc public enum EFInputCorrectionLevel: Int {
-    case l = 0     // L 7%
-    case m = 1     // M 15%
-    case q = 2     // Q 25%
-    case h = 3     // H 30%
-}
+#if os(iOS) || os(tvOS) || os(macOS)
+import CoreImage
+#endif
 
 // Like UIViewContentMode
-@objc public enum EFWatermarkMode: Int {
+public enum EFWatermarkMode: Int {
     case scaleToFill        = 0
     case scaleAspectFit     = 1
     case scaleAspectFill    = 2
@@ -89,13 +44,4 @@ public class EFIntSize: NSObject {
     case topRight           = 9
     case bottomLeft         = 10
     case bottomRight        = 11
-}
-
-struct EFIntPoint {
-    public var x: Int = 0
-    public var y: Int = 0
-
-    public func toCGPoint() -> CGPoint {
-        return CGPoint(x: self.x, y: self.y)
-    }
 }
