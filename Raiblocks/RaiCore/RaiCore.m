@@ -156,18 +156,22 @@
     const char *txn = [transaction UTF8String];
     unsigned char *privateKeyBytePair = (unsigned char *)[privateKey bytes];
 
-    const char *signedTransaction = xrb_sign_transaction((char *)txn, privateKeyBytePair);
+    char *signedTransaction = xrb_sign_transaction((char *)txn, privateKeyBytePair);
 
-    return [NSString stringWithFormat:@"%s", signedTransaction];
+    NSString *signedTransactionString = [NSString stringWithCString:signedTransaction encoding:NSASCIIStringEncoding];
+    free (signedTransaction);
+    return signedTransactionString;
 }
 
 /// Takes a JSON-serialized string version of a block (state or legacy)
 - (NSString *)hashBlock:(NSString *)transaction;
 {
     const char *txn = [transaction UTF8String];
-    const char *hash = xrb_hash_transaction((char *)txn);
+    char *hash = xrb_hash_transaction((char *)txn);
 
-    return [NSString stringWithFormat:@"%s", hash];
+    NSString *hashString = [NSString stringWithCString:hash encoding:NSASCIIStringEncoding];
+    free(hash);
+    return hashString;
 }
 
 @end
