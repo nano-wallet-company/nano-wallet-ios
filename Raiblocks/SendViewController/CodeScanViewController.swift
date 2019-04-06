@@ -13,7 +13,7 @@ import ReactiveSwift
 
 
 @objc protocol CodeScanViewControllerDelegate: class {
-    func didReceiveAddress(address: Address, amount: NSDecimalNumber)
+    func didReceive(address: String)
 }
 
 
@@ -58,13 +58,7 @@ final class CodeScanViewController: ScannerViewContoller {
     private func scanAddress() {
         scannerCameraView?.qrCodeProducer()
             .startWithValues { string in
-                if let address = Address(string) {
-                    self.delegate?.didReceiveAddress(address: address, amount: 0)
-                } else if let parsedAddress = AddressParser.parse(string: string) {
-                    self.delegate?.didReceiveAddress(address: parsedAddress.address, amount: parsedAddress.amount)
-                } else {
-                    AnalyticsEvent.errorParsingQRCode.track(customAttributes: ["qr_code_string": string])
-                }
+                self.delegate?.didReceive(address: string)
             }
     }
 
