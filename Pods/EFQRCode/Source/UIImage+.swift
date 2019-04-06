@@ -24,17 +24,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS) || os(tvOS) || os(watchOS)
+import UIKit
+
 #if os(iOS) || os(tvOS)
-    import UIKit
+import CoreImage
+#endif
 
-    public extension UIImage {
+public extension UIImage {
 
-        public func toCIImage() -> CIImage? {
-            return CIImage(image: self)
-        }
-
-        public func toCGImage() -> CGImage? {
-            return self.toCIImage()?.toCGImage()
-        }
+    #if os(iOS) || os(tvOS)
+    public func toCIImage() -> CIImage? {
+        return CIImage(image: self)
     }
+    #endif
+
+    public func toCGImage() -> CGImage? {
+        #if os(watchOS)
+        return cgImage
+        #else
+        return toCIImage()?.toCGImage()
+        #endif
+    }
+}
 #endif

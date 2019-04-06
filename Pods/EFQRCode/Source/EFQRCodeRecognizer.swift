@@ -24,9 +24,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if os(iOS) || os(macOS) || os(tvOS)
 import CoreImage
 
-public class EFQRCodeRecognizer: NSObject {
+public class EFQRCodeRecognizer {
 
     private var image: CGImage? {
         didSet {
@@ -38,10 +39,6 @@ public class EFQRCodeRecognizer: NSObject {
     }
 
     private var contentArray: [String]?
-
-    public override init() {
-        super.init()
-    }
 
     public init(image: CGImage) {
         self.image = image
@@ -56,7 +53,7 @@ public class EFQRCodeRecognizer: NSObject {
 
     // Get QRCodes from image
     private func getQRString() -> [String]? {
-        guard let finalImage = self.image else {
+        guard let finalImage = image else {
             return nil
         }
         let result = finalImage.toCIImage().recognizeQRCode(options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
@@ -68,3 +65,4 @@ public class EFQRCodeRecognizer: NSObject {
         return result
     }
 }
+#endif
