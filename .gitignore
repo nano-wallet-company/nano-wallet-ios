@@ -4,3 +4,9 @@ xcuserdata
 *.xcworkspace
 Pods/Pods.xcodeproj/xcuserdata
 Raiblocks.xcodeproj/xcuserdata
+
+#Bundler
+bin
+
+# CocoaPods
+Pods/ 

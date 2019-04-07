@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29C30D0121079D2100DF237F /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C30D0021079D2100DF237F /* QRCode.swift */; };
 		510896D32053739300A5362D /* AddressParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510896D22053739300A5362D /* AddressParser.swift */; };
 		510C39202084F3DC004DDC6B /* GenericFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510C391F2084F3DC004DDC6B /* GenericFunctions.swift */; };
 		5117F4D01FD8490800CEAE78 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5117F4CF1FD8490800CEAE78 /* Credentials.swift */; };
@@ -137,6 +138,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		29C30D0021079D2100DF237F /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		415B60457C17517F10FE2D5D /* Pods-Raiblocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.release.xcconfig"; sourceTree = "<group>"; };
 		510896D22053739300A5362D /* AddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressParser.swift; sourceTree = "<group>"; };
 		510C391F2084F3DC004DDC6B /* GenericFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericFunctions.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 		51203A3B1FE1ECF700CD7D79 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				29C30D0021079D2100DF237F /* QRCode.swift */,
 				517FA64C1FE1D1DB00FE04B6 /* Address.swift */,
 				51394038202B64BB0073B90F /* ExchaingePairs.swift */,
 				5117F4CF1FD8490800CEAE78 /* Credentials.swift */,
@@ -577,7 +580,6 @@
 				51FE1F911FC605C9009F045F /* Frameworks */,
 				51FE1F921FC605C9009F045F /* Resources */,
 				8D470C91ABDA43EE836B8F03 /* [CP] Embed Pods Frameworks */,
-				F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */,
 				51A520641FE43791003F6EC7 /* ShellScript */,
 				51A520821FE8495D003F6EC7 /* CopyFiles */,
 				5171EE7B201FB80800E4CE7C /* ShellScript */,
@@ -600,7 +602,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0910;
-				ORGANIZATIONNAME = "Zack Shapiro";
+				ORGANIZATIONNAME = "Nano Wallet Company";
 				TargetAttributes = {
 					514A3FB120C9F1C500FFC4D8 = {
 						CreatedOnToolsVersion = 9.3;
@@ -618,7 +620,7 @@
 					51FE1F931FC605C9009F045F = {
 						CreatedOnToolsVersion = 9.1;
 						LastSwiftMigration = 0910;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -723,6 +725,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftWebSocket/SwiftWebSocket.framework",
+				"${BUILT_PRODUCTS_DIR}/swift_qrcodejs/swift_qrcodejs.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -735,6 +738,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftWebSocket.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/swift_qrcodejs.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -757,21 +761,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F8D869ED8EBE7F08FCF8CCBA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -852,6 +841,7 @@
 				5174E8F9200FA6CF00DE86A0 /* PriceService.swift in Sources */,
 				519B4D801FD74955006B7B6E /* RaiCore.m in Sources */,
 				51CD153F1FF854B5004102A2 /* SendKeyboardButton.swift in Sources */,
+				29C30D0121079D2100DF237F /* QRCode.swift in Sources */,
 				51A5205D1FE33B04003F6EC7 /* WebViewController.swift in Sources */,
 				5148279C1FEDAF0C00C788E3 /* SubscriptionTransaction.swift in Sources */,
 				51A8907720646C1900BBA280 /* UILabel+Extensions.swift in Sources */,
@@ -1169,8 +1159,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;
@@ -1210,8 +1200,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4ZFN7W45G2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Raiblocks/Info.plist;

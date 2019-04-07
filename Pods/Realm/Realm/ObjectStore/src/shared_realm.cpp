@@ -41,10 +41,12 @@
 
 #include <realm/sync/history.hpp>
 #include <realm/sync/permissions.hpp>
+#include <realm/sync/version.hpp>
 #else
 namespace realm {
 namespace sync {
     struct PermissionsCache {};
+    struct TableInfoCache {};
 }
 }
 #endif
@@ -712,6 +714,7 @@ void Realm::invalidate()
     }
 
     m_permissions_cache = nullptr;
+    m_table_info_cache = nullptr;
     m_shared_group->end_read();
     m_group = nullptr;
 }
@@ -727,11 +730,11 @@ bool Realm::compact()
         throw InvalidTransactionException("Can't compact a Realm within a write transaction");
     }
 
-    Group& group = read_group();
-    for (auto &object_schema : m_schema) {
-        ObjectStore::table_for_object_type(group, object_schema.name)->optimize();
+    verify_open();
+    // FIXME: when enum columns are ready, optimise all tables in a write transaction
+    if (m_group) {
+        m_shared_group->end_read();
     }
-    m_shared_group->end_read();
     m_group = nullptr;
 
     return m_shared_group->compact();
@@ -889,6 +892,7 @@ void Realm::close()
     }
 
     m_permissions_cache = nullptr;
+    m_table_info_cache = nullptr;
     m_group = nullptr;
     m_shared_group = nullptr;
     m_history = nullptr;
@@ -961,6 +965,7 @@ T Realm::resolve_thread_safe_reference(ThreadSafeReference<T> reference)
         if (reference_version < current_version) {
             // Duplicate config for uncached Realm so we don't advance the user's Realm
             Realm::Config config = m_coordinator->get_config();
+            config.automatic_change_notifications = false;
             config.cache = false;
             config.schema = util::none;
             SharedRealm temporary_realm = m_coordinator->get_realm(config);
@@ -1019,7 +1024,13 @@ bool Realm::init_permission_cache()
 
     // Admin users bypass permissions checks outside of the logic in PermissionsCache
     if (m_config.sync_config && m_config.sync_config->is_partial && !m_config.sync_config->user->is_admin()) {
+#if REALM_SYNC_VER_MAJOR == 3 && (REALM_SYNC_VER_MINOR < 13 || (REALM_SYNC_VER_MINOR == 13 && REALM_SYNC_VER_PATCH < 3))
         m_permissions_cache = std::make_unique<sync::PermissionsCache>(read_group(), m_config.sync_config->user->identity());
+#else
+        m_table_info_cache = std::make_unique<sync::TableInfoCache>(read_group());
+        m_permissions_cache = std::make_unique<sync::PermissionsCache>(read_group(), *m_table_info_cache,
+                                                                       m_config.sync_config->user->identity());
+#endif
         return true;
     }
     return false;
@@ -1095,4 +1106,9 @@ Group& RealmFriend::read_group_to(Realm& realm, VersionID version)
         realm.m_shared_group->end_read();
     realm.begin_read(version);
     return *realm.m_group;
+}
+
+std::size_t Realm::compute_size() {
+    Group& group = read_group();
+    return group.compute_aggregated_byte_size();
 }
