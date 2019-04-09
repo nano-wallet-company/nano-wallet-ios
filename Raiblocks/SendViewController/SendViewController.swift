@@ -138,7 +138,8 @@ final class SendViewController: UIViewController {
         constrain(nanoTextField) {
             $0.top == $0.superview!.top
             $0.height == $0.superview!.height * CGFloat(0.5)
-            $0.width == $0.superview!.width
+            $0.left == $0.superview!.left + CGFloat(88)
+            $0.right == $0.superview!.right - CGFloat(88)
         }
         self.nanoTextField = nanoTextField
 
