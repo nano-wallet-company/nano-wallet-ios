@@ -580,10 +580,8 @@ final class SendViewController: UIViewController {
     private func keyboardAccessoryView() -> UIToolbar {
         let accessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
         accessoryView.barStyle = .default
-        let xrbItem = UIBarButtonItem(title: "xrb_", style: .plain, target: self, action: #selector(addXRBAddressPrefix))
         let nanoItem = UIBarButtonItem(title: "nano_", style: .plain, target: self, action: #selector(addNanoAddressPrefix))
-        [xrbItem].forEach { $0.tintColor = .black }
-        accessoryView.items = [xrbItem, nanoItem]
+        accessoryView.items = [nanoItem]
         accessoryView.sizeToFit()
 
         return accessoryView

@@ -11,10 +11,9 @@ extension URL {
     var queryDictionary: [String: String]? {
         guard let query = URLComponents(string: self.absoluteString)?.query else { return nil}
 
-        // TODO: add nano_ support later
         var queryStrings: [String: String] = [:]
         for item in query.components(separatedBy: ":") {
-            if item.contains("xrb_") {
+            if item.contains("xrb_") || item.contains("nano_") {
                 let items = item.split(separator: "?")
                 queryStrings["address"] = String(items[0])
 
