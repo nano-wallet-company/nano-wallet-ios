@@ -622,6 +622,7 @@ extension SendViewController: CodeScanViewControllerDelegate {
             if let amount = qrCode.amount {
                 self?.viewModel.nanoAmount.value = amount
                 self?.nanoTextField?.text = amount.stringValue
+                self?.sendableAmountIsValid.value = self?.nanoTextField?.text != ""
             }
             self?.nanoTextField?.becomeFirstResponder()
         }
