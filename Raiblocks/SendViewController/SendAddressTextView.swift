@@ -26,12 +26,7 @@ final class SendAddressTextView: UITextView {
         autocapitalizationType = .none
         layer.cornerRadius = 3
         clipsToBounds = true
-
-        if isiPhoneSE() {
-            textContainerInset = UIEdgeInsets(top: 22, left: 18, bottom: 18, right: 18)
-        } else {
-            textContainerInset = UIEdgeInsets(top: 22, left: 36, bottom: 18, right: 36)
-        }
+        textContainerInset = UIEdgeInsets(top: 22, left: 18, bottom: 18, right: 18)
     }
 
     required init?(coder aDecoder: NSCoder) {
