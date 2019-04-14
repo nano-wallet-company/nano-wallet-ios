@@ -17,6 +17,7 @@ final class SendTextField: UITextField {
         textColor = .white
         tintColor = .white
         textAlignment = .center
+        adjustsFontSizeToFitWidth = true
         placeholder = "0.00"
         inputView = UIView() // Don't show a keyboard
         font = Styleguide.Fonts.nunitoLight.font(ofSize: (isiPhoneSE() ? 17 : 20))

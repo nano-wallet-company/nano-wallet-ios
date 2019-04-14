@@ -138,7 +138,8 @@ final class SendViewController: UIViewController {
         constrain(nanoTextField) {
             $0.top == $0.superview!.top
             $0.height == $0.superview!.height * CGFloat(0.5)
-            $0.width == $0.superview!.width
+            $0.left == $0.superview!.left + CGFloat(88)
+            $0.right == $0.superview!.right - CGFloat(88)
         }
         self.nanoTextField = nanoTextField
 
@@ -579,10 +580,8 @@ final class SendViewController: UIViewController {
     private func keyboardAccessoryView() -> UIToolbar {
         let accessoryView = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 50))
         accessoryView.barStyle = .default
-        let xrbItem = UIBarButtonItem(title: "xrb_", style: .plain, target: self, action: #selector(addXRBAddressPrefix))
         let nanoItem = UIBarButtonItem(title: "nano_", style: .plain, target: self, action: #selector(addNanoAddressPrefix))
-        [xrbItem].forEach { $0.tintColor = .black }
-        accessoryView.items = [xrbItem, nanoItem]
+        accessoryView.items = [nanoItem]
         accessoryView.sizeToFit()
 
         return accessoryView
@@ -621,6 +620,7 @@ extension SendViewController: CodeScanViewControllerDelegate {
             if let amount = qrCode.amount {
                 self?.viewModel.nanoAmount.value = amount
                 self?.nanoTextField?.text = amount.stringValue
+                self?.sendableAmountIsValid.value = self?.nanoTextField?.text != ""
             }
             self?.nanoTextField?.becomeFirstResponder()
         }

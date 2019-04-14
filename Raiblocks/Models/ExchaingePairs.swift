@@ -22,7 +22,9 @@ enum Exchange: String {
         switch self {
         case .binance: return URL(string: "https://api.binance.com/api/v1/ticker/24hr?symbol=NANOBTC")
         case .okex: return URL(string: "https://www.okex.com/api/v1/ticker.do?symbol=nano_btc")
-        case .kucoin: return URL(string: "https://api.kucoin.com/v1/XRB-BTC/open/tick")
+        case .kucoin:
+            // TODO: Update usage of this endpoint. This URL does not work anymore.
+            return URL(string: "https://api.kucoin.com/v1/XRB-BTC/open/tick")
         }
     }
 

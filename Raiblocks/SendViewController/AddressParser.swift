@@ -29,7 +29,7 @@ final class AddressParser {
             
             guard values.count > 1 else { return (address: address, amount: nil) }
             let val = values[1].replacingOccurrences(of: ",", with: ".")
-            amount = NSDecimalNumber(string: val)
+            amount = NSDecimalNumber(string: val).rawAsUsableAmount
         }
         
         return (address: address, amount: amount)

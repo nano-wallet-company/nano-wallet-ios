@@ -14,9 +14,10 @@ import UIKit.UIColor
     private let value: String
 
     init?(_ address: String) {
-        guard RaiCore().walletAddressIsValid(address) else { return nil }
+        let modifiedAddress = address.replacingOccurrences(of: "xrb_", with: "nano_")
+        guard RaiCore().walletAddressIsValid(modifiedAddress) else { return nil }
 
-        self.value = address
+        self.value = modifiedAddress
     }
 
     var hasXrbAddressFormat: Bool {

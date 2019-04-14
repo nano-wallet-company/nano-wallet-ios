@@ -47,7 +47,7 @@ final class TransactionTableViewCell: UITableViewCell {
         let icon = UIImageView()
         addSubview(icon)
         constrain(icon) {
-            $0.left == $0.superview!.left + (isiPhoneSE() ? CGFloat(24) : CGFloat(32))
+            $0.left == $0.superview!.left + CGFloat(24)
             $0.centerY == $0.superview!.centerY
         }
         self.icon = icon
@@ -75,7 +75,7 @@ final class TransactionTableViewCell: UITableViewCell {
         addSubview(addressLabel)
         constrain(addressLabel) {
             $0.top == $0.superview!.top + CGFloat(24)
-            $0.right == $0.superview!.right - (isiPhoneSE() ? CGFloat(24) : CGFloat(32))
+            $0.right == $0.superview!.right - CGFloat(24)
         }
         self.addressLabel = addressLabel
 
