@@ -15,12 +15,7 @@ import SwiftWebSocket
 extension RaiCore {
 
     private var socketServerURL: URL? {
-        guard
-            let path = Bundle.main.path(forResource: "Common", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: String],
-            let urlString = root["socketServerURL"]
-        else { return nil }
-
+        let urlString = UserService.socketServerURL
         return URL(string: urlString)
     }
 

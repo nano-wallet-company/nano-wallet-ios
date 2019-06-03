@@ -39,7 +39,6 @@
 		515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */; };
 		515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E72A31FEC6B08001272D4 /* SendTextField.swift */; };
 		515E72A61FEC829A001272D4 /* PreconfiguredRepresentatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */; };
-		516C54A42008130E0044E0D2 /* Common.plist in Resources */ = {isa = PBXBuildFile; fileRef = 516C54A32008130E0044E0D2 /* Common.plist */; };
 		5171EE78201E1D7C00E4CE7C /* SeedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */; };
 		517275B0203F46F9009D9AA1 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517275AF203F46F9009D9AA1 /* URL+Extensions.swift */; };
 		5174E8F9200FA6CF00DE86A0 /* PriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5174E8F8200FA6CF00DE86A0 /* PriceService.swift */; };
@@ -170,7 +169,6 @@
 		515E72A01FEC4BD1001272D4 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		515E72A31FEC6B08001272D4 /* SendTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextField.swift; sourceTree = "<group>"; };
 		515E72A51FEC829A001272D4 /* PreconfiguredRepresentatives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreconfiguredRepresentatives.swift; sourceTree = "<group>"; };
-		516C54A32008130E0044E0D2 /* Common.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Common.plist; sourceTree = "<group>"; };
 		5171EE77201E1D7C00E4CE7C /* SeedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedTextView.swift; sourceTree = "<group>"; };
 		517275AF203F46F9009D9AA1 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		5174E8F8200FA6CF00DE86A0 /* PriceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceService.swift; sourceTree = "<group>"; };
@@ -478,7 +476,6 @@
 				51FE1F9E1FC605C9009F045F /* Assets.xcassets */,
 				51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */,
 				51FE1FA31FC605C9009F045F /* Info.plist */,
-				516C54A32008130E0044E0D2 /* Common.plist */,
 				519C1A101FEAC39C005EBA02 /* Fonts */,
 				51A520811FE846E7003F6EC7 /* RaiCore */,
 			);
@@ -674,7 +671,6 @@
 				5193E8E72062A622000B45B5 /* NotoSans-Regular.ttf in Resources */,
 				51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */,
 				51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */,
-				516C54A42008130E0044E0D2 /* Common.plist in Resources */,
 				515E72A11FEC4BD1001272D4 /* Nunito-Regular.ttf in Resources */,
 				515E729F1FEC4AE1001272D4 /* Nunito-Light.ttf in Resources */,
 			);

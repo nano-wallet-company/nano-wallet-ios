@@ -83,12 +83,7 @@ final class SendViewModel {
         self.decimalSeparator = localCurrency.locale.decimalSeparator ?? "."
         // Default values are USD grouping/separator values
 
-        guard
-            let path = Bundle.main.path(forResource: "Common", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: String],
-            let urlString = root["socketServerURL"]
-        else { fatalError("Could not load socket server URL") }
-
+        let urlString = UserService.socketServerURL
         self.sendSocket = WebSocket(urlString)
 
         sendSocket.event.message = { message in
