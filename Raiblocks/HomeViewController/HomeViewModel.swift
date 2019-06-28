@@ -166,12 +166,7 @@ final class HomeViewModel {
     // MARK: - init
 
     init() {
-        guard
-            let path = Bundle.main.path(forResource: "Common", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: String],
-            let urlString = root["socketServerURL"]
-        else { fatalError("Could not load socket server URL") }
-
+        let urlString = UserService.socketServerURL
         self.frontierBlockHash = ReactiveSwift.Property<String?>(_frontierBlockHash)
         self.transactableAccountBalance = ReactiveSwift.Property<NSDecimalNumber>(_transactableAccountBalance)
         self.hasNetworkConnection = ReactiveSwift.Property<Bool>(_hasNetworkConnection)

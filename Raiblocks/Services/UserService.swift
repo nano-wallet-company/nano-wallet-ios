@@ -11,25 +11,19 @@ import RealmSwift
 
 final class UserService {
 
+    static var socketServerURL: String {
+        return "wss://light.nano.org"
+    }
+    
+    private static var keychainID: String {
+        return "io.Realm.NanoWalletiOS"
+    }
+    
     static func getKeychainKeyID() -> NSData {
-        guard
-            let path = Bundle.main.path(forResource: "Common", ofType: "plist"),
-            let root = NSDictionary(contentsOfFile: path) as? [String: String],
-            let keychainID = root["keychainID"]
-        else {
-            AnalyticsEvent.trackCrash(error: .unableToGetKeychainKeyID)
-
-            fatalError("Could not load keychain id")
-        }
-
-        // Identifier for our keychain entry - should be unique for your application
-        let keychainIdentifier = keychainID
-        let keychainIdentifierData = keychainIdentifier.data(using: .utf8, allowLossyConversion: false)!
-
         // First check in the keychain for an existing key
         var query: [NSString: AnyObject] = [
             kSecClass: kSecClassKey,
-            kSecAttrApplicationTag: keychainIdentifierData as AnyObject,
+            kSecAttrApplicationTag: keychainID as AnyObject,
             kSecAttrKeySizeInBits: 512 as AnyObject,
             kSecReturnData: true as AnyObject
         ]
@@ -50,9 +44,10 @@ final class UserService {
         // Store the key in the keychain
         query = [
             kSecClass: kSecClassKey,
-            kSecAttrApplicationTag: keychainIdentifierData as AnyObject,
+            kSecAttrApplicationTag: keychainID as AnyObject,
             kSecAttrKeySizeInBits: 512 as AnyObject,
-            kSecValueData: keyData
+            kSecValueData: keyData,
+            kSecAttrIsPermanent: true as AnyObject
         ]
 
         status = SecItemAdd(query as CFDictionary, nil)
@@ -83,8 +78,6 @@ final class UserService {
             return realm.objects(Credentials.self).first
 
         } catch {
-            AnalyticsEvent.trackCrash(error: .unableToFetchCredentials)
-
             return nil
         }
     }
