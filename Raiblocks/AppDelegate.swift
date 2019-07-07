@@ -27,10 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // TODO: Before deploy, make sure this is set to nil/false
     let devConfig: (device: Device?, skipLegal: Bool) = (nil, false)
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let currentSchemaVersion: UInt64 = 2
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        let currentSchemaVersion: UInt64 = 3
         let config = Realm.Configuration(encryptionKey: UserService.getKeychainKeyID() as Data, readOnly: false, schemaVersion: currentSchemaVersion)
         Realm.Configuration.defaultConfiguration = config
+        return true
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "LogOut"), object: nil, queue: nil) { _ in
             UserService.logOut()
