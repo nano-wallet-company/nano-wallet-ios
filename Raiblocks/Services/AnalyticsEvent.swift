@@ -43,6 +43,10 @@ enum AnalyticsEvent: String {
     case socketErrorHome = "socket Error in HomeVM"
     case unableToValidateHeadBlock = "Unable to validate head block"
 
+    // Banner
+    case bannerViewed = "Banner Viewed"
+    case bannerActionButtonTapped = "Banner Action Button Tapped"
+    case bannerMinimized = "Banner Minimized"
 
     // Legal
     case disclaimerAgreementToggled = "Mobile Disclaimer Agreement Toggled"

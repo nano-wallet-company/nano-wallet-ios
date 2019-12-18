@@ -22,7 +22,9 @@ class HomeViewController: UIViewController {
     private let (lifetime, token) = Lifetime.make()
 
     // MARK: - UI Elements
-
+    private let bannerViewController = BannerViewController(nibName: nil, bundle: nil)
+    private var bannerHeightConstraint: NSLayoutConstraint? = nil
+    
     private weak var pricePageViewController: PricePageViewController?
     private weak var pageControl: UIPageControl?
     private weak var refreshControl: UIRefreshControl?
@@ -100,6 +102,11 @@ class HomeViewController: UIViewController {
         if viewModel.socket.readyState != .open {
             viewModel.socket.open()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AnalyticsEvent.bannerViewed.track()
     }
 
     override func viewDidLoad() {
@@ -192,6 +199,8 @@ class HomeViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         self.refreshControl = refreshControl
 
+        setupBannerViewController(in: topSection)
+        
         let tableView = UITableView()
         tableView.refreshControl = refreshControl
         tableView.backgroundColor = .white
@@ -199,7 +208,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        constrain(tableView, sendButton, topSection) {
+        constrain(tableView, sendButton, bannerViewController.view) {
             $0.top == $2.bottom
             $0.width == $0.superview!.width
             $0.bottom == $1.top - CGFloat(33)
@@ -222,6 +231,11 @@ class HomeViewController: UIViewController {
                 showAnalyticsAlert()
             }
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateBannerConstraints()
     }
 
     override func didReceiveMemoryWarning() {
@@ -450,6 +464,54 @@ extension HomeViewController: TransactionTableViewCellDelegate {
         present(ac, animated: true)
     }
 
+}
+
+private extension HomeViewController {
+    
+    func setupBannerViewController(in topSection: UIView) {
+        addChildViewController(bannerViewController)
+        view.addSubview(bannerViewController.view)
+        bannerViewController.didMove(toParentViewController: self)
+        
+        constrain(bannerViewController.view, topSection) {
+            $0.width == $0.superview!.width
+            $0.top == $1.bottom
+            bannerHeightConstraint = $0.height == 0
+        }
+        
+        bannerViewController.actionHandler = { [weak self] (url) in
+            AnalyticsEvent.bannerActionButtonTapped.track()
+            
+            guard let strongSelf = self else { return }
+            let webViewController = WebViewController(url: url, useForLegalPurposes: false)
+            strongSelf.present(webViewController, animated: true, completion: nil)
+        }
+        
+        bannerViewController.minimizeActionHandler = { [weak self] (minimized) in
+            if minimized == true {
+                AnalyticsEvent.bannerMinimized.track()
+            }
+            
+            guard let strongSelf = self else { return }
+            strongSelf.updateBannerConstraints()
+        }
+    }
+    
+    func updateBannerConstraints() {
+        let bannerView = bannerViewController.bannerView
+        let padding: CGFloat = 10
+        
+        let buttonHeight: CGFloat = bannerView.actionButton.sizeThatFits(bannerView.bounds.size).height
+        let textViewHeight: CGFloat = bannerView.textView.contentSize.height
+        let bannerHeight = textViewHeight + buttonHeight + padding
+        
+        view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.25, animations: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.bannerHeightConstraint?.constant = bannerHeight
+            strongSelf.view.layoutIfNeeded()
+        })
+    }
 }
 
 

@@ -24,7 +24,8 @@ final class NanoButton: UIButton {
 
         var backgroundColor: UIColor {
             switch self {
-            case .lightBlue, .darkBlue: return Styleguide.Colors.lightBlue.color.withAlphaComponent(0.2)
+            case .lightBlue: return Styleguide.Colors.lightBlue.color.withAlphaComponent(0.2)
+            case .darkBlue: return Styleguide.Colors.darkBlue.color.withAlphaComponent(0.8)
             case .orange: return Styleguide.Colors.orange.color.withAlphaComponent(0.2)
             case .lightBlueSend: return Styleguide.Colors.lightBlue.color
             case .grey: return UIColor.from(rgb: 0xE9E9E9)

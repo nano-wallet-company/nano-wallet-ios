@@ -85,6 +85,8 @@
 		51FE1F9A1FC605C9009F045F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FE1F991FC605C9009F045F /* HomeViewController.swift */; };
 		51FE1F9F1FC605C9009F045F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1F9E1FC605C9009F045F /* Assets.xcassets */; };
 		51FE1FA21FC605C9009F045F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51FE1FA01FC605C9009F045F /* LaunchScreen.storyboard */; };
+		ADB8489C238E878C00354D49 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB8489B238E878C00354D49 /* BannerView.swift */; };
+		ADB8489E238E87D600354D49 /* BannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB8489D238E87D600354D49 /* BannerViewController.swift */; };
 		B1B448F99EDC4C000021D555 /* Pods_Raiblocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */; };
 /* End PBXBuildFile section */
 
@@ -222,6 +224,8 @@
 		51FE1FA11FC605C9009F045F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		51FE1FA31FC605C9009F045F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		682CF0F483734E9493E71355 /* Pods_Raiblocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Raiblocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADB8489B238E878C00354D49 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		ADB8489D238E87D600354D49 /* BannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewController.swift; sourceTree = "<group>"; };
 		D52FEF9BCCC6F2F4A4622ECE /* Pods-Raiblocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Raiblocks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -460,6 +464,7 @@
 		51FE1F961FC605C9009F045F /* Raiblocks */ = {
 			isa = PBXGroup;
 			children = (
+				ADB8489A238E875300354D49 /* Banner */,
 				519B4D711FD36485006B7B6E /* Raiblocks-Bridging-Header.h */,
 				51A520571FE32E47003F6EC7 /* Common */,
 				51203A3B1FE1ECF700CD7D79 /* Models */,
@@ -480,6 +485,15 @@
 				51A520811FE846E7003F6EC7 /* RaiCore */,
 			);
 			path = Raiblocks;
+			sourceTree = "<group>";
+		};
+		ADB8489A238E875300354D49 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				ADB8489B238E878C00354D49 /* BannerView.swift */,
+				ADB8489D238E87D600354D49 /* BannerViewController.swift */,
+			);
+			path = Banner;
 			sourceTree = "<group>";
 		};
 		C8887A5CA257542CA23A6941 /* Frameworks */ = {
@@ -711,7 +725,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cartography/Cartography.framework",
 				"${BUILT_PRODUCTS_DIR}/EFQRCode/EFQRCode.framework",
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
@@ -738,7 +752,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Raiblocks/Pods-Raiblocks-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E75B9383A84D38143A3F866A /* [CP] Check Pods Manifest.lock */ = {
@@ -797,6 +811,7 @@
 				51883F0F1FE08E9D00069D41 /* AccountBalance.swift in Sources */,
 				517CCCD12028EAE90095590D /* CurrencyService.swift in Sources */,
 				519C1A191FEAE28E005EBA02 /* AccountCheck.swift in Sources */,
+				ADB8489C238E878C00354D49 /* BannerView.swift in Sources */,
 				517FA96B1FD225CD00043EE2 /* StyleguideV1.swift in Sources */,
 				51A520851FE99C63003F6EC7 /* RaiCore.swift in Sources */,
 				5185DBEE1FDF14030096E687 /* SendViewModel.swift in Sources */,
@@ -854,6 +869,7 @@
 				51912EC31FDA3190001BDF2C /* CodeScanViewController.swift in Sources */,
 				515E72A41FEC6B08001272D4 /* SendTextField.swift in Sources */,
 				51E945CB1FF6E1A4006B7081 /* SendReceiveHeaderView.swift in Sources */,
+				ADB8489E238E87D600354D49 /* BannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

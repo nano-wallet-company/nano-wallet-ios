@@ -10,11 +10,11 @@ PODS:
     - ReactiveSwift (~> 4.0)
   - ReactiveSwift (4.0.0):
     - Result (~> 4.0)
-  - Realm (3.13.1):
-    - Realm/Headers (= 3.13.1)
-  - Realm/Headers (3.13.1)
-  - RealmSwift (3.13.1):
-    - Realm (= 3.13.1)
+  - Realm (3.20.0):
+    - Realm/Headers (= 3.20.0)
+  - Realm/Headers (3.20.0)
+  - RealmSwift (3.20.0):
+    - Realm (= 3.20.0)
   - Result (4.1.0)
   - swift_qrcodejs (1.0.1)
   - SwiftWebSocket (2.7.0)
@@ -27,11 +27,11 @@ DEPENDENCIES:
   - M13Checkbox
   - ReactiveCocoa
   - ReactiveSwift
-  - RealmSwift
+  - RealmSwift (~> 3.20.0)
   - SwiftWebSocket
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Cartography
     - Crashlytics
     - EFQRCode
@@ -53,12 +53,12 @@ SPEC CHECKSUMS:
   M13Checkbox: d75dca81d61c9903e7f091f32b35a3254bc97dce
   ReactiveCocoa: fbd26e9ba60e98417ee47433e59465a98ed9da0f
   ReactiveSwift: a2bb9ace428a109e9c0209615645d9d286c8c433
-  Realm: 50071da38fe079e0735e47c9f2eae738c68c5996
-  RealmSwift: 8a1e6a02b7a08cd17a31e3115143fb69fe5f3fb9
+  Realm: 8b2ca5bc6479a91f379b6b42b5922e396cd5ba5a
+  RealmSwift: 1949ef26a279e1845bd51d591b9103adfcd121df
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   swift_qrcodejs: c181fe5c849d30c699546a23762d7e3dd143ab37
   SwiftWebSocket: 612c9729fd503cb6b0b8b45390c788686dac306f
 
-PODFILE CHECKSUM: a944b8500a5a459b56db0521b4221e823eb74c0d
+PODFILE CHECKSUM: aa22889c7c8591d280152c5539522325752cf00b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4
