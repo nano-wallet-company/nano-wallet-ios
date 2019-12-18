@@ -13,7 +13,7 @@ target 'Raiblocks' do
   pod 'EFQRCode'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'RealmSwift'
+  pod 'RealmSwift', '~> 3.20.0'
   pod 'M13Checkbox'
 end
 
